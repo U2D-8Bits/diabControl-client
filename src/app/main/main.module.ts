@@ -10,6 +10,7 @@ import { FormsPageComponent } from './pages/forms-page/forms-page.component';
 import { ChatsPageComponent } from './pages/chats-page/chats-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { RouterModule } from '@angular/router';
+import { PrimengModule } from '../primeng/primeng.module';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     MainRoutingModule,
-    RouterModule
+    RouterModule,
+
+    PrimengModule
   ],
   exports: [
     MainLayoutComponent,
