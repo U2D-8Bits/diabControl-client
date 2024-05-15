@@ -7,13 +7,15 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrimengModule } from '../primeng/primeng.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
 @NgModule({
   declarations: [
     LoginPageComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { PrimengModule } from '../primeng/primeng.module';
     RouterModule,
 
     ReactiveFormsModule,
+    HttpClientModule,
 
     PrimengModule
   ],

@@ -1,0 +1,19 @@
+#menu-container{
+    width: auto;
+    gap: 30px;
+}
+
+#menu-mobile{
+    display: none;
+}
+
+/* preparamos para vistas moviles */
+@media (max-width: 768px) {
+    #menu-container{
+        display: none;
+    }
+
+    #menu-mobile{
+        display: block;
+    }
+}
