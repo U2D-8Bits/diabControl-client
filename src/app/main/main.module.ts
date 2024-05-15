@@ -11,6 +11,8 @@ import { ChatsPageComponent } from './pages/chats-page/chats-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { RouterModule } from '@angular/router';
 import { PrimengModule } from '../primeng/primeng.module';
+import { FirstCharacterPipe } from './pipes/first-character.pipe';
+import { MaterialuiModule } from '../materialui/materialui.module';
 
 
 @NgModule({
@@ -22,13 +24,15 @@ import { PrimengModule } from '../primeng/primeng.module';
     FormsPageComponent,
     ChatsPageComponent,
     ProfilePageComponent,
+    FirstCharacterPipe,
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
     RouterModule,
 
-    PrimengModule
+    PrimengModule,
+    MaterialuiModule,
   ],
   exports: [
     MainLayoutComponent,

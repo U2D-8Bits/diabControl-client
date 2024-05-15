@@ -1,21 +1,81 @@
 <div class="w-screen h-screen">
 
-    <!-- Header web-->
-    <div id="div" class="flex sm:flex-column  align-items-center ">
-  
-      <div class="container-img mt-2">
-        <img class="img-logo" src="" alt="logo_diabControl">
+  <!-- Header-->
+  <div id="div" class="flex sm:flex-column items-center justify-between bg-blue-700 px-2 py-2">
+
+    <!-- Logo del Website -->
+    <div class="container-img mt-2">
+      <img class="img-logo" src="../../../../assets/svg/DiabControl_Banner_white_200x50.svg" alt="logo_diabControl">
+    </div>
+
+    <!-- Contenedor del Menu para PC -->
+    <div id="menu-container" class="flex items-center justify-between">
+
+      <!-- Menu -->
+      <div id="menu" class="flex items-center space-x-4 text-white gap-4">
+        <a routerLink="/main/dashboard" routerLinkActive="active" class="text-white">
+          <span class="pi pi-home"></span>
+          Inicio
+        </a>
+
+        <a *ngIf="roleUser !== 'paciente'" routerLink="/main/patients" routerLinkActive="active" class="text-white">
+          <span class="pi pi-users"></span>
+          Pacientes
+        </a>
+        <a *ngIf="roleUser !== 'paciente'"  routerLink="/main/informs" routerLinkActive="active" class="text-white">
+          <span class="pi pi-clipboard"></span>
+          Informes
+        </a>
+        <a *ngIf="roleUser === 'paciente'" routerLink="/main/forms" routerLinkActive="active" class="text-white">
+          <span class="pi pi-file"></span>
+          Formularios
+        </a>
+        <a routerLink="/main/chats" routerLinkActive="active" class="text-white">
+          <span class="pi pi-comments"></span>
+          Chats
+        </a>
+        <a routerLink="/main/profile" routerLinkActive="active" class="text-white">
+          <span class="pi pi-user"></span>
+          Mi perfil
+        </a>
       </div>
 
-  
+      <div class="flex flex-shrink-0 items-center space-x-4 text-white">
+        <!-- Texto -->
+        <div class="flex flex-col items-end ">
+          <!-- Nome -->
+          <div class="text-md font-medium ">{{ userInfo }}</div>
+          <!-- Título -->
+          <div class="text-sm font-regular">{{roleUser}}</div>
+        </div>
+
+        <p-menu #menu [model]="items" [popup]="true" />
+        <p-avatar (click)="menu.toggle($event)" class="text-blue-700 cursor-pointer" label="{{ nameUser | firstCharacter }}" styleClass="mr-2" size="xlarge" shape="circle" />
+      </div>
+
     </div>
-  
-  
-    <!-- BottomMenu -->
-  
-  
-    <!-- Main -->
-    <div id="main" class="w-full">
-      <router-outlet></router-outlet>
+
+    <!-- Contenedor del Menu para Mobiles -->
+    <div id="menu-mobile">
+      <div class="flex flex-shrink-0 items-center space-x-4 text-white">
+        <!-- Texto -->
+        <div class="flex flex-col items-end ">
+          <!-- Nome -->
+          <div class="text-md font-medium ">{{ userInfo }}</div>
+          <!-- Título -->
+          <div class="text-sm font-regular">{{roleUser}}</div>
+        </div>
+
+        <p-menu #menuPhone [model]="phoneMenu" [popup]="true" />
+        <p-avatar (click)="menuPhone.toggle($event)" class="text-blue-700 cursor-pointer" label="{{ nameUser | firstCharacter }}" styleClass="mr-2" size="xlarge" shape="circle" />
+      </div>
     </div>
+
   </div>
+
+
+  <!-- Main -->
+  <div id="main" class="w-full">
+    <router-outlet></router-outlet>
+  </div>
+</div>
