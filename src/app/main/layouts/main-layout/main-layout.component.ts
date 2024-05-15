@@ -65,7 +65,6 @@ export class MainLayoutComponent implements OnInit {
             label: 'Mi Perfil',
             icon: 'pi pi-user',
             routerLink: ['/main/profile'],
-            visible: this.roleUser === 'medico',
           },
           {
             label: 'Cerrar Sesión',
