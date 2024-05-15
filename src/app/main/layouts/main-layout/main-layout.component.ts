@@ -1,7 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../../auth/services/auth.service';
+import { AuthStatus } from '../../../auth/enums/auth-status.enum';
 
 @Component({
   selector: 'app-main-layout',
@@ -17,15 +18,14 @@ export class MainLayoutComponent implements OnInit {
   phoneMenu: MenuItem[] | undefined;
 
   //? Variables e Injecciones
-  private router = inject(Router);
   private authService = inject( AuthService);
-
 
 
   //? Variables de usuario de localstorage
   public roleUser = localStorage.getItem('role');
   public userInfo = localStorage.getItem('user_name');
   public nameUser = localStorage.getItem('nameUser');
+  
 
 
 
@@ -117,4 +117,7 @@ export class MainLayoutComponent implements OnInit {
       },
     ];
   }
+
+
+
 }

@@ -1,1 +1,57 @@
-<p>patients-page works!</p>
+<div class="flex justify-between items-center p-2">
+
+    <h1 class="text-2xl text-gray-700">Mis pacientes</h1>
+
+    <!-- Boton para agregar paciente -->
+    <button class="btn-add" mat-raised-button>
+        <mat-icon>add</mat-icon>
+        Agregar paciente
+    </button>
+
+</div>
+
+
+<table class="border-collapse w-full">
+    <thead>
+        <tr>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Codigo</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombres</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Correo</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Estado</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let patient of patients" class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                {{patient.id_user}}
+            </td>
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                {{patient.user_name}} {{patient.user_lastname}}
+            </td>
+          	<td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                {{patient.user_email}}
+          	</td>
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                <span *ngIf="patient.user_status" class="badge-succes">Activo</span>
+                <span *ngIf="!patient.user_status" class="badge-danger">Inactivo</span>
+            </td>
+            <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:flex justify-center relative gap-2 lg:static">
+                <p-toast />
+                <p-confirmDialog />
+                <button class="btn-action" mat-raised-button>
+                    <span class="pi pi-pencil"></span>
+                </button>
+                <button class="btn-action" mat-raised-button>
+                    <span class="pi pi-eye"></span>
+                </button>
+                <button (click)="changeStatePatient(patient.id_user, $event)" class="btn-action" mat-raised-button>
+                    <span class="pi pi-sync"></span>
+                </button>
+                <button class="btn-action" mat-raised-button>
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
