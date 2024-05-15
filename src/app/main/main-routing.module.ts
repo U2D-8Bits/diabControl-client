@@ -21,16 +21,19 @@ const routes: Routes = [
       {
         path: 'patients',
         title: 'Pacientes',
+        //? Guard que verifica si el usuario tiene el rol de medico
         component: PatientsPageComponent
       },
       {
         path: 'informs',
         title: 'Informes',
+        //? Guard que verifica si el usuario tiene el rol de medico
         component: InformsPageComponent
       },
       {
         path: 'forms',
         title: 'Formularios',
+        //? Guard que verifica si el usuario tiene el rol de paciente
         component: FormsPageComponent
       },
       {

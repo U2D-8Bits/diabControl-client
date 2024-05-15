@@ -10,6 +10,10 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
   declarations: [],
@@ -21,7 +25,11 @@ import { SidebarModule } from 'primeng/sidebar';
     AvatarGroupModule,
     ConfirmDialogModule,
     DynamicDialogModule,
-    SidebarModule
+    SidebarModule,
+    ButtonModule,
+    CardModule,
+    MenubarModule,
+    MenuModule,
   ],
 })
 export class PrimengModule { }
