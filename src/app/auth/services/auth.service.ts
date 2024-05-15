@@ -34,7 +34,7 @@ export class AuthService {
 
   //? Funciones
 
-  //* Metodo para guardar informacion
+  //* Metodo para guardar informacion de autenticacion
   private saveData(user: User, token: string): boolean {
 
     this.roleService.getRoleByID(user.role_id).subscribe();
@@ -47,19 +47,6 @@ export class AuthService {
     return true;
   }
 
-
-
-
-
-  //* Metodo para cerrar sesion
-  logOut(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user_name');
-    localStorage.removeItem('nameUser');
-    localStorage.removeItem('role');
-    this._currentUser.set(null);
-    this._authStatus.set(AuthStatus.notAuthenticated);
-  }
 
 
 
@@ -80,17 +67,14 @@ export class AuthService {
 
 
 
-  //* Metodo para obtener un usuario por ID
-  getUserByID(id_user: number): Observable<User> {
-    const url = `${this.baseUrl}/users/${id_user}`;
-    return this.http.get<User>(url)
-      .pipe(
-        map( (user) => {
-          this._currentUser.set(user);
-          return user;
-        }),
-        catchError((err) => { throw err.error.message; })
-      )
+  //* Metodo para cerrar sesion
+  logOut(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('nameUser');
+    localStorage.removeItem('role');
+    this._currentUser.set(null);
+    this._authStatus.set(AuthStatus.notAuthenticated);
   }
 
 

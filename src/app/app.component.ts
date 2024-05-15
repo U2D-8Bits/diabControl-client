@@ -36,6 +36,9 @@ export class AppComponent implements OnInit {
 
   //? Metodo para verificar el cambio de estado de autenticacion
   public authStatusChangedEffect = effect ( () =>{
+
+    console.log("Estado =>", this.authService.authStatus() )
+
     switch( this.authService.authStatus() ){
 
       case AuthStatus.checking:

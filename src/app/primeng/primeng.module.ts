@@ -14,7 +14,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
-
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 @NgModule({
   declarations: [],
   exports: [
@@ -30,6 +31,9 @@ import { MenuModule } from 'primeng/menu';
     CardModule,
     MenubarModule,
     MenuModule,
+    TableModule,
+    TagModule,
+    
   ],
 })
 export class PrimengModule { }
