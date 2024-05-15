@@ -18,11 +18,11 @@
           Inicio
         </a>
 
-        <a *ngIf="roleUser !== 'paciente'" routerLink="/main/patients" routerLinkActive="active" class="text-white">
+        <a *ngIf="roleUser === 'medico'" routerLink="/main/patients" routerLinkActive="active" class="text-white">
           <span class="pi pi-users"></span>
           Pacientes
         </a>
-        <a *ngIf="roleUser !== 'paciente'"  routerLink="/main/informs" routerLinkActive="active" class="text-white">
+        <a *ngIf="roleUser === 'medico'"  routerLink="/main/informs" routerLinkActive="active" class="text-white">
           <span class="pi pi-clipboard"></span>
           Informes
         </a>
