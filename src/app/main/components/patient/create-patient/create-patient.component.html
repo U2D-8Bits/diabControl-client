@@ -1,0 +1,63 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<div class="max-w-2xl mx-auto bg-white p-16">
+    <form [formGroup]="myForm" (ngSubmit)="createPatient()">
+        <div class="grid gap-6 mb-6 lg:grid-cols-2">
+            <div>
+                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre</label>
+                <input formControlName="user_name" type="text" id="first_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="John" required>
+            </div>
+            <div>
+                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Apellido</label>
+                <input formControlName="user_lastname" type="text" id="last_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Doe" required>
+            </div>
+            <div>
+                <label for="cedula" class="block mb-2 text-sm font-medium text-gray-900 ">Numero de Cedula</label>
+                <input formControlName="user_ced" type="text" id="cedula"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="9999999999" required>
+            </div>
+            <div>
+                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Numero de telefono</label>
+                <input formControlName="user_phone" type="string" id="phone"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="099-999-999" required>
+            </div>
+        </div>
+        <div class="mb-6">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Correo Electronico</label>
+            <input formControlName="user_email" type="email" id="email"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="john.doe@company.com" required>
+        </div>
+        <div class="mb-6">
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre de Usuario</label>
+            <input formControlName="user_username" type="text" id="email"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="john.doe@company.com" required>
+        </div>
+        <div class="mb-6">
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <input formControlName="user_password" type="password" id="password"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="•••••••••" required>
+        </div>
+    </form>
+    <div class="mb-6 flex items-center justify-between">
+        <button (click)="createPatient()" [disabled]="formInvalid === true"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            >
+            Agregar
+        </button>
+        <button (click)="cancelCreation()"
+            class="text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+            Cancelar
+        </button>
+    </div>
+</div>
+
+<button (click)="verificarFormularioInvalido()">Verificar Formulario</button>

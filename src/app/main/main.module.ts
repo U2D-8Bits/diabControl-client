@@ -13,6 +13,9 @@ import { RouterModule } from '@angular/router';
 import { PrimengModule } from '../primeng/primeng.module';
 import { FirstCharacterPipe } from './pipes/first-character.pipe';
 import { MaterialuiModule } from '../materialui/materialui.module';
+import { ViewPatientComponent } from './components/patient/view-patient/view-patient.component';
+import { CreatePatientComponent } from './components/patient/create-patient/create-patient.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -25,11 +28,14 @@ import { MaterialuiModule } from '../materialui/materialui.module';
     ChatsPageComponent,
     ProfilePageComponent,
     FirstCharacterPipe,
+    ViewPatientComponent,
+    CreatePatientComponent,
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
     RouterModule,
+    ReactiveFormsModule,
 
     PrimengModule,
     MaterialuiModule,
