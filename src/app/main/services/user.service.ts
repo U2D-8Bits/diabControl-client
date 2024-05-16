@@ -149,21 +149,19 @@ export class UserService {
 
 
   //? Eliminar un usuario
-  deleteUser(id: string): boolean{
+  deleteUser(id: number): Observable<boolean>{
     const url = `${this.baseUrl}/users/${id}`;
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.delete(url, {headers})
+    return this.http.delete<User>(url, {headers})
     .pipe(
       map((resp: any) => {
-        return resp
+        return true
       }),
       catchError((err: any) => {
         return throwError(err);
       })
     );
-
-    return true;
   }
 }
