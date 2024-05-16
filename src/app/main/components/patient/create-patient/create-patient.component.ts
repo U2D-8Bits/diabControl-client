@@ -28,7 +28,6 @@ export class CreatePatientComponent implements OnInit {
   private patientsPageComponent = inject(PatientsPageComponent);
 
   // variable para determinar que el formulario es invalido
-  formInvalid: boolean = true;
   cancelAble: boolean = false;
 
   //? Formulario para crear un nuevo paciente
@@ -48,11 +47,6 @@ export class CreatePatientComponent implements OnInit {
   createPatient() {
 
     const patientData = this.myForm.value;
-
-    //Validamos que el formulario sea valido
-    if (this.myForm.valid) {
-      this.formInvalid = true;
-    }
 
     this.confirmationService.confirm({
       message: 'Esta seguro que desea crear un nuevo paciente?',
@@ -80,9 +74,8 @@ export class CreatePatientComponent implements OnInit {
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Error al crear paciente',
+                detail: error.error.message,
               });
-              this.myForm.reset();
             },
           });
       },
@@ -124,46 +117,10 @@ export class CreatePatientComponent implements OnInit {
     });
   }
 
-  verificarFormularioInvalido() {
-    if (this.myForm.invalid) {
-      console.log('El formulario es inválido.');
-      // mostrar porque es invalido
-      if (this.myForm.controls.user_name.invalid) {
-        console.log('El campo nombre es requerido');
-      }
-      if (this.myForm.controls.user_lastname.invalid) {
-        console.log('El campo apellido es requerido');
-      }
-      if (this.myForm.controls.user_username.invalid) {
-        console.log('El campo usuario es requerido');
-      }
-      if (this.myForm.controls.user_password.invalid) {
-        console.log('El campo contraseña es requerido');
-      }
-      if (this.myForm.controls.user_email.invalid) {
-        console.log('El campo email es requerido');
-      }
-      if (this.myForm.controls.user_phone.invalid) {
-        console.log('El campo telefono es requerido');
-      }
-      if (this.myForm.controls.user_ced.invalid) {
-        console.log('El campo cedula es requerido');
-      }
-      if (this.myForm.controls.role_id.invalid) {
-        console.log('El campo rol es requerido');
-      }
-      if(this.myForm.controls.user_status.invalid){
-        console.log('El campo estado es requerido');
-      }
 
-    } else {
-      console.log('El formulario es válido.');
-    }
-  }
 
   ngOnInit(): void {
     console.log(`componente create-patient cargado`);
-    console.log("Formulario Valido =>", this.myForm.valid)
   }
 
   ngOnDestroy(): void {
