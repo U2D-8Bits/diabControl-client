@@ -69,7 +69,6 @@ export class PatientsPageComponent implements OnInit{
 
   //? Funcion para enviar el ID del paciente a traves de un observable
   sendUserID(id_user: number){
-    console.log("Id del paciente: ", id_user)
     this.userDataService.changeUserId(id_user)
   }
 
@@ -152,15 +151,10 @@ export class PatientsPageComponent implements OnInit{
 
 
   ngOnInit(): void {
+    console.log('Componente de PatientsPageComponent creado')
     this.getAllPatients()
   }
 
 
-
-
-
-  ngOnDestroy(): void {
-    console.log('Componente de pacientes destruido')
-  }
 
 }
