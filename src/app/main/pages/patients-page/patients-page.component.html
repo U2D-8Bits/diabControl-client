@@ -1,9 +1,11 @@
+<p-toast />
+<p-confirmDialog />
 <div class="flex justify-between items-center p-2">
 
     <h1 class="text-2xl text-gray-700">Mis pacientes</h1>
 
     <!-- Boton para agregar paciente -->
-    <button class="btn-add" mat-raised-button>
+    <button class="btn-add" (click)="showDialog('create', 'Agregar Usuario')" mat-raised-button>
         <mat-icon>add</mat-icon>
         Agregar paciente
     </button>
@@ -37,12 +39,7 @@
                 <span *ngIf="!patient.user_status" class="badge-danger">Inactivo</span>
             </td>
             <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:flex justify-center relative gap-2 lg:static">
-                <p-toast />
-                <p-confirmDialog />
-                <button class="btn-action" mat-raised-button>
-                    <span class="pi pi-pencil"></span>
-                </button>
-                <button class="btn-action" mat-raised-button>
+                <button (click)="showDialog('view', 'Ver Usuario')" (click)="sendUserID(patient.id_user)" class="btn-action" mat-raised-button>
                     <span class="pi pi-eye"></span>
                 </button>
                 <button (click)="changeStatePatient(patient.id_user, $event)" class="btn-action" mat-raised-button>

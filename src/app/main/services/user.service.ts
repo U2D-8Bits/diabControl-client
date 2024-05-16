@@ -65,7 +65,7 @@ export class UserService {
 
 
   //? Obtener un usuario por ID
-  getUserById(id: string): Observable<User>{
+  getUserById(id: number): Observable<User>{
     const url = `${this.baseUrl}/users/${id}`;
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -105,7 +105,7 @@ export class UserService {
 
 
 
-  
+
   //? Actualizar un usuario por ID
   updateUser(id: number, userData: User): Observable<User>{
     const url = `${this.baseUrl}/users/${id}`;

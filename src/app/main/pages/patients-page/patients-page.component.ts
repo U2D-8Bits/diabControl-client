@@ -1,30 +1,77 @@
-import { Component, Inject, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, inject, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../../auth/interfaces';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 import Swal from 'sweetalert2'
+import { CreatePatientComponent } from '../../components/patient/create-patient/create-patient.component';
+import { ViewPatientComponent } from '../../components/patient/view-patient/view-patient.component';
+import { UserDataService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-patients-page',
   templateUrl: './patients-page.component.html',
   styleUrl: './patients-page.component.css',
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService, DialogService]
 })
 export class PatientsPageComponent implements OnInit{
 
-  
+  ref: DynamicDialogRef | undefined;
 
   constructor() { }
 
   //? Variables e Injecciones
   private userService = inject( UserService)
+  private userDataService = inject( UserDataService)
   private confirmationService = inject( ConfirmationService)
   private messageService = inject( MessageService)
+  public dialigService = inject( DialogService )
 
-
+  
 
   public patients: User[] = []
+
+
+
+
+  //? Funcion para abrir el dialogo de agregar paciente
+  showDialog(componentName: string, headerText: string) {
+    //* Mostrar el compomente de agregar paciente
+    if( componentName === 'create'){
+      this.ref = this.dialigService.open(CreatePatientComponent, {
+        header: headerText,
+        width: '40%',
+        contentStyle: {"max-height": "500px", "overflow": "auto"},
+      })
+    }
+
+    if( componentName === 'view'){
+      this.ref = this.dialigService.open(ViewPatientComponent, {
+        header: headerText,
+        width: '40%',
+        contentStyle: {"max-height": "500px", "overflow": "auto"},
+      })
+    }
+
+    //* Mostrar el componente para ver/editar un paciente
+    if (this.ref) {
+      this.ref.onClose.subscribe(() => {
+        this.ngOnInit();
+      });
+    }
+  }
+
+
+
+
+
+  //? Funcion para enviar el ID del paciente a traves de un observable
+  sendUserID(id_user: number){
+    console.log("Id del paciente: ", id_user)
+    this.userDataService.changeUserId(id_user)
+  }
 
 
 
