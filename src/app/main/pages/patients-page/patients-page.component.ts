@@ -91,7 +91,7 @@ export class PatientsPageComponent implements OnInit{
 
 
   //? Funcion para modificar el estado de un paciente
-  changeStatePatient(id_user: number, event: Event){
+  changeStatePatient(id_user: number){
      Swal.fire({
         title: '¿Estás seguro?',
         text: 'Estás a punto de cambiar el estado de un paciente',
@@ -117,10 +117,36 @@ export class PatientsPageComponent implements OnInit{
 
 
 
-
-
   //? Funcion para eliminar un paciente
-
+  deletePatient(id_user: number){
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Estás a punto de eliminar un paciente',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar paciente',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if(result.isConfirmed){
+        //? Lógica para eliminar un paciente
+        this.userService.deleteUser(id_user)
+          .subscribe({
+            next: (resp: any) => {
+              this.messageService.add({severity: 'success', summary: 'Paciente eliminado', detail: 'El paciente ha sido eliminado'})
+              setTimeout(() => {
+                this.ngOnInit()
+              }, 700)
+            },
+            error: (err: any) => {
+              this.messageService.add({severity: 'error', summary: 'Error', detail: 'Ha ocurrido un error al eliminar el paciente'})
+            }
+          
+          })
+      }
+    })
+  }
 
 
 

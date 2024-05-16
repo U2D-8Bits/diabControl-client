@@ -83,7 +83,7 @@ export class MainLayoutComponent implements OnInit {
       {
         label: 'Inicio',
         icon: 'pi pi-home',
-        routerLink: ['/main/home'],
+        routerLink: ['/main/dashboard'],
       },
       {
         label: 'Pacientes',
