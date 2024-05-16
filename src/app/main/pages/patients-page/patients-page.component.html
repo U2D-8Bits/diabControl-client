@@ -64,7 +64,7 @@
                 <span *ngIf="!patient.user_status" class="badge-danger">Inactivo</span>
             </td>
             <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:flex justify-center relative gap-2 lg:static">
-                <button (click)="showDialog('view', 'Ver Usuario')" (click)="sendUserID(patient.id_user)" class="btn-action" mat-raised-button>
+                <button (click)="sendUserID(patient.id_user)" (click)="showDialog('view', 'Ver Usuario')"  class="btn-action" mat-raised-button>
                     <span class="pi pi-eye"></span>
                 </button>
                 <button (click)="changeStatePatient(patient.id_user)" class="btn-action" mat-raised-button>
