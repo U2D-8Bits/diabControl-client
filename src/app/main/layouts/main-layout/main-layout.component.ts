@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../../auth/services/auth.service';
 import { AuthStatus } from '../../../auth/enums/auth-status.enum';
+import { UserDataService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -19,13 +20,14 @@ export class MainLayoutComponent implements OnInit {
 
   //? Variables e Injecciones
   private authService = inject( AuthService);
+  private userDataService = inject( UserDataService );
 
 
   //? Variables de usuario de localstorage
+
   public roleUser = localStorage.getItem('role');
   public userInfo = localStorage.getItem('user_name');
   public nameUser = localStorage.getItem('nameUser');
-  
 
 
 
@@ -36,7 +38,7 @@ export class MainLayoutComponent implements OnInit {
     if (this.nameUser !== null) {
       this.nameUser = this.nameUser.split(' ')[0];
     } else {
-      this.nameUser = null;
+      this.nameUser = '';
     }
   }
 
@@ -119,5 +121,8 @@ export class MainLayoutComponent implements OnInit {
   }
 
 
+  ngOnDestroy(): void {
+    console.log(`Main Layout Component destroyed!`);
+  }
 
 }
