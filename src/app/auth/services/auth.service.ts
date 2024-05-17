@@ -43,6 +43,7 @@ export class AuthService {
     localStorage.setItem('user_name', `${user.user_name} ${user.user_lastname}`);
     //guardamos el nombre del usuario en el localStorage como un string
     localStorage.setItem('nameUser', user.user_name.toString());
+    localStorage.setItem('ID', user.id_user.toString());
     this._authStatus.set(AuthStatus.authenticated);
     return true;
   }
