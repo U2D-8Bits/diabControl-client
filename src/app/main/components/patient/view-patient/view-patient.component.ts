@@ -30,10 +30,6 @@ export class ViewPatientComponent implements OnInit {
   public userID!: number;
   myForm!: FormGroup;
 
-  editButtonDisabled: boolean = false;
-
-  disabledInput: boolean = true;
-
 
 
 
@@ -56,7 +52,12 @@ export class ViewPatientComponent implements OnInit {
           console.error("Error al obtener el ID del paciente:", error);
         }
       })
+    
 
+
+
+
+    //* Se crea el formulario
     this.myForm = this.fb.group({
       id_user: [this.userID, Validators.required],
       user_name: ['', Validators.required],
@@ -98,6 +99,9 @@ export class ViewPatientComponent implements OnInit {
       })
 
   }
+
+
+
 
 
   //? Metodo para acutalizar paciente
@@ -148,6 +152,10 @@ export class ViewPatientComponent implements OnInit {
     });
     }
 
+
+
+
+
   //? Cancelar la edición del paciente
   cancelUpdate(){
     this.confirmationService.confirm({
@@ -159,8 +167,6 @@ export class ViewPatientComponent implements OnInit {
       acceptButtonStyleClass: 'p-button-success',
       rejectButtonStyleClass: 'p-button-danger',
       accept: () => {
-        this.disabledInput = true;
-        this.editButtonDisabled = false;
         this.myForm.reset(this.patienFormData);
       },
       reject: () => {
@@ -173,6 +179,10 @@ export class ViewPatientComponent implements OnInit {
     })
   }
   
+
+
+
+
   //? Destructor for the component
   ngOnDestroy(): void {
     //* Mensaje que se muestra en consola cuando el componente se destruye
