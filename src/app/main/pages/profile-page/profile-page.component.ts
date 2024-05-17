@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
 import { MainLayoutComponent } from '../../layouts/main-layout/main-layout.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-page',
@@ -18,8 +19,8 @@ export class ProfilePageComponent implements OnInit {
   //? Variables e Inyecciones
   private userService = inject(UserService);
   private roleService = inject(RoleService);
+  private router = inject(Router);
   private fb = inject(FormBuilder);
-  private mainLayout = inject(MainLayoutComponent);
   private idUser!: number;
 
   myForm: FormGroup = this.fb.group({
@@ -47,7 +48,6 @@ export class ProfilePageComponent implements OnInit {
         this.userData = user;
         this.getRoleData(user.role_id);
         this.chargeForm(user);
-        console.log("Valores del formulario =>", this.myForm.dirty);
       },
       error: (error) => {
         console.error(`Error:`, error);
@@ -70,10 +70,11 @@ export class ProfilePageComponent implements OnInit {
             next: (data) => {
               console.log("Data =>", data);
               Swal.fire('¡Tus datos se han actualizado!', '', 'success');
-              //Ajustamos los nuevos valores en el localStorage
-              localStorage.setItem('nameUser', data.user_name.toString());
-              localStorage.setItem('user_name', `${data.user_name} ${data.user_lastname}`);
-              this.mainLayout.ngOnInit();
+              // Recargamos toda la pagina despues de un segundo y lo redirigimos al main/profile
+              setTimeout(() => {
+                window.location.reload();
+                this.router.navigate(['/main/profile']);
+              }, 1000);
             },
             error: (error) => {
               console.error(`Error:`, error);
