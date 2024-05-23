@@ -5,7 +5,6 @@ import { RoleService } from '../../../auth/services/role.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
-import { MainLayoutComponent } from '../../layouts/main-layout/main-layout.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,7 +21,15 @@ export class ProfilePageComponent implements OnInit {
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private idUser!: number;
+  public userData?: User;
+  public roleData?: Role;
+  public currentUserData?: User;
 
+
+
+
+
+  //? Formulario de Usuario
   myForm: FormGroup = this.fb.group({
     user_name: ['', Validators.required],
     user_lastname: ['', Validators.required],
@@ -34,15 +41,26 @@ export class ProfilePageComponent implements OnInit {
     role_id: ['', Validators.required],
     user_status: ['', Validators.required],
   });
-  public userData?: User;
-  public roleData?: Role;
-  public currentUserData?: User;
+
+
+
+
 
   ngOnInit(): void {
     console.log(`Profile Page Component initialized!`);
 
+
+
+
+
+    //? Obtenemos el ID del usuario
     this.idUser = Number(localStorage.getItem('ID'));
 
+
+
+
+
+    //? Obtenemos los datos del usuario
     this.userService.getUserById(this.idUser).subscribe({
       next: (user) => {
         this.userData = user;
@@ -53,10 +71,14 @@ export class ProfilePageComponent implements OnInit {
         console.error(`Error:`, error);
       },
     });
-
   }
 
-  updateUserInfo(){
+
+
+
+
+  //? Funcion para actualizar los datos del usuario
+  updateUserInfo() {
     Swal.fire({
       title: '¿Estás seguro de actualizar tus datos?',
       showDenyButton: true,
@@ -65,22 +87,21 @@ export class ProfilePageComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         const dataUser = this.myForm.value;
-        this.userService.updateUser(this.idUser, dataUser)
-          .subscribe({
-            next: (data) => {
-              console.log("Data =>", data);
-              Swal.fire('¡Tus datos se han actualizado!', '', 'success');
-              // Recargamos toda la pagina despues de un segundo y lo redirigimos al main/profile
-              setTimeout(() => {
-                window.location.reload();
-                this.router.navigate(['/main/profile']);
-              }, 1000);
-            },
-            error: (error) => {
-              console.error(`Error:`, error);
-              Swal.fire('¡Tus datos no se han actualizado!', '', 'error');
-            },
-          })
+        this.userService.updateUser(this.idUser, dataUser).subscribe({
+          next: (data) => {
+            console.log('Data =>', data);
+            Swal.fire('¡Tus datos se han actualizado!', '', 'success');
+            //* Recargamos toda la pagina despues de un segundo y lo redirigimos al main/profile
+            setTimeout(() => {
+              window.location.reload();
+              this.router.navigate(['/main/profile']);
+            }, 1000);
+          },
+          error: (error) => {
+            console.error(`Error:`, error);
+            Swal.fire('¡Tus datos no se han actualizado!', '', 'error');
+          },
+        });
       } else if (result.isDenied) {
         Swal.fire('¡Tus datos no se han actualizado!', '', 'info');
         this.myForm.reset(this.currentUserData);
@@ -90,30 +111,39 @@ export class ProfilePageComponent implements OnInit {
   }
 
 
-  chargeForm(userData: User){
 
-    this.myForm.valueChanges.subscribe( value => {
-      console.log("Formulario =>", value);
-    })
 
-        //* Se crea el formulario
-        this.myForm = this.fb.group({
-          user_name: [userData.user_name, Validators.required],
-          user_lastname: [userData.user_lastname, Validators.required],
-          user_email: [userData.user_email, [Validators.required, Validators.email]],
-          user_phone: [userData.user_phone, Validators.required],
-          user_username: [userData.user_username, Validators.required],
-          user_password: [userData.user_password, [Validators.required, Validators.minLength(6)]],
-          user_ced: [userData.user_ced, Validators.required],
-          role_id: [userData.role_id, Validators.required],
-          user_status: [userData.user_status, Validators.required],
-        })
 
-        this.currentUserData = this.myForm.value;
+  //? Funcion para cargar los datos del usuario en el formulario
+  chargeForm(userData: User) {
+    //* Se crea el formulario
+    this.myForm = this.fb.group({
+      user_name: [userData.user_name, Validators.required],
+      user_lastname: [userData.user_lastname, Validators.required],
+      user_email: [
+        userData.user_email,
+        [Validators.required, Validators.email],
+      ],
+      user_phone: [userData.user_phone, Validators.required],
+      user_username: [userData.user_username, Validators.required],
+      user_password: [
+        userData.user_password,
+        [Validators.required, Validators.minLength(6)],
+      ],
+      user_ced: [userData.user_ced, Validators.required],
+      role_id: [userData.role_id, Validators.required],
+      user_status: [userData.user_status, Validators.required],
+    });
+
+    //* Se guarda la data actual del usuario
+    this.currentUserData = this.myForm.value;
   }
 
 
 
+
+
+  //? Funcion para obtener los datos del rol
   getRoleData(role_id: number) {
     this.roleService.getRoleByID(role_id).subscribe({
       next: (role) => {
@@ -125,6 +155,11 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
+
+
+
+
+  //? Funcion para destruir el componente
   ngOnDestroy(): void {
     console.log(`Profile Page Component destroyed!`);
   }
