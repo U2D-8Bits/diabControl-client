@@ -7,6 +7,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
+import { ConfirmationService, MessageService } from 'primeng/api';
+
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
@@ -15,42 +17,32 @@ import { Router } from '@angular/router';
 export class ProfilePageComponent implements OnInit {
   constructor() {}
 
+
+
   //? Variables e Inyecciones
   private userService = inject(UserService);
   private roleService = inject(RoleService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
+
+
   public roleUser = localStorage.getItem('role');
   private idUser!: number;
   public userData?: User;
   public roleData?: Role;
   public currentUserData?: User;
   public myForm!: FormGroup;
+  public medics: User[] = [];
+
+
+  ngOnInit(): void {
+    console.log(`Profile Page Component initialized!`);
 
 
 
 
 
   //? Formulario de Usuario
-  // myForm: FormGroup = this.fb.group({
-  //   user_name: ['', Validators.required],
-  //   user_lastname: ['', Validators.required],
-  //   user_email: ['', Validators.required],
-  //   user_phone: ['', Validators.required],
-  //   user_username: ['', Validators.required],
-  //   user_password: ['', [Validators.required, Validators.minLength(6)]],
-  //   user_ced: [0, Validators.required],
-  //   role_id: [0, Validators.required],
-  //   user_status: [true, Validators.required],
-  // });
-
-
-
-
-
-  ngOnInit(): void {
-    console.log(`Profile Page Component initialized!`);
-
    this.myForm = this.fb.group({
       user_name: ['', Validators.required],
       user_lastname: ['', Validators.required],
