@@ -20,27 +20,29 @@ export class ProfilePageComponent implements OnInit {
   private roleService = inject(RoleService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
+  public roleUser = localStorage.getItem('role');
   private idUser!: number;
   public userData?: User;
   public roleData?: Role;
   public currentUserData?: User;
+  public myForm!: FormGroup;
 
 
 
 
 
   //? Formulario de Usuario
-  myForm: FormGroup = this.fb.group({
-    user_name: ['', Validators.required],
-    user_lastname: ['', Validators.required],
-    user_email: ['', Validators.required],
-    user_phone: ['', Validators.required],
-    user_username: ['', Validators.required],
-    user_password: ['', Validators.required],
-    user_ced: ['', Validators.required],
-    role_id: ['', Validators.required],
-    user_status: ['', Validators.required],
-  });
+  // myForm: FormGroup = this.fb.group({
+  //   user_name: ['', Validators.required],
+  //   user_lastname: ['', Validators.required],
+  //   user_email: ['', Validators.required],
+  //   user_phone: ['', Validators.required],
+  //   user_username: ['', Validators.required],
+  //   user_password: ['', [Validators.required, Validators.minLength(6)]],
+  //   user_ced: [0, Validators.required],
+  //   role_id: [0, Validators.required],
+  //   user_status: [true, Validators.required],
+  // });
 
 
 
@@ -49,6 +51,17 @@ export class ProfilePageComponent implements OnInit {
   ngOnInit(): void {
     console.log(`Profile Page Component initialized!`);
 
+   this.myForm = this.fb.group({
+      user_name: ['', Validators.required],
+      user_lastname: ['', Validators.required],
+      user_email: ['', Validators.required],
+      user_phone: ['', Validators.required],
+      user_username: ['', Validators.required],
+      user_password: ['', [Validators.required, Validators.minLength(6)]],
+      user_ced: [0, Validators.required],
+      role_id: [0, Validators.required],
+      user_status: [true, Validators.required],
+    });
 
 
 
@@ -71,7 +84,9 @@ export class ProfilePageComponent implements OnInit {
         console.error(`Error:`, error);
       },
     });
+
   }
+
 
 
 
@@ -91,7 +106,6 @@ export class ProfilePageComponent implements OnInit {
           next: (data) => {
             console.log('Data =>', data);
             Swal.fire('¡Tus datos se han actualizado!', '', 'success');
-            //* Recargamos toda la pagina despues de un segundo y lo redirigimos al main/profile
             setTimeout(() => {
               window.location.reload();
               this.router.navigate(['/main/profile']);

@@ -16,6 +16,8 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { PasswordModule } from 'primeng/password';
+
 @NgModule({
   declarations: [],
   exports: [
@@ -33,7 +35,7 @@ import { TagModule } from 'primeng/tag';
     MenuModule,
     TableModule,
     TagModule,
-    
+    PasswordModule,
   ],
 })
 export class PrimengModule { }

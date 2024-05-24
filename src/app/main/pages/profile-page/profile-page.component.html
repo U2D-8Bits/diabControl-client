@@ -3,47 +3,33 @@
         <div
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
             <div class="rounded-t bg-white mb-0 px-6 py-6">
-                <div class="text-center flex justify-between">
+                <div class="text-center flex flex-wrap justify-between">
                     <h6 class="text-blueGray-700 text-xl font-bold">
                         Mi Perfil
                     </h6>
-                    <button [disabled]="!myForm.dirty || myForm.invalid" (click)="updateUserInfo()"
-                        class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
-                        type="button" >
-                        <span class="pi pi-cog"></span>
-                        Actualizar Informacion.
-                    </button>
+                    <div class=" flex flex-wrap items-center gap-2">
+                        <button *ngIf="roleUser === 'medico'"
+                            class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+                            type="button">
+                            <span class="pi pi-plus"></span>
+                            Agregar Médico
+                        </button>
+                        <button [disabled]="!myForm.dirty || myForm.invalid" (click)="updateUserInfo()"
+                            class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
+                            type="button">
+                            <span class="pi pi-cog"></span>
+                            Actualizar Información.
+                        </button>
+                    </div>
 
                 </div>
             </div>
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <form [formGroup]="myForm" (ngSubmit)="updateUserInfo()">
                     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        Informacion de Usuario
+                        Información de Usuario
                     </h6>
                     <div class="flex flex-wrap">
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                    htmlfor="grid-password">
-                                    Nombre de Usuario
-                                </label>
-                                <input type="text"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_username" formControlName="user_username" required>
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                    htmlfor="grid-password">
-                                    Numero de Cedula
-                                </label>
-                                <input type="number"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_ced" formGroupName="user_ced" required>
-                            </div>
-                        </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -66,19 +52,52 @@
                                     [value]="userData?.user_lastname" formControlName="user_lastname" required>
                             </div>
                         </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlfor="grid-password">
+                                    Nombre de Usuario
+                                </label>
+                                <input type="text"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    [value]="userData?.user_username" formControlName="user_username" required>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlfor="grid-password">
+                                    Número de Cédula
+                                </label>
+                                <input type="number"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    [value]="userData?.user_ced" formGroupName="user_ced" required>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlfor="grid-password">
+                                    Contraseña
+                                </label>
+                                <input type="password"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    [value]="userData?.user_password" formControlName="user_password" required>
+                            </div>
+                        </div>
                     </div>
 
                     <hr class="mt-6 border-b-1 border-blueGray-300">
 
                     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        Informacion de Contacto
+                        Información de Contacto
                     </h6>
                     <div class="flex flex-wrap">
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                     htmlfor="grid-password">
-                                    Correo Electronico
+                                    Correo Electrónico
                                 </label>
                                 <input type="email"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -89,7 +108,7 @@
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                     htmlfor="grid-password">
-                                    Numero de Telefono
+                                    Número de Teléfono
                                 </label>
                                 <input type="text"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -101,7 +120,7 @@
                     <hr class="mt-6 border-b-1 border-blueGray-300">
 
                     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                        Informacion Adicional
+                        Información Adicional
                     </h6>
                     <div class="flex flex-wrap">
                         <div class="w-full lg:w-6/12 px-4">
