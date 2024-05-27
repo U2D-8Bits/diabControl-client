@@ -18,7 +18,7 @@ import { CreatePatientComponent } from './components/patient/create-patient/crea
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateMedicComponent } from './components/medic/create-medic/create-medic.component';
 import { ViewMedicComponent } from './components/medic/view-medic/view-medic.component';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
