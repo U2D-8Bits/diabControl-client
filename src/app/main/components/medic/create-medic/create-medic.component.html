@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
 <div class="max-w-2xl mx-auto bg-white p-16">
-    <form [formGroup]="myForm" (ngSubmit)="createPatient()">
+    <form [formGroup]="myForm" (ngSubmit)="createMedic()">
         <div class="grid gap-6 mb-6 lg:grid-cols-2">
             <div>
                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre</label>
@@ -70,7 +70,7 @@
         </div>
     </form>
     <div class="mb-6 flex items-center justify-between">
-        <button (click)="createPatient()" [disabled]="myForm.invalid"
+        <button (click)="createMedic()" [disabled]="myForm.invalid"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">
             Agregar
         </button>

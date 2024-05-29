@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -20,14 +20,14 @@ export class MainLayoutComponent implements OnInit {
 
   //? Variables e Injecciones
   private authService = inject( AuthService);
+  private cdr = inject( ChangeDetectorRef );
   private userDataService = inject( UserDataService );
 
 
-  //? Variables de usuario de localstorage
-
-  public roleUser = localStorage.getItem('role');
-  public userInfo = localStorage.getItem('user_name');
-  public nameUser = localStorage.getItem('nameUser');
+  //? Variables de usuario
+  roleUser: string | null = null;
+  userInfo: string | null = null;
+  nameUser: string | null = null;
 
 
 
@@ -58,6 +58,17 @@ export class MainLayoutComponent implements OnInit {
   //? NgOnInit
   ngOnInit() {
 
+
+
+
+
+    //? Cargamos los datos del usuario
+    this.loadUserData();
+
+
+
+
+
     //? Menu de opciones del icono de usuario
     this.items = [
       {
@@ -80,7 +91,40 @@ export class MainLayoutComponent implements OnInit {
       },
     ];
 
+    
+
+
+
     //? Menu de opciones para vista de telefono
+    this.setupPhoneMenu();
+  }
+
+
+
+
+
+  //? Metodo para cargar los datos del usuario
+  loadUserData() {
+    this.roleUser = localStorage.getItem('role');
+    this.userInfo = localStorage.getItem('user_name');
+    this.nameUser = localStorage.getItem('nameUser');
+
+    if (this.nameUser !== null) {
+      this.nameUser = this.nameUser.split(' ')[0];
+    } else {
+      this.nameUser = '';
+    }
+
+    // Force change detection to update the view
+    this.cdr.detectChanges();
+  }
+
+
+
+
+
+  //? Metodo para configurar el menu de opciones para vista de telefono
+  setupPhoneMenu() {
     this.phoneMenu = [
       {
         label: 'Inicio',
@@ -121,6 +165,10 @@ export class MainLayoutComponent implements OnInit {
   }
 
 
+
+
+
+  //? Destroy del componente
   ngOnDestroy(): void {
     console.log(`Main Layout Component destroyed!`);
   }

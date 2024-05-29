@@ -63,6 +63,25 @@ export class UserService {
 
 
 
+  //? Obtener todos los usuarios de rol medico
+  getAllMedics(): Observable<User[]>{
+    const url = `${this.baseUrl}/users/medics`;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<User[]>(url, {headers})
+    .pipe(
+      map((users: User[]) => {
+        return users
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+
+
 
   //? Obtener un usuario por ID
   getUserById(id: number): Observable<User>{
