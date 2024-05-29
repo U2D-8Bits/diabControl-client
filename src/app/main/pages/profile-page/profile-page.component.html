@@ -7,12 +7,26 @@
                     <h6 class="text-blueGray-700 text-xl font-bold">
                         Mi Perfil
                     </h6>
-                    <button [disabled]="!myForm.dirty || myForm.invalid" (click)="updateUserInfo()"
-                        class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
-                        type="button">
-                        <span class="pi pi-cog"></span>
-                        Actualizar Información.
-                    </button>
+
+                    <div class="text-center flex flex-wrap justify-between">
+
+                        <button *ngIf="currentUserData?.role_id === 1" (click)="showDialog('create', 'Agregar Medico')"
+                            class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
+                            type="button">
+                            <span class="pi pi-plus"></span>
+                            Agregar Médico
+                        </button>
+
+                        <button [disabled]="!myForm.dirty || myForm.invalid" (click)="updateUserInfo()"
+                            class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
+                            type="button">
+                            <span class="pi pi-cog"></span>
+                            Actualizar Información.
+                        </button>
+
+                    </div>
+
+
 
                 </div>
             </div>
@@ -48,22 +62,60 @@
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                     htmlfor="grid-password">
-                                    Nombre de Usuario
+                                    Número de Cédula
                                 </label>
-                                <input type="text"
+                                <input type="number"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_username" formControlName="user_username" required>
+                                    [value]="userData?.user_ced" formGroupName="user_ced" required>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                     htmlfor="grid-password">
-                                    Número de Cédula
+                                    Fecha de Nacimiento
                                 </label>
-                                <input type="number"
+                                <input type="date"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_ced" formGroupName="user_ced" required>
+                                    [value]="userData?.user_birthdate" formControlName="user_birthdate" required>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlfor="grid-password">
+                                    Genero
+                                </label>
+                                <!-- Select para escoger el sexo -->
+                                <select
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    formControlName="user_genre" [value]="userData?.user_genre" required>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlfor="grid-password">
+                                    Direccion de Residencia
+                                </label>
+                                <input type="text"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    [value]="userData?.user_address" formControlName="user_address" required>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlfor="grid-password">
+                                    Nombre de Usuario
+                                </label>
+                                <input type="text"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    [value]="userData?.user_username" formControlName="user_username" required>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">

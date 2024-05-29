@@ -22,6 +22,28 @@
                     placeholder="9999999999" required>
             </div>
             <div>
+                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Fecha de Nacimiento</label>
+                <input formControlName="user_birthdate" type="Date" id="last_name" [value]="patientData?.user_birthdate"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Doe" required>
+            </div>
+            <div>
+                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Genero</label>
+                <select
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    formControlName="user_genre" [value]="patientData?.user_genre" required>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otros">Otros</option>
+                </select>
+            </div>
+            <div>
+                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Direccion</label>
+                <input formControlName="user_address" type="text" id="last_name" [value]="patientData?.user_address"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Doe" required>
+            </div>
+            <div>
                 <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Numero de telefono</label>
                 <input formControlName="user_phone" type="string" id="phone" [value]="patientData?.user_phone"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

@@ -7,6 +7,9 @@ export interface User {
     user_email:    string;
     user_phone:    string;
     user_ced:      number;
+    user_address:  string;
+    user_birthdate: string;
+    user_genre:    string;
     user_status:   boolean;
     role_id:       number;
 }

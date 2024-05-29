@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -24,10 +23,10 @@ export class CreatePatientComponent implements OnInit {
   private dialogService = inject(DialogService);
   private userService = inject(UserService);
 
-  // Declramamos como variable el PatientsPageComponent para poder acceder a sus metodos
+  //* Declramamos como variable el PatientsPageComponent para poder acceder a sus metodos
   private patientsPageComponent = inject(PatientsPageComponent);
 
-  // variable para determinar que el formulario es invalido
+  //* variable para determinar que el formulario es invalido
   cancelAble: boolean = false;
 
   //? Formulario para crear un nuevo paciente
@@ -38,6 +37,9 @@ export class CreatePatientComponent implements OnInit {
     user_password: ['', [Validators.required, Validators.minLength(6)]],
     user_email: ['', [Validators.required]],
     user_phone: ['', Validators.required],
+    user_address: ['', [Validators.required]],
+    user_birthdate: ['', [Validators.required]],
+    user_genre: ['', [Validators.required]],
     user_ced: [0, [Validators.required]],
     user_status: [true],
     role_id: [2],
@@ -48,8 +50,9 @@ export class CreatePatientComponent implements OnInit {
 
     const patientData = this.myForm.value;
 
+
     this.confirmationService.confirm({
-      message: 'Esta seguro que desea crear un nuevo paciente?',
+      message: 'Está seguro que desea crear un nuevo paciente?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
@@ -92,7 +95,7 @@ export class CreatePatientComponent implements OnInit {
   //? Funcion para cancelar la creacion de un nuevo paciente
   cancelCreation() {
     this.confirmationService.confirm({
-      message: 'Esta seguro que desea cancelar la creacion de un nuevo paciente?',
+      message: 'Está seguro que desea cancelar la creación de un nuevo paciente?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
@@ -103,7 +106,7 @@ export class CreatePatientComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Info',
-          detail: 'Creacion de paciente cancelada',
+          detail: 'creación de paciente cancelada',
         });
         this.myForm.reset();
       },
@@ -111,7 +114,7 @@ export class CreatePatientComponent implements OnInit {
         this.messageService.add({
           severity: 'info',
           summary: 'Info',
-          detail: 'Creacion de paciente no cancelada',
+          detail: 'creación de paciente no cancelada',
         });
       }
     });
