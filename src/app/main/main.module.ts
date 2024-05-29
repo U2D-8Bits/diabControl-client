@@ -16,7 +16,11 @@ import { MaterialuiModule } from '../materialui/materialui.module';
 import { ViewPatientComponent } from './components/patient/view-patient/view-patient.component';
 import { CreatePatientComponent } from './components/patient/create-patient/create-patient.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { CreateMedicComponent } from './components/medic/create-medic/create-medic.component';
+import { ViewMedicComponent } from './components/medic/view-medic/view-medic.component';
+import { FormsModule } from '@angular/forms';
+import { CreateFormComponent } from './components/forms/create-form/create-form.component';
+import { ViewFormComponent } from './components/forms/view-form/view-form.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     FirstCharacterPipe,
     ViewPatientComponent,
     CreatePatientComponent,
+    CreateMedicComponent,
+    ViewMedicComponent,
+    CreateFormComponent,
+    ViewFormComponent,
   ],
   imports: [
     CommonModule,
