@@ -60,7 +60,7 @@ export class CreatePatientComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-text',
       acceptButtonStyleClass: 'p-button-text',
       accept: () => {
-        this.userService.createUser(patientData as User)
+        this.userService.createUser(patientData)
           .subscribe({
             next: (data) => {
               console.log(data);

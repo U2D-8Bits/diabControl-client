@@ -21,6 +21,7 @@ import { ViewMedicComponent } from './components/medic/view-medic/view-medic.com
 import { FormsModule } from '@angular/forms';
 import { CreateFormComponent } from './components/forms/create-form/create-form.component';
 import { ViewFormComponent } from './components/forms/view-form/view-form.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ViewFormComponent } from './components/forms/view-form/view-form.compon
 
     PrimengModule,
     MaterialuiModule,
+    SharedModule
   ],
   exports: [
     MainLayoutComponent,

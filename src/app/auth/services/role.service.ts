@@ -29,9 +29,7 @@ export class RoleService {
     return this.http.get<Role>(url)
       .pipe(
         map((role) => { 
-          console.log("Rol obtenido =>", role)
           this._currentRole.set(role); 
-          localStorage.setItem('role', role.role_name);
           return role; 
         }),
         catchError((err) => { throw err.error.message; })
