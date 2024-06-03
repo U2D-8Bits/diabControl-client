@@ -105,7 +105,7 @@ export class UserService {
 
 
   //? Crear un usuario
-  createUser(userData: User): Observable<User>{
+  createUser(userData: any): Observable<User>{
     const url= `${this.baseUrl}/users`;
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
