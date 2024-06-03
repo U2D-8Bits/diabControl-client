@@ -7,6 +7,7 @@ import { CheckTokenResponse, LoginResponse, User } from '../interfaces';
 import { catchError, map, Observable, of, throwError} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RoleService } from './role.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class AuthService {
   private readonly baseUrl: string = environment.baseUrl;
   private http = inject(HttpClient);
   private roleService = inject( RoleService );
+  private router = inject(Router);
 
   private _currentUser = signal<User | null>(null);
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
@@ -36,15 +38,17 @@ export class AuthService {
 
   //* Metodo para guardar informacion de autenticacion
   private saveData(user: User, token: string): boolean {
-
     this.roleService.getRoleByID(user.role_id).subscribe();
-    localStorage.setItem('token', token);
     this._currentUser.set(user);
-    localStorage.setItem('user_name', `${user.user_name} ${user.user_lastname}`);
-    //guardamos el nombre del usuario en el localStorage como un string
-    localStorage.setItem('nameUser', user.user_name.toString());
-    localStorage.setItem('ID', user.id_user.toString());
     this._authStatus.set(AuthStatus.authenticated);
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('user_name', `${user.user_name} ${user.user_lastname}`);
+    localStorage.setItem('roleID', user.role_id.toString());
+    localStorage.setItem('nameUser', user.user_name.toString());
+    localStorage.setItem('isAdmin', user.user_admin.toString());
+    localStorage.setItem('ID', user.id_user.toString());
+
     return true;
   }
 
@@ -59,11 +63,18 @@ export class AuthService {
     const body = { user_username, user_password };
 
     return this.http.post<LoginResponse>(url, body).pipe(
-      map(({ user, token }) => this.saveData(user, token)),
+      map(({ user, token }) => {
+        this.saveData(user, token);
+        this.showLoadingScreen();
+        setTimeout(() => {
+          this.router.navigate(['/main']);
+          this.hideLoadingScreen();
+        }, 3000); // 3 segundos de espera simulada
+        return true;
+      }),
       catchError((err) => throwError(() => err.error.message))
     );
   }
-
 
 
 
@@ -107,7 +118,13 @@ export class AuthService {
   }
 
 
+  showLoadingScreen(): void {
+    document.getElementById('loadingScreen')!.style.display = 'flex';
+  }
 
+  hideLoadingScreen(): void {
+    document.getElementById('loadingScreen')!.style.display = 'none';
+  }
 
 
 }

@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../../auth/services/auth.service';
-import { AuthStatus } from '../../../auth/enums/auth-status.enum';
 import { UserDataService } from '../../services/user-data.service';
+import { RoleService } from '../../../auth/services/role.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -20,27 +19,20 @@ export class MainLayoutComponent implements OnInit {
 
   //? Variables e Injecciones
   private authService = inject( AuthService);
-  private cdr = inject( ChangeDetectorRef );
-  private userDataService = inject( UserDataService );
+  private roleService = inject( RoleService);
 
 
   //? Variables de usuario
-  roleUser: string | null = null;
-  userInfo: string | null = null;
-  nameUser: string | null = null;
+  roleUser: string = '';
+  userInfo: string = '';
+  nameUser: string = '';
 
 
 
 
 
   //? Constructor
-  constructor() {
-    if (this.nameUser !== null) {
-      this.nameUser = this.nameUser.split(' ')[0];
-    } else {
-      this.nameUser = '';
-    }
-  }
+  constructor() {  }
 
 
 
@@ -58,16 +50,9 @@ export class MainLayoutComponent implements OnInit {
   //? NgOnInit
   ngOnInit() {
 
-
-
-
-
-    //? Cargamos los datos del usuario
     this.loadUserData();
-
-
-
-
+    console.log(`userInfo: ${this.userInfo}`);
+    console.log(`nameUser: ${this.nameUser}`);
 
     //? Menu de opciones del icono de usuario
     this.items = [
@@ -103,20 +88,24 @@ export class MainLayoutComponent implements OnInit {
 
 
 
-  //? Metodo para cargar los datos del usuario
+  // //? Metodo para cargar los datos del usuario
   loadUserData() {
-    this.roleUser = localStorage.getItem('role');
-    this.userInfo = localStorage.getItem('user_name');
-    this.nameUser = localStorage.getItem('nameUser');
+    const roleId = localStorage.getItem('roleID')?.toString() || '';
+
+    this.roleService.getRoleByID(Number(roleId))
+      .subscribe((role) => {
+        this.roleUser = role.role_name;
+        console.log(`Role: ${this.roleUser}`);
+      });
+
+    this.userInfo = localStorage.getItem('user_name')?.toString() || '';
+    this.nameUser = localStorage.getItem('nameUser')?.toString() || '';
 
     if (this.nameUser !== null) {
       this.nameUser = this.nameUser.split(' ')[0];
     } else {
       this.nameUser = '';
     }
-
-    // Force change detection to update the view
-    this.cdr.detectChanges();
   }
 
 
