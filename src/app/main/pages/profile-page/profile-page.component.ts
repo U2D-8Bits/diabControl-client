@@ -18,7 +18,15 @@ import { CreateMedicComponent } from '../../components/medic/create-medic/create
   providers: [DialogService],
 })
 export class ProfilePageComponent implements OnInit {
+
+
+
+
   constructor() {}
+
+
+
+
 
   //? Variables e Inyecciones
   ref: DynamicDialogRef | undefined;
@@ -28,6 +36,10 @@ export class ProfilePageComponent implements OnInit {
   private fb = inject(FormBuilder);
   public dialigService = inject(DialogService);
 
+
+
+
+
   public roleUser = localStorage.getItem('role');
   private idUser!: number;
   public userData?: User;
@@ -36,8 +48,16 @@ export class ProfilePageComponent implements OnInit {
   public myForm!: FormGroup;
   public medics: User[] = [];
 
+
+
+
+
   ngOnInit(): void {
     console.log(`Profile Page Component initialized!`);
+
+
+
+
 
     //? Formulario de Usuario
     this.myForm = this.fb.group({
@@ -49,17 +69,26 @@ export class ProfilePageComponent implements OnInit {
       user_password: ['', [Validators.required, Validators.minLength(6)]],
       user_ced: [0, Validators.required],
       user_address: ['', Validators.required],
-      // User_birthdate de tipo Date
       user_birthdate: ['', Validators.required],
+      user_age: [0, Validators.required],
+      user_admin: [false, Validators.required],
       user_genre: ['', Validators.required],
       role_id: [0, Validators.required],
       user_status: [true, Validators.required],
     });
 
+
+
+
+
     //? Obtenemos el ID del usuario
     this.idUser = Number(localStorage.getItem('ID'));
 
     console.log('Formulario de Usuario =>', this.myForm.dirty);
+
+
+
+
 
     //? Obtenemos los datos del usuario
     this.userService.getUserById(this.idUser).subscribe({
@@ -74,6 +103,10 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
+
+
+
+
   //? Metodo para agregar un medico nuevo
   showDialog(componentName: string, headerText: string) {
     //* Mostrar el componente de agregar medico
@@ -86,6 +119,10 @@ export class ProfilePageComponent implements OnInit {
       });
     }
   }
+
+
+
+
 
   //? Funcion para actualizar los datos del usuario
   updateUserInfo() {
@@ -103,7 +140,7 @@ export class ProfilePageComponent implements OnInit {
             setTimeout(() => {
               window.location.reload();
               this.router.navigate(['/main/profile']);
-            }, 1000);
+            }, 1500);
           },
           error: (error) => {
             console.error(`Error:`, error);
@@ -117,6 +154,10 @@ export class ProfilePageComponent implements OnInit {
       }
     });
   }
+
+
+
+
 
   //? Funcion para cargar los datos del usuario en el formulario
   chargeForm(userData: User) {
@@ -135,6 +176,8 @@ export class ProfilePageComponent implements OnInit {
         userData.user_password,
         [Validators.required, Validators.minLength(6)],
       ],
+      user_age: [userData.user_age, Validators.required],
+      user_admin: [userData.user_admin, Validators.required],
       user_ced: [userData.user_ced, Validators.required],
       user_address: [userData.user_address, Validators.required],
       user_birthdate: [userData.user_birthdate, Validators.required],
@@ -143,9 +186,15 @@ export class ProfilePageComponent implements OnInit {
       user_status: [userData.user_status, Validators.required],
     });
 
+    console.log('Formulario de Usuario =>', this.myForm.value)
+
     //* Se guarda la data actual del usuario
     this.currentUserData = this.myForm.value;
   }
+
+
+
+
 
   //? Funcion para obtener los datos del rol
   getRoleData(role_id: number) {
@@ -158,6 +207,10 @@ export class ProfilePageComponent implements OnInit {
       },
     });
   }
+
+
+
+
 
   //? Funcion para destruir el componente
   ngOnDestroy(): void {

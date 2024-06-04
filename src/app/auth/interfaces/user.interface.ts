@@ -13,6 +13,7 @@ export interface User {
     user_ced:        string;
     user_status:     boolean;
     user_admin:      boolean;
+    user_created_at: Date;
+    user_updated_at: Date;
     role_id:         number;
 }
-
