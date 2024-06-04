@@ -37,6 +37,11 @@ export class ProfilePageComponent implements OnInit {
   public dialigService = inject(DialogService);
 
 
+  presentYear = new Date().getFullYear();
+  dateBirthYear = this.userData?.user_birthdate?.split('-')[0];
+  ageUser: number = this.presentYear - Number(this.dateBirthYear);
+
+
 
 
 
@@ -56,7 +61,7 @@ export class ProfilePageComponent implements OnInit {
     console.log(`Profile Page Component initialized!`);
 
 
-
+    
 
 
     //? Formulario de Usuario
@@ -94,6 +99,9 @@ export class ProfilePageComponent implements OnInit {
     this.userService.getUserById(this.idUser).subscribe({
       next: (user) => {
         this.userData = user;
+
+        this.dateBirthYear = this.userData.user_birthdate.split('-')[0];
+        this.ageUser = this.presentYear - Number(this.dateBirthYear);
         this.getRoleData(user.role_id);
         this.chargeForm(user);
       },
@@ -133,6 +141,7 @@ export class ProfilePageComponent implements OnInit {
       denyButtonText: `No`,
     }).then((result) => {
       if (result.isConfirmed) {
+        console.log('Formulario de Usuario =>', this.myForm.value);
         const dataUser = this.myForm.value;
         this.userService.updateUser(this.idUser, dataUser).subscribe({
           next: (data) => {
@@ -176,7 +185,7 @@ export class ProfilePageComponent implements OnInit {
         userData.user_password,
         [Validators.required, Validators.minLength(6)],
       ],
-      user_age: [userData.user_age, Validators.required],
+      user_age: [this.ageUser, Validators.required],
       user_admin: [userData.user_admin, Validators.required],
       user_ced: [userData.user_ced, Validators.required],
       user_address: [userData.user_address, Validators.required],
