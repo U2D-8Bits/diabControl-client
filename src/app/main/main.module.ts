@@ -23,6 +23,8 @@ import { CreateFormComponent } from './components/forms/create-form/create-form.
 import { ViewFormComponent } from './components/forms/view-form/view-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
+import { CreateHistoryComponent } from './components/histories/create-history/create-history.component';
+import { ViewHistoryComponent } from './components/histories/view-history/view-history.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { HistoriesPageComponent } from './pages/histories-page/histories-page.co
     CreateFormComponent,
     ViewFormComponent,
     HistoriesPageComponent,
+    CreateHistoryComponent,
+    ViewHistoryComponent,
   ],
   imports: [
     CommonModule,

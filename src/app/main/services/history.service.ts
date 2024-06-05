@@ -32,7 +32,7 @@ export class HistoryService {
 
     //? Metodo para obtener todas las historias medicas de un paciente por su id
     getHistoriesByPatientId(id: number): Observable<History[]>{
-        const url = `${this.baseUrl}/histories/patient/${id}`;
+        const url = `${this.baseUrl}/histories/paciente/${id}`;
 
         return this.httpClient.get<History[]>(url)
         .pipe(

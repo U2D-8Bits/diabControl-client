@@ -5,9 +5,11 @@
     <h1 class="text-2xl text-gray-700">Mis pacientes</h1>
 
     <!-- Boton para agregar paciente -->
-    <button class="btn-add" (click)="showDialog('create', 'Agregar Usuario')" mat-raised-button>
-        <mat-icon>add</mat-icon>
-        Agregar paciente
+    <button (click)="showDialog('create', 'Agregar Usuario')"
+    class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
+    type="button">
+    <span class="pi pi-plus"></span>
+    Agregar paciente
     </button>
 
 </div>
