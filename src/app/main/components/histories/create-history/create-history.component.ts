@@ -22,7 +22,7 @@ export class CreateHistoryComponent implements OnInit {
 
   private idPatient!: number;
   private idMedic!: number;
-  private dataMedic!: User;
+  dataMedic!: User;
 
   private dynamicDialogConfing = inject( DynamicDialogConfig)
   private userService = inject( UserService );
@@ -30,6 +30,9 @@ export class CreateHistoryComponent implements OnInit {
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
   private fb = inject( FormBuilder );
+
+  //? Establecemos una variable con la fecha actual
+  currentDate: Date = new Date();
    
   historyForm = this.fb.group({
     medicoId: [this.idMedic],
@@ -56,6 +59,33 @@ export class CreateHistoryComponent implements OnInit {
     this.idPatient = this.dynamicDialogConfing.data.idPatient;
     this.idMedic = Number( localStorage.getItem('ID') );
 
+    this.formatDate();
+    this.getMedicData();
+
+  }
+
+  //? Metodo para formatear la fecha actual en formato YYYY-MM-DD
+  formatDate(){
+    const year = this.currentDate.getFullYear();
+    const month = this.currentDate.getMonth() + 1;
+    const day = this.currentDate.getDate();
+
+    this.currentDate = new Date(`${year}-${month}-${day}`);
+  }
+
+
+  //? Metodo para obtener la data del Medico
+  getMedicData(){
+    this.userService.getUserById( this.idMedic )
+    .subscribe({
+      next: (data) => {
+        this.dataMedic = data;
+        console.log(`Data del Medico =>`, this.dataMedic);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
 
@@ -70,8 +100,7 @@ export class CreateHistoryComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: 'none',
         rejectIcon: 'none',
-        //Colocamos un background rojo al boton de cancelar con un padding de 1rem y borde de 1px
-        rejectButtonStyleClass: 'p-button-danger',
+        rejectButtonStyleClass: 'p-button-danger, padding: 10px; borer-radius: 5px; border: 1px solid red;',
         acceptButtonStyleClass: 'p-button-success',
         accept: () => {
 
@@ -111,7 +140,6 @@ export class CreateHistoryComponent implements OnInit {
 
 
   //? Metodo para cancelar la creacion de la Historia Clinica
-
   cancelHistory(){
     this.confirmationService.confirm({
       message: 'Está seguro que desea cancelar la creación de la Historia Clinica?',
