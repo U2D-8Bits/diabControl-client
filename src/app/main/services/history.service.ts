@@ -65,7 +65,7 @@ export class HistoryService {
 
 
     //? Metodo para crear una historia medica
-    crateHistory(history: History): Observable<History>{
+    crateHistory(history: any): Observable<History>{
         const url = `${this.baseUrl}/histories`;
 
         return this.httpClient.post<History>(url, history)
