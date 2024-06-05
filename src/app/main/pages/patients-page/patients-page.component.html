@@ -74,13 +74,19 @@
                 <span *ngIf="!patient.user_status" class="badge-danger">Inactivo</span>
             </td>
             <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:flex justify-center relative gap-2 lg:static">
-                <button (click)="sendUserID(patient.id_user)" (click)="showDialog('view', 'Ver Usuario')"  class="btn-action" mat-raised-button>
+                <button pTooltip="Ver paciente" tooltipPosition="right"
+                    (click)="sendUserID(patient.id_user)" 
+                    (click)="showDialog('view', 'Ver Usuario')"  
+                    class="btn-action" mat-raised-button>
                     <span class="pi pi-eye"></span>
                 </button>
-                <button (click)="changeStatePatient(patient.id_user)" class="btn-action" mat-raised-button>
+                <button [routerLink]="['/main/patients', patient.id_user]" pTooltip="Historias clinicas" tooltipPosition="right"  class="btn-action" mat-raised-button>
+                    <span class="pi pi-receipt"></span>
+                </button>
+                <button pTooltip="Cambiar estado" tooltipPosition="right" (click)="changeStatePatient(patient.id_user)" class="btn-action" mat-raised-button>
                     <span class="pi pi-sync"></span>
                 </button>
-                <button (click)="deletePatient(patient.id_user)" class="btn-action" mat-raised-button>
+                <button pTooltip="Eliminar paciente" tooltipPosition="right" (click)="deletePatient(patient.id_user)" class="btn-action" mat-raised-button>
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>
