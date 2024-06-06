@@ -7,6 +7,8 @@ import { History } from '../../interfaces/history.interface';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateHistoryComponent } from '../../components/histories/create-history/create-history.component';
 import { User } from '../../../auth/interfaces';
+import { ViewHistoryComponent } from '../../components/histories/view-history/view-history.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-histories-page',
@@ -24,6 +26,7 @@ export class HistoriesPageComponent implements OnInit {
   private route = inject( ActivatedRoute);
   public dialigService = inject( DialogService )
   idPatient!: string;
+  idHistory!: number;
   patientData!: User;
   historiesPatient: History[] = [];
 
@@ -51,6 +54,10 @@ export class HistoriesPageComponent implements OnInit {
     })
   }
 
+  //? Metodo para obtener el id de la historia clinica
+  getHistoryId(id: number){
+    this.idHistory = id;
+  }
 
   //? Metodo para abrir el dialogo de historia clinica
   showDialog(componentName: string, headerText: string) {
@@ -64,18 +71,27 @@ export class HistoriesPageComponent implements OnInit {
         height: '80%',
         contentStyle: { overflow: 'auto' },
         data: {
-          idPatient: this.idPatient
+          idPatient: this.idPatient,
+          idHistory: this.idHistory
         }
       })
     }
 
-    // if( componentName === 'view'){
-    //   this.ref = this.dialigService.open(ViewHistoryComponent, {
-    //     header: headerText,
-    //     width: '40%',
-    //     contentStyle: {"max-height": "500px", "overflow": "auto"},
-    //   })
-    // }
+
+    if( componentName === 'view'){
+      this.ref = this.dialigService.open(ViewHistoryComponent, {
+        header: headerText,
+        maximizable: true,
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '100vw', width: '80vw' },
+        height: '80%',
+        contentStyle: { overflow: 'auto' },
+        data: {
+          idPatient: this.idPatient,
+          idHistory: this.idHistory
+        }
+      })
+    }
 
     //* Mostrar el componente para ver/editar un paciente
     if (this.ref) {
@@ -95,6 +111,42 @@ export class HistoriesPageComponent implements OnInit {
       error: (err: any) => {
         console.error(err);
       }
+    })
+  }
+
+  //? Metodo para eliminar una historia clinica
+  deleteHistory(id: number){
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "No podras revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.historyService.deleteHistory(id)
+        .subscribe({
+          next: (resp: any) => {
+            Swal.fire(
+              'Borrado!',
+              'La historia clinica ha sido eliminada.',
+              'success'
+            )
+            this.getAllHistoriesByPatientId(this.idPatient);
+          },
+          error: (err: any) => {
+            Swal.fire(
+              'Error!',
+              'Ha ocurrido un error al eliminar la historia clinica.',
+              'error'
+            )
+          }
+        })
+      }
+    
     })
   }
 
