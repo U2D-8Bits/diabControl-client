@@ -122,7 +122,22 @@ export class CreateHistoryComponent implements OnInit {
                 detail: 'Historia Clinica creada correctamente',
               });
               this.historyComponent.ngOnInit();
-              this.historyForm.reset();
+              this.historyForm.setValue({
+                medicoId: this.idMedic,
+                pacienteId: this.idPatient,
+                weight_patient: 0,
+                tall_patient: 0,
+                pulse_patient: 0,
+                presure_patient: 0,
+                frequency_patient: 0,
+                temperature_patient: 0,
+                consult_reason: '',
+                fisic_exam: '',
+                recipe: '',
+                current_illness: '',
+                diagnostic: '',
+                medic_indications: ''
+              });
               this.ref?.close();
             },
             error: (error) => {
@@ -163,7 +178,22 @@ export class CreateHistoryComponent implements OnInit {
           summary: 'Info',
           detail: 'Creacion de Historia Clinica cancelada',
         });
-        this.ref?.close();
+        this.historyForm.setValue({
+          medicoId: this.idMedic,
+          pacienteId: this.idPatient,
+          weight_patient: 0,
+          tall_patient: 0,
+          pulse_patient: 0,
+          presure_patient: 0,
+          frequency_patient: 0,
+          temperature_patient: 0,
+          consult_reason: '',
+          fisic_exam: '',
+          recipe: '',
+          current_illness: '',
+          diagnostic: '',
+          medic_indications: ''
+        });
       },
       reject: () => {
         this.messageService.add({

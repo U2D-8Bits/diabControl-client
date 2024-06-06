@@ -81,10 +81,10 @@ export class HistoryService {
 
 
     //? Metodo para actualizar una historia medica
-    updateHistory(history: History): Observable<History>{
-        const url = `${this.baseUrl}/histories/${history.id_medic_history}`;
+    updateHistory(id: number, history: any): Observable<History>{
+        const url = `${this.baseUrl}/histories/${id}`;
 
-        return this.httpClient.put<History>(url, history)
+        return this.httpClient.patch<History>(url, history)
         .pipe(
             map((history: History) => {
                 return history;
