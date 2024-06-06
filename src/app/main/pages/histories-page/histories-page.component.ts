@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { History } from '../../interfaces/history.interface';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateHistoryComponent } from '../../components/histories/create-history/create-history.component';
+import { User } from '../../../auth/interfaces';
 
 @Component({
   selector: 'app-histories-page',
@@ -23,6 +24,7 @@ export class HistoriesPageComponent implements OnInit {
   private route = inject( ActivatedRoute);
   public dialigService = inject( DialogService )
   idPatient!: string;
+  patientData!: User;
   historiesPatient: History[] = [];
 
   ngOnInit(): void {
@@ -31,6 +33,7 @@ export class HistoriesPageComponent implements OnInit {
     this.idPatient = this.route.snapshot.params['id'];
 
     this.getAllHistoriesByPatientId(this.idPatient);
+    this.getPatientData();
   }
 
 
@@ -41,7 +44,6 @@ export class HistoriesPageComponent implements OnInit {
     .subscribe({
       next: (histories: History[]) => {
         this.historiesPatient = histories;
-        console.log(`Historias del cliente Obtenidas =>`, this.historiesPatient);
       },
       error: (err: any) => {
         console.error(err);
@@ -81,6 +83,19 @@ export class HistoriesPageComponent implements OnInit {
         this.getAllHistoriesByPatientId(this.idPatient);
       });
     }
+  }
+
+  //? Metodo para obtener la informacion del paciente
+  getPatientData(){
+    this.userService.getUserById( Number(this.idPatient))
+    .subscribe({
+      next: (user: User) => {
+        this.patientData = user;
+      },
+      error: (err: any) => {
+        console.error(err);
+      }
+    })
   }
 
 

@@ -2,14 +2,15 @@
 <p-confirmDialog />
 <div class="flex justify-between items-center p-2">
 
-    <h1 class="text-2xl text-gray-700">Mis pacientes</h1>
+    <h1 class="text-2xl text-gray-700">Historias Clínicas de <label for="" class="font-medium">{{patientData.user_name}}
+            {{patientData.user_lastname}}</label> </h1>
 
     <!-- Boton para generar historia clinica -->
     <button (click)="showDialog('create', 'Agregar Historia Clinica')"
-    class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
-    type="button">
-    <span class="pi pi-plus"></span>
-    Agregar historia clinica
+        class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
+        type="button">
+        <span class="pi pi-plus"></span>
+        Agregar historia clínicas
     </button>
 
 </div>
@@ -17,12 +18,70 @@
 <div *ngIf="historiesPatient.length === 0" class="flex items-center mt-6 text-center border rounded-lg h-96 mx-2">
     <div class="flex flex-col w-full max-w-sm px-4 mx-auto">
         <div class="p-3 mx-auto text-blue-500 bg-blue-100 rounded-full ">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
         </div>
-        <h1 class="mt-3 text-lg text-gray-800 ">No existen Historias Clinicas para este paciente</h1>
-        <p class="mt-2 text-gray-500 ">Actualmente no se encuentra registrads ninguna Historia Clinica para este paciente dentro de la aplicacion.
+        <h1 class="mt-3 text-lg text-gray-800 ">No existen Historias Clínicas para este paciente</h1>
+        <p class="mt-2 text-gray-500 ">Actualmente no se encuentra registrads ninguna Historia Clínicas para este
+            paciente dentro de la aplicación.
         </p>
     </div>
 </div>
+
+<table *ngIf="historiesPatient.length > 0" class="border-collapse w-full px-2">
+    <thead>
+        <tr>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Historia Clínica</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Atendido por</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Fecha de creación</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Última modificación</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let history of historiesPatient"
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                {{history.id_medic_history}}
+            </td>
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                {{history.medico.user_name}} {{history.medico.user_lastname}}
+            </td>
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                {{history.created_at | date: 'dd/MM/yyyy'}}
+            </td>
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                {{history.updated_at | date: 'dd/MM/yyyy'}}
+            </td>
+
+            <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
+                <button
+                pTooltip="Ver Historia Clínica" pTooltipPosition="right" pTooltipStyleClass="rounded-lg shadow-lg"
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true">
+                    <span class="pi pi-eye"></span>
+                </button>
+
+                <button
+                pTooltip="Eliminar Historia Clínica" pTooltipPosition="right" pTooltipStyleClass="rounded-lg shadow-lg"
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true">
+                    <span class="pi pi-trash"></span>
+                </button>
+            </td>
+
+        </tr>
+    </tbody>
+</table>

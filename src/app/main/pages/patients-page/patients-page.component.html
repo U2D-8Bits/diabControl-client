@@ -56,26 +56,26 @@
             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                 {{patient.id_user}}
             </td>
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                 {{patient.user_name}} {{patient.user_lastname}}
             </td>
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                 {{patient.user_username}}
             </td>
-          	<td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+          	<td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                 {{patient.user_email}}
           	</td>
-              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                 {{patient.user_created_at | date: 'dd/MM/yyyy'}}
           	</td>
-              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                 {{patient.user_updated_at | date: 'dd/MM/yyyy'}}
           	</td>
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                 <span *ngIf="patient.user_status" class="badge-succes">Activo</span>
                 <span *ngIf="!patient.user_status" class="badge-danger">Inactivo</span>
             </td>
-            <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:flex justify-center relative gap-2 lg:static">
+            <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
                 <button pTooltip="Ver paciente" tooltipPosition="right"
                     (click)="sendUserID(patient.id_user)" 
                     (click)="showDialog('view', 'Ver Usuario')"  
