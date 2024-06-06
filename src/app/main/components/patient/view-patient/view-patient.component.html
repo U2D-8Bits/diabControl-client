@@ -38,6 +38,12 @@
                 </select>
             </div>
             <div>
+                <label for="user_age" class="block mb-2 text-sm font-medium text-gray-900 ">Edad</label>
+                <input disabled type="text" id="user_age" [value]="this.patientData?.user_age"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:bg-gray-200"
+                >
+            </div>
+            <div>
                 <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Direccion</label>
                 <input formControlName="user_address" type="text" id="last_name" [value]="patientData?.user_address"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -63,7 +69,7 @@
                 placeholder="john.doe@company.com" required>
         </div>
         <div class="mb-6">
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Contrasena</label>
             <input formControlName="user_password" type="password" id="password" [value]="patientData?.user_password"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="•••••••••" required>

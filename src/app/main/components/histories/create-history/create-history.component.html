@@ -1,0 +1,119 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<div class="max-w-full mx-auto bg-white p-8">
+    <form action="" [formGroup]="historyForm" (ngSubmit)="createHistory()">
+        <label class="flex mb-5 font-bold text-black" for="">Datos y Signos Vitales</label>
+        <div class="grid gap-6 mb-6 lg:grid-cols-2">
+            <div class="flex flex-col">
+                <label for="">Fecha Actual</label>
+                <input disabled type="date" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200"
+                    [valueAsDate]="currentDate">
+            </div>
+            <div class="flex flex-col">
+                <label for="">Atendido por</label>
+                <input disabled type="text" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200"
+                [value]="medicNames" >
+            </div>
+            <div class="flex flex-col">
+                <label for="">Peso/ Peso x Talla</label>
+                <div class="flex items-center gap-2">
+                    <input type="number" formControlName="weight_patient"
+                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                    <label for="">Kilos/Z</label>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <label for="">Talla/ Talla x Edad</label>
+                <div class="flex items-center gap-2">
+                    <input type="number" formControlName="tall_patient"
+                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                    <label for="">c.m/Z</label>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <label for="">Pulso / Peso x Edad</label>
+                <div class="flex items-center gap-2">
+                    <input type="number" formControlName="pulse_patient"
+                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                    <label for="">Pulsaciones X Min.</label>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <label for="">Presión Arterial</label>
+                <div class="flex items-center gap-2">
+                    <input type="number" formControlName="presure_patient"
+                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                    <label for="">mmHg</label>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <label for="">Frecuencia Cardiaca</label>
+                <div class="flex items-center gap-2">
+                    <input type="number" formControlName="frequency_patient"
+                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                    <label for="">X Min.</label>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <label for="">Temperatura</label>
+                <div class="flex items-center gap-2">
+                    <input type="number" formControlName="temperature_patient"
+                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                    <label for="">°C</label>
+                </div>
+            </div>
+        </div>
+        <label class="flex mb-5 font-bold text-black" for="">Consultorio</label>
+
+        <div class="grid gap-6 mb-6 lg:grid-cols-2">
+
+            <div class="flex flex-col">
+                <label for="">Motivo de consulta</label>
+                <textarea formControlName="consult_reason" id="message" rows="4"
+                    class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="El motivo de consulta" required></textarea >
+            </div>
+
+            <div class="flex flex-col">
+                <label for="">Enfermedad actual</label>
+                <textarea formControlName="current_illness" id="message" rows="4"
+                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="">Examen Fisico / Complementario</label>
+                <textarea formControlName="fisic_exam" id="message" rows="4"
+                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="">Impresion diagnostico / Prescripcion</label>
+                <textarea formControlName="diagnostic" id="message" rows="4"
+                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="">Receta</label>
+                <textarea formControlName="recipe" id="message" rows="4"
+                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="">Indicaciones</label>
+                <textarea formControlName="medic_indications" id="message" rows="4"
+                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+            </div>
+
+        </div>
+
+        <div class="grid gap-6 mb-6 lg:grid-cols-2">
+
+            <button type="submit" [disabled]="historyForm.invalid" (click)="createHistory()"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">Crear Historia</button>
+
+            <button type="submit" (click)="cancelHistory()"
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:red:ring-blue-800">Cancelar Historia</button>
+
+        </div>
+    </form>
+</div>

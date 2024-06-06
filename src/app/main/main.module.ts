@@ -22,6 +22,9 @@ import { FormsModule } from '@angular/forms';
 import { CreateFormComponent } from './components/forms/create-form/create-form.component';
 import { ViewFormComponent } from './components/forms/view-form/view-form.component';
 import { SharedModule } from '../shared/shared.module';
+import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
+import { CreateHistoryComponent } from './components/histories/create-history/create-history.component';
+import { ViewHistoryComponent } from './components/histories/view-history/view-history.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,9 @@ import { SharedModule } from '../shared/shared.module';
     ViewMedicComponent,
     CreateFormComponent,
     ViewFormComponent,
+    HistoriesPageComponent,
+    CreateHistoryComponent,
+    ViewHistoryComponent,
   ],
   imports: [
     CommonModule,

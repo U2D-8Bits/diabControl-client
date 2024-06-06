@@ -5,9 +5,11 @@
     <h1 class="text-2xl text-gray-700">Mis pacientes</h1>
 
     <!-- Boton para agregar paciente -->
-    <button class="btn-add" (click)="showDialog('create', 'Agregar Usuario')" mat-raised-button>
-        <mat-icon>add</mat-icon>
-        Agregar paciente
+    <button (click)="showDialog('create', 'Agregar Usuario')"
+    class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
+    type="button">
+    <span class="pi pi-plus"></span>
+    Agregar paciente
     </button>
 
 </div>
@@ -41,6 +43,10 @@
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombres</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombre de Usuario</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Correo</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Fecha de Creacion
+            </th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Ultima Modificacion</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Estado</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Acciones</th>
         </tr>
@@ -59,18 +65,30 @@
           	<td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                 {{patient.user_email}}
           	</td>
+              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                {{patient.user_created_at | date: 'dd/MM/yyyy'}}
+          	</td>
+              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
+                {{patient.user_updated_at | date: 'dd/MM/yyyy'}}
+          	</td>
             <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:table-cell relative lg:static">
                 <span *ngIf="patient.user_status" class="badge-succes">Activo</span>
                 <span *ngIf="!patient.user_status" class="badge-danger">Inactivo</span>
             </td>
             <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b text-center block lg:flex justify-center relative gap-2 lg:static">
-                <button (click)="sendUserID(patient.id_user)" (click)="showDialog('view', 'Ver Usuario')"  class="btn-action" mat-raised-button>
+                <button pTooltip="Ver paciente" tooltipPosition="right"
+                    (click)="sendUserID(patient.id_user)" 
+                    (click)="showDialog('view', 'Ver Usuario')"  
+                    class="btn-action" mat-raised-button>
                     <span class="pi pi-eye"></span>
                 </button>
-                <button (click)="changeStatePatient(patient.id_user)" class="btn-action" mat-raised-button>
+                <button [routerLink]="['/main/patients', patient.id_user]" pTooltip="Historias clinicas" tooltipPosition="right"  class="btn-action" mat-raised-button>
+                    <span class="pi pi-receipt"></span>
+                </button>
+                <button pTooltip="Cambiar estado" tooltipPosition="right" (click)="changeStatePatient(patient.id_user)" class="btn-action" mat-raised-button>
                     <span class="pi pi-sync"></span>
                 </button>
-                <button (click)="deletePatient(patient.id_user)" class="btn-action" mat-raised-button>
+                <button pTooltip="Eliminar paciente" tooltipPosition="right" (click)="deletePatient(patient.id_user)" class="btn-action" mat-raised-button>
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>

@@ -23,6 +23,10 @@ export class CreatePatientComponent implements OnInit {
   private dialogService = inject(DialogService);
   private userService = inject(UserService);
 
+  presentYear = new Date().getFullYear();
+  ageUser!: number;
+
+
   //* Declramamos como variable el PatientsPageComponent para poder acceder a sus metodos
   private patientsPageComponent = inject(PatientsPageComponent);
 
@@ -31,22 +35,32 @@ export class CreatePatientComponent implements OnInit {
 
   //? Formulario para crear un nuevo paciente
   myForm = this.fb.group({
+    user_username: ['', Validators.required],
+    user_status: [true],
+    user_phone: ['', Validators.required],
+    user_password: ['', [Validators.required, Validators.minLength(6)]],
     user_name: ['', Validators.required],
     user_lastname: ['', Validators.required],
-    user_username: ['', Validators.required],
-    user_password: ['', [Validators.required, Validators.minLength(6)]],
-    user_email: ['', [Validators.required]],
-    user_phone: ['', Validators.required],
-    user_address: ['', [Validators.required]],
-    user_birthdate: ['', [Validators.required]],
     user_genre: ['', [Validators.required]],
+    user_email: ['', [Validators.required]],
     user_ced: [0, [Validators.required]],
-    user_status: [true],
+    user_birthdate: ['', [Validators.required]],
+    user_age: [0, [Validators.required]],
+    user_admin: [false],
+    user_address: ['', [Validators.required]],
     role_id: [2],
   });
 
   //? Funcion para crear un nuevo paciente
   createPatient() {
+    
+    const birthDateYear = this.myForm.get('user_birthdate')?.value?.split('-')[0] || '';
+    this.ageUser = this.presentYear - parseInt(birthDateYear);
+    this.myForm.patchValue({
+      user_age: this.ageUser,
+    });
+
+    console.log(`Valores del Formulario a crear =>`,this.myForm.value);
 
     const patientData = this.myForm.value;
 
