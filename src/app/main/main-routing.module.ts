@@ -7,6 +7,7 @@ import { InformsPageComponent } from './pages/informs-page/informs-page.componen
 import { FormsPageComponent } from './pages/forms-page/forms-page.component';
 import { ChatsPageComponent } from './pages/chats-page/chats-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,13 @@ const routes: Routes = [
         title: 'Pacientes',
         //? Guard que verifica si el usuario tiene el rol de medico
         component: PatientsPageComponent
+      },
+      //Ruta para las historias clinicas de un paciente por id
+      {
+        path: 'patients/:id',
+        title: 'Historias Clinicas',
+        //? Guard que verifica si el usuario tiene el rol de medico
+        component: HistoriesPageComponent
       },
       {
         path: 'informs',

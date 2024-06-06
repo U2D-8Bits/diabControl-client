@@ -29,6 +29,8 @@ export class ViewPatientComponent implements OnInit {
   public patientData?: User;
   public userID!: number;
   myForm!: FormGroup;
+  presentYear = new Date().getFullYear();
+  userAge!: number;
 
 
 
@@ -67,6 +69,8 @@ export class ViewPatientComponent implements OnInit {
       user_address: ['', Validators.required],
       user_genre: ['', Validators.required],
       user_birthdate: ['', Validators.required],
+      user_age: [0, Validators.required],
+      user_admin: [false],
       user_username: ['', Validators.required],
       user_password: ['', Validators.required],
       user_ced: ['', Validators.required],
@@ -78,7 +82,7 @@ export class ViewPatientComponent implements OnInit {
 
 
   
-    //* Se obtiene la información del paciente
+    //* Se obtiene la información del paciente y se asigna al formulario
     this.userService.getUserById(this.userID)
       .subscribe({
         next: (data) => {
@@ -91,12 +95,15 @@ export class ViewPatientComponent implements OnInit {
             user_phone: this.patientData.user_phone,
             user_address: this.patientData.user_address,
             user_genre: this.patientData.user_genre,
+            user_age: this.patientData.user_age,
+            user_admin: this.patientData.user_admin,
             user_birthdate: this.patientData.user_birthdate,
             user_username: this.patientData.user_username,
             user_password: this.patientData.user_password,
             user_ced: this.patientData.user_ced,
           })
 
+          // Se guarda la información del paciente
           this.patienFormData = this.myForm.value;
         },
         error: (error) => {
@@ -113,6 +120,13 @@ export class ViewPatientComponent implements OnInit {
   //? Metodo para acutalizar paciente
   updatePatient(){
     console.log("Valor del formulario:", this.myForm.value);
+
+    const birthDateYear = this.myForm.get('user_birthdate')?.value?.split('-')[0] || '';
+    this.userAge = this.presentYear - parseInt(birthDateYear);
+
+    this.myForm.patchValue({
+      user_age: this.userAge,
+    });
 
     const {id_user, ...patientData} = this.myForm.value;
 
@@ -135,6 +149,7 @@ export class ViewPatientComponent implements OnInit {
                 detail: 'Paciente actualizado correctamente',
               });
               this.patientsPageComponent.ngOnInit();
+              this.ngOnInit();
             },
             error: (error) => {
               console.error(error);
