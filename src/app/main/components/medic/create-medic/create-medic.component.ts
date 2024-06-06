@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../../auth/interfaces';
+import { ProfilePageComponent } from '../../../pages/profile-page/profile-page.component';
 
 @Component({
   selector: 'main-create-medic',
@@ -17,23 +18,29 @@ export class CreateMedicComponent implements OnInit {
   //? Variables e Inyecciones
   private fb = inject(FormBuilder);
   private confirmationService = inject(ConfirmationService);
+  profilePageComponent = inject(ProfilePageComponent)
   private messageService = inject(MessageService);
   private dialogService = inject(DialogService);
   private userService = inject(UserService);
 
+  presentYear = new Date().getFullYear();
+  ageUser!: number;
+
   //* Formulario con Valores por defecto
   formDefault = this.fb.group({
+    user_username: ['', Validators.required],
+    user_status: [true],
+    user_phone: ['', Validators.required],
+    user_password: ['', [Validators.required, Validators.minLength(6)]],
     user_name: ['', Validators.required],
     user_lastname: ['', Validators.required],
-    user_username: ['', Validators.required],
-    user_password: ['', [Validators.required, Validators.minLength(6)]],
-    user_email: ['', [Validators.required]],
-    user_phone: ['', Validators.required],
-    user_address: ['', [Validators.required]],
-    user_birthdate: ['', [Validators.required]],
     user_genre: ['', [Validators.required]],
+    user_email: ['', [Validators.required]],
     user_ced: [0, [Validators.required]],
-    user_status: [true],
+    user_birthdate: ['', [Validators.required]],
+    user_age: [0, [Validators.required]],
+    user_admin: [false],
+    user_address: ['', [Validators.required]],
     role_id: [1],
   });
 
@@ -42,17 +49,19 @@ export class CreateMedicComponent implements OnInit {
 
   //? Formulario para crear un nuevo medico
   myForm = this.fb.group({
+    user_username: ['', Validators.required],
+    user_status: [true],
+    user_phone: ['', Validators.required],
+    user_password: ['', [Validators.required, Validators.minLength(6)]],
     user_name: ['', Validators.required],
     user_lastname: ['', Validators.required],
-    user_username: ['', Validators.required],
-    user_password: ['', [Validators.required, Validators.minLength(6)]],
-    user_email: ['', [Validators.required]],
-    user_phone: ['', Validators.required],
-    user_address: ['', [Validators.required]],
-    user_birthdate: ['', [Validators.required]],
     user_genre: ['', [Validators.required]],
+    user_email: ['', [Validators.required]],
     user_ced: [0, [Validators.required]],
-    user_status: [true],
+    user_birthdate: ['', [Validators.required]],
+    user_age: [0, [Validators.required]],
+    user_admin: [false],
+    user_address: ['', [Validators.required]],
     role_id: [1],
   });
 
@@ -60,6 +69,13 @@ export class CreateMedicComponent implements OnInit {
 
   //? Funcion para crear un nuevo medico
   createMedic() {
+
+    const birthDateYear = this.myForm.get('user_birthdate')?.value?.split('-')[0] || '';
+    this.ageUser = this.presentYear - parseInt(birthDateYear);
+    this.myForm.patchValue({
+      user_age: this.ageUser,
+    });
+
     const medicData = this.myForm.value;
 
     this.confirmationService.confirm({
@@ -82,6 +98,7 @@ export class CreateMedicComponent implements OnInit {
             
             //? Volvemos los valores del formulario a su estado por defecto
             this.myForm = this.formDefault;
+            this.profilePageComponent.ngOnInit();
           },
           error: (error) => {
             console.error(error);

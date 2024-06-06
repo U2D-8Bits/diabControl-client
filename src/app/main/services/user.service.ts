@@ -126,7 +126,7 @@ export class UserService {
 
 
   //? Actualizar un usuario por ID
-  updateUser(id: number, userData: User): Observable<User>{
+  updateUser(id: number, userData: any): Observable<User>{
     const url = `${this.baseUrl}/users/${id}`;
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
