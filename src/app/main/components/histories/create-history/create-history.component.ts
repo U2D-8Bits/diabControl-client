@@ -23,6 +23,7 @@ export class CreateHistoryComponent implements OnInit {
   private idPatient!: number;
   private idMedic!: number;
   dataMedic!: User;
+  medicNames: string = '';
 
   private dynamicDialogConfing = inject( DynamicDialogConfig)
   private userService = inject( UserService );
@@ -81,6 +82,7 @@ export class CreateHistoryComponent implements OnInit {
       next: (data) => {
         this.dataMedic = data;
         console.log(`Data del Medico =>`, this.dataMedic);
+        this.medicNames = `${this.dataMedic.user_name} ${this.dataMedic.user_lastname}`;
       },
       error: (error) => {
         console.error(error);
@@ -91,6 +93,11 @@ export class CreateHistoryComponent implements OnInit {
 
   //? Metodo para crear la Historia Clinica
   createHistory(){
+    
+    this.historyForm.patchValue({
+      medicoId: this.idMedic,
+      pacienteId: Number(this.idPatient)
+    });
     console.log(`Valores del Formulario a Guardar =>`, this.historyForm.value);
     const historyData = this.historyForm.value;
 
@@ -108,6 +115,7 @@ export class CreateHistoryComponent implements OnInit {
           .subscribe({
             next: (data) => {
               console.log(data);
+              console.log(`Valores de Data =>`, data);
               this.messageService.add({
                 severity: 'success',
                 summary: 'Success',
