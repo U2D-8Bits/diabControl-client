@@ -25,6 +25,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
 import { CreateHistoryComponent } from './components/histories/create-history/create-history.component';
 import { ViewHistoryComponent } from './components/histories/view-history/view-history.component';
+import { ActPageComponent } from './pages/act-page/act-page.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ViewHistoryComponent } from './components/histories/view-history/view-h
     HistoriesPageComponent,
     CreateHistoryComponent,
     ViewHistoryComponent,
+    ActPageComponent,
   ],
   imports: [
     CommonModule,
