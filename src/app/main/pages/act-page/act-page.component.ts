@@ -4,11 +4,17 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../auth/interfaces';
 import { ActService } from '../../services/act.service';
 import { ActInterface } from '../../interfaces/acts/act.interface';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import Swal from 'sweetalert2';
+import { CreateActComponent } from '../../components/Act/create-act/create-act.component';
+import { ViewActComponent } from '../../components/Act/view-act/view-act.component';
 
 @Component({
   selector: 'app-act-page',
   templateUrl: './act-page.component.html',
-  styleUrl: './act-page.component.css'
+  styleUrl: './act-page.component.css',
+  providers: [ConfirmationService, MessageService, DialogService]
 })
 export class ActPageComponent implements OnInit, OnDestroy {
 
@@ -16,6 +22,8 @@ export class ActPageComponent implements OnInit, OnDestroy {
   private userService = inject(UserService);
   private actService = inject(ActService);
   private route = inject( ActivatedRoute )
+  private dialogService = inject( DialogService );
+
   private idPatient!: number;
   public patientData!: User;
   public actData!: ActInterface;
@@ -58,6 +66,39 @@ export class ActPageComponent implements OnInit, OnDestroy {
         console.error(err);
       }
     })
+  }
+
+
+  //? Metodo para abir el dialogo
+  showDialog(componentName: string, headerText: string){
+    if( componentName === 'create'){
+      this.dialogService.open( CreateActComponent,{
+        header: headerText,
+        maximizable: true,
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '100vw', width: '80vw' },
+        height: '80%',
+        contentStyle: { overflow: 'auto' },
+        data: {
+          idPatient: this.idPatient,
+        }
+      })
+    }
+
+    if( componentName === 'view'){
+      this.dialogService.open( ViewActComponent,{
+        header: headerText,
+        maximizable: true,
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '100vw', width: '80vw' },
+        height: '80%',
+        contentStyle: { overflow: 'auto' },
+        data: {
+          idPatient: this.idPatient,
+          idActy: this.actData.id
+        }
+      })
+    }
   }
 
 
