@@ -82,7 +82,7 @@ export class ActService {
 
 
         //? Metodo para actualizar un acta
-        updateAct(id: number, actData: ActCreateInterface): Observable<ActInterface>{
+        updateAct(id: number, actData: any): Observable<ActInterface>{
 
             const url = `${this.baseUrl}/act/${id}`;
 

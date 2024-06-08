@@ -98,33 +98,32 @@
             </td>
             <td
                 class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
-                <button pTooltip="Ver paciente" tooltipPosition="right"
+                <button pTooltip="Ver paciente" (click)="sendUserID(patient.id_user)"
+                    (click)="showDialog('view', 'Ver Usuario')"
                     class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    type="button" data-ripple-light="true" (click)="sendUserID(patient.id_user)"
-                    (click)="showDialog('view', 'Ver Usuario')">
+                    type="button" data-ripple-light="true">
                     <span class="pi pi-eye"></span>
                 </button>
                 <button [routerLink]="['/main/patients', patient.id_user]" pTooltip="Historias clinicas"
-                    tooltipPosition="right"
                     class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button" data-ripple-light="true">
                     <span class="pi pi-receipt"></span>
                 </button>
                 <button [routerLink]="['/main/patients', patient.id_user,'consentimiento']"
-                    pTooltip="Concentimiento informado" tooltipPosition="right"
+                    pTooltip="Concentimiento informado"
                     class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button" data-ripple-light="true">
                     <span class="pi pi-file-check"></span>
                 </button>
-                <button pTooltip="Cambiar estado" tooltipPosition="right" (click)="changeStatePatient(patient.id_user)"
+                <button pTooltip="Cambiar estado" (click)="changeStatePatient(patient.id_user)"
                     class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button" data-ripple-light="true">
                     <span class="pi pi-sync"></span>
                 </button>
-                <button pTooltip="Eliminar paciente" tooltipPosition="right" (click)="deletePatient(patient.id_user)"
+                <button pTooltip="Eliminar paciente" (click)="deletePatient(patient.id_user)"
                     class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button" data-ripple-light="true">
-                    <span class="pi pi-trash"></span>
+                    <mat-icon>delete</mat-icon>
                 </button>
             </td>
         </tr>

@@ -2,8 +2,8 @@
 <p-confirmDialog />
 <div class="flex justify-between items-center p-2">
 
-    <h1 class="text-2xl text-gray-700">Historias Clínicas de <label for="" class="font-medium">{{patientData.user_name}}
-            {{patientData.user_lastname}}</label> </h1>
+    <h1 class="text-2xl text-gray-700">Historias Clínicas de <label for="" class="font-medium">{{patientData?.user_name}}
+            {{patientData?.user_lastname}}</label> </h1>
 
     <div class="flex flex-wrap items-center justify-center gap-2">
         <button (click)="showDialog('create', 'Agregar Historia Clinica')"
