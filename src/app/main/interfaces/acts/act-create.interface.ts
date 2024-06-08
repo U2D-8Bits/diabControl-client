@@ -6,7 +6,7 @@ export interface ActCreateInterface {
 
     illiteracy: boolean;
 
-    tutor_name: string;
+    tutor_names: string;
 
     tutor_lastname: string;
 
@@ -15,8 +15,6 @@ export interface ActCreateInterface {
     tutor_phone: string;
 
     tutor_email: string;
-
-    tutor_address: string;
 
     tutor_motive: string
 

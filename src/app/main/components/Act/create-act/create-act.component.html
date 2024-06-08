@@ -1,1 +1,96 @@
-<p>create-act works!</p>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<div class="max-w-full mx-auto bg-white p-8">
+    <h1 class="flex mb-2 text-2xl font-medium uppercase justify-center">Consentimiento Informado De Pacientes</h1>
+    <form action="" [formGroup]="actForm">
+        <label for="" class="flex mb-3 font-medium text-black text-xl">Datos del paciente</label>
+        <table class="border-collapse w-full mb-8">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombre y Apellido</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_name + ' ' + patientData.user_lastname ">
+                </td>
+            </tr>
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">C.I</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_ced ">
+                </td>
+            </tr>
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Teléfono</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_phone ">
+                </td>
+            </tr>
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Dirección de Domicilio</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_address ">
+                </td>
+            </tr>
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Correo Electrónico</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_email ">
+                </td>
+            </tr>
+        </table>
+
+        <div class="grid gap-3 mb-6 lg:grid-cols-3">
+            <div class="grid gap-1 lg:grid-cols-2">
+                <label for="">Menor de Edad</label>
+                <p-inputSwitch formControlName="minor_age" />
+            </div>
+
+            <div class="grid gap-1 lg:grid-cols-2">
+                <label for="">Discapacidad</label>
+                <p-inputSwitch formControlName="disability" />
+            </div>
+
+            <div class="grid gap-1 lg:grid-cols-2">
+                <label for="">Analfabetismo</label>
+                <p-inputSwitch formControlName="illiteracy" />
+            </div>
+        </div>
+
+        <label for="" class="flex mb-3 font-medium text-black text-xl" >Datos del representante legal</label>
+        <table class="border-collapse w-full mb-8">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombre y Apellido</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input  type="text" class="text-black" formControlName="tutor_names">
+                </td>
+            </tr>
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">C.I</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input  type="text" class="text-black" formControlName="tutor_ced">
+                </td>
+            </tr>
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Teléfono</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input  type="text" class="text-black" formControlName="tutor_phone">
+                </td>
+            </tr>
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Correo Electrónico</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input  type="text" class="text-black" formControlName="tutor_email">
+                </td>
+            </tr>
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Motivo de Representación</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input  type="text" class="text-black" formControlName="tutor_motive">
+                </td>
+            </tr>
+        </table>
+
+
+
+
+        
+    </form>
+</div>

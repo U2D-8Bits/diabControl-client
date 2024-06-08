@@ -102,6 +102,48 @@ export class ActPageComponent implements OnInit, OnDestroy {
   }
 
 
+  //? Metodo para eliminar el acta
+  deleteAct(){
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "No podras revertir esta acción!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar acta!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.actService.deleteAct(this.actData.id)
+        .subscribe({
+          next: (resp: any) => {
+            Swal.fire(
+              'Eliminado!',
+              'El acta ha sido eliminada.',
+              'success'
+            )
+            this.getActaByPatientId();
+          },
+          error: (err: any) => {
+            Swal.fire(
+              'Error!',
+              'Ha ocurrido un error al eliminar el acta.',
+              'error'
+            )
+          }
+        })
+      }
+      if(result.isDismissed){
+        Swal.fire(
+          'Cancelado',
+          'La acción ha sido cancelada',
+          'info'
+        )
+      }
+    })
+  }
+
+
   ngOnDestroy(): void {
     console.log(`Componente ActPage destruido`)
   }
