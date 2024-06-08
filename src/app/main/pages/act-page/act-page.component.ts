@@ -16,7 +16,7 @@ import { ViewActComponent } from '../../components/Act/view-act/view-act.compone
   styleUrl: './act-page.component.css',
   providers: [ConfirmationService, MessageService, DialogService]
 })
-export class ActPageComponent implements OnInit, OnDestroy {
+export class ActPageComponent implements OnInit {
 
   //? Variables e Inyecciones
   private userService = inject(UserService);
@@ -26,10 +26,11 @@ export class ActPageComponent implements OnInit, OnDestroy {
 
   private idPatient!: number;
   public patientData!: User;
+  existAct: boolean = false;
   public actData!: ActInterface;
 
   
-  ngOnInit(): void {
+  ngOnInit() {
     console.log(`Componente ActPage creado`)
 
     this.idPatient = Number(this.route.snapshot.params['id']);
@@ -60,10 +61,11 @@ export class ActPageComponent implements OnInit, OnDestroy {
     .subscribe({
       next: (act: ActInterface) => {
         this.actData = act;
-        console.log(`data recivida:`, this.actData)
+        this.existAct = true;
       },
       error: (err: any) => {
         console.error(err);
+        this.existAct = false;
       }
     })
   }
@@ -122,7 +124,9 @@ export class ActPageComponent implements OnInit, OnDestroy {
               'El acta ha sido eliminada.',
               'success'
             )
-            this.getActaByPatientId();
+            //Recargamos el componente
+            this.ngOnDestroy();
+            this.ngOnInit();
           },
           error: (err: any) => {
             Swal.fire(
@@ -143,6 +147,20 @@ export class ActPageComponent implements OnInit, OnDestroy {
     })
   }
 
+
+  //? Metodo para descargar el acta en pdf
+  downloadPDF(){
+    this.actService.downloadPDF(this.actData.id)
+    .subscribe({
+      next: (pdf: Blob) => {
+        const url = window.URL.createObjectURL(pdf);
+        window.open(url);
+      },
+      error: (err: any) => {
+        console.error(err);
+      }
+    })
+  }
 
   ngOnDestroy(): void {
     console.log(`Componente ActPage destruido`)
