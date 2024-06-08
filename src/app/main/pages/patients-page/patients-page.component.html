@@ -6,10 +6,10 @@
 
     <!-- Boton para agregar paciente -->
     <button (click)="showDialog('create', 'Agregar Usuario')"
-    class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
-    type="button">
-    <span class="pi pi-plus"></span>
-    Agregar paciente
+        class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
+        type="button">
+        <span class="pi pi-plus"></span>
+        Agregar paciente
     </button>
 
 </div>
@@ -17,16 +17,22 @@
 <div *ngIf="patients.length === 0" class="flex items-center mt-6 text-center border rounded-lg h-96 mx-2">
     <div class="flex flex-col w-full max-w-sm px-4 mx-auto">
         <div class="p-3 mx-auto text-blue-500 bg-blue-100 rounded-full ">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
         </div>
         <h1 class="mt-3 text-lg text-gray-800 ">No existen Pacientes</h1>
-        <p class="mt-2 text-gray-500 ">Actualmente no se encuentra registrado ningun paciente dentro de la aplicacion.</p>
+        <p class="mt-2 text-gray-500 ">Actualmente no se encuentra registrado ningun paciente dentro de la aplicacion.
+        </p>
         <div class="flex items-center mt-4 sm:mx-auto gap-x-3">
-            <button (click)="showDialog('create', 'Agregar Usuario')" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <button (click)="showDialog('create', 'Agregar Usuario')"
+                class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
 
                 <span>Agregar Paciente</span>
@@ -39,60 +45,86 @@
 <table *ngIf="patients.length > 0" class="border-collapse w-full">
     <thead>
         <tr>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Codigo</th>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombres</th>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombre de Usuario</th>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Correo</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Codigo</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Nombres</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Nombre de Usuario</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Correo</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
                 Fecha de Creacion
             </th>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Ultima Modificacion</th>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Estado</th>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Acciones</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Ultima Modificacion</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Estado</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Acciones</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let patient of patients" class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+        <tr *ngFor="let patient of patients"
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                 {{patient.id_user}}
             </td>
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                 {{patient.user_name}} {{patient.user_lastname}}
             </td>
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                 {{patient.user_username}}
             </td>
-          	<td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                 {{patient.user_email}}
-          	</td>
-              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
+            </td>
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                 {{patient.user_created_at | date: 'dd/MM/yyyy'}}
-          	</td>
-              <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
+            </td>
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
                 {{patient.user_updated_at | date: 'dd/MM/yyyy'}}
-          	</td>
-            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+            </td>
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                 <span *ngIf="patient.user_status" class="badge-succes">Activo</span>
                 <span *ngIf="!patient.user_status" class="badge-danger">Inactivo</span>
             </td>
-            <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
+            <td
+                class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
                 <button pTooltip="Ver paciente" tooltipPosition="right"
-                    (click)="sendUserID(patient.id_user)" 
-                    (click)="showDialog('view', 'Ver Usuario')"  
-                    class="btn-action" mat-raised-button>
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true" (click)="sendUserID(patient.id_user)"
+                    (click)="showDialog('view', 'Ver Usuario')">
                     <span class="pi pi-eye"></span>
                 </button>
-                <button [routerLink]="['/main/patients', patient.id_user]" pTooltip="Historias clinicas" tooltipPosition="right"  class="btn-action" mat-raised-button>
+                <button [routerLink]="['/main/patients', patient.id_user]" pTooltip="Historias clinicas"
+                    tooltipPosition="right"
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true">
                     <span class="pi pi-receipt"></span>
                 </button>
-                <button [routerLink]="['/main/patients', patient.id_user,'consentimiento']" pTooltip="Concentimiento informado" tooltipPosition="right"  class="btn-action" mat-raised-button>
+                <button [routerLink]="['/main/patients', patient.id_user,'consentimiento']"
+                    pTooltip="Concentimiento informado" tooltipPosition="right"
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true">
                     <span class="pi pi-file-check"></span>
                 </button>
-                <button pTooltip="Cambiar estado" tooltipPosition="right" (click)="changeStatePatient(patient.id_user)" class="btn-action" mat-raised-button>
+                <button pTooltip="Cambiar estado" tooltipPosition="right" (click)="changeStatePatient(patient.id_user)"
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true">
                     <span class="pi pi-sync"></span>
                 </button>
-                <button pTooltip="Eliminar paciente" tooltipPosition="right" (click)="deletePatient(patient.id_user)" class="btn-action" mat-raised-button>
-                    <mat-icon>delete</mat-icon>
+                <button pTooltip="Eliminar paciente" tooltipPosition="right" (click)="deletePatient(patient.id_user)"
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true">
+                    <span class="pi pi-trash"></span>
                 </button>
             </td>
         </tr>
