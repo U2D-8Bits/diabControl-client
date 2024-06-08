@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../../auth/interfaces';
 import { PatientsPageComponent } from '../../../pages/patients-page/patients-page.component';
@@ -18,6 +18,7 @@ export class CreatePatientComponent implements OnInit {
 
   //?Variables e Injecciones
   private fb = inject(FormBuilder);
+  private ref: DynamicDialogRef = inject(DynamicDialogRef);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
   private dialogService = inject(DialogService);
@@ -83,8 +84,12 @@ export class CreatePatientComponent implements OnInit {
                 summary: 'Success',
                 detail: 'Paciente creado correctamente',
               });
+
               this.patientsPageComponent.ngOnInit();
               this.myForm.reset();
+              setTimeout(() => {
+                this.closeDialog();
+              }, 1200)
             },
             error: (error) => {
               console.error(error);
@@ -122,6 +127,7 @@ export class CreatePatientComponent implements OnInit {
           summary: 'Info',
           detail: 'creación de paciente cancelada',
         });
+        this.closeDialog();
         this.myForm.reset();
       },
       reject: () => {
@@ -134,6 +140,10 @@ export class CreatePatientComponent implements OnInit {
     });
   }
 
+  //? Metodo para cerrar el dialog
+  closeDialog() {
+    this.ref.close();
+  }
 
 
   ngOnInit(): void {

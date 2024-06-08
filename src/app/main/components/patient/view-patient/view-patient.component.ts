@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PatientsPageComponent } from '../../../pages/patients-page/patients-page.component';
+import { DynamicDialogComponent } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-view-patient',
@@ -20,6 +21,7 @@ export class ViewPatientComponent implements OnInit {
   //? Variables e Injecciones
   private userService = inject(UserService);
   private userDataService = inject(UserDataService);
+  private ref: DynamicDialogComponent = inject(DynamicDialogComponent);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
   private patientsPageComponent = inject(PatientsPageComponent);
@@ -150,6 +152,9 @@ export class ViewPatientComponent implements OnInit {
               });
               this.patientsPageComponent.ngOnInit();
               this.ngOnInit();
+              setTimeout(() => {
+                this.closeModal();
+              }, 1200)
             },
             error: (error) => {
               console.error(error);
@@ -189,6 +194,14 @@ export class ViewPatientComponent implements OnInit {
       rejectButtonStyleClass: 'p-button-danger',
       accept: () => {
         this.myForm.reset(this.patienFormData);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Info',
+          detail: 'Edición de paciente cancelada',
+        });
+        setTimeout(() => {
+          this.closeModal();
+        }, 1200)
       },
       reject: () => {
         this.messageService.add({
@@ -201,6 +214,10 @@ export class ViewPatientComponent implements OnInit {
   }
   
 
+  //? Metodo para cerrar al modal
+  closeModal(){
+    this.ref.close();
+  }
 
 
 

@@ -42,16 +42,20 @@ export class PatientsPageComponent implements OnInit{
     if( componentName === 'create'){
       this.ref = this.dialigService.open(CreatePatientComponent, {
         header: headerText,
-        width: '40%',
-        contentStyle: {"max-height": "500px", "overflow": "auto"},
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '90vw', width: '80vw' },
+        height: '80%',
+        contentStyle: { overflow: 'auto' },
       })
     }
 
     if( componentName === 'view'){
       this.ref = this.dialigService.open(ViewPatientComponent, {
         header: headerText,
-        width: '40%',
-        contentStyle: {"max-height": "500px", "overflow": "auto"},
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '100vw', width: '80vw' },
+        height: '80%',
+        contentStyle: { overflow: 'auto' },
       })
     }
 

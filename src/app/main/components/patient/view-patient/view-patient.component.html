@@ -1,33 +1,33 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
-<div class="max-w-2xl mx-auto bg-white p-16">
+<div class="max-w-full mx-auto bg-white p-16">
     <form [formGroup]="myForm" (ngSubmit)="updatePatient()">
         <div class="grid gap-6 mb-6 lg:grid-cols-2">
-            <div>
+            <div class="flex flex-col">
                 <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre</label>
                 <input #inputForm formControlName="user_name" type="text" id="first_name" [value]="patientData?.user_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="John" required>
             </div>
-            <div>
+            <div class="flex flex-col">
                 <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Apellido</label>
                 <input formControlName="user_lastname" type="text" id="last_name" [value]="patientData?.user_lastname"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Doe" required>
             </div>
-            <div>
+            <div class="flex flex-col">
                 <label for="cedula" class="block mb-2 text-sm font-medium text-gray-900 ">Numero de Cedula</label>
                 <input formControlName="user_ced" type="text" id="cedula" [value]="patientData?.user_ced"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="9999999999" required>
             </div>
-            <div>
+            <div class="flex flex-col">
                 <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Fecha de Nacimiento</label>
                 <input formControlName="user_birthdate" type="Date" id="last_name" [value]="patientData?.user_birthdate"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Doe" required>
             </div>
-            <div>
+            <div class="flex flex-col">
                 <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Genero</label>
                 <select
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -37,52 +37,52 @@
                     <option value="Otros">Otros</option>
                 </select>
             </div>
-            <div>
+            <div class="flex flex-col">
                 <label for="user_age" class="block mb-2 text-sm font-medium text-gray-900 ">Edad</label>
                 <input disabled type="text" id="user_age" [value]="this.patientData?.user_age"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:bg-gray-200"
                 >
             </div>
-            <div>
+            <div class="flex flex-col">
                 <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Direccion</label>
                 <input formControlName="user_address" type="text" id="last_name" [value]="patientData?.user_address"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Doe" required>
             </div>
-            <div>
+            <div class="flex flex-col">
                 <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Numero de telefono</label>
                 <input formControlName="user_phone" type="string" id="phone" [value]="patientData?.user_phone"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="099-999-999" required>
             </div>
         </div>
-        <div class="mb-6">
+        <div class="mb-6 flex flex-col">
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Correo Electronico</label>
             <input formControlName="user_email" type="email" id="email" [value]="patientData?.user_email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="john.doe@company.com" required>
         </div>
-        <div class="mb-6">
+        <div class="mb-6 flex flex-col">
             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre de Usuario</label>
             <input formControlName="user_username" type="text" id="email" [value]="patientData?.user_username"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="john.doe@company.com" required>
         </div>
-        <div class="mb-6">
+        <div class="mb-6 flex flex-col">
             <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Contrasena</label>
             <input formControlName="user_password" type="password" id="password" [value]="patientData?.user_password"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="•••••••••" required>
         </div>
     </form>
-    <div class="mb-6 flex items-center justify-between">
+    <div class="grid gap-6 mb-6 lg:grid-cols-2">
         <button [disabled]="!myForm.dirty" (click)="updatePatient()"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto"
             >
             Actualizar informacion
         </button>
         <button [disabled]="!myForm.dirty" (click)="cancelUpdate()"
-            class="text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-orange-400 pointer-events-auto">
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto">
             Cancelar
         </button>
     </div>
