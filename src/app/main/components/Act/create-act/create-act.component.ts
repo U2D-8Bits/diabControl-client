@@ -29,9 +29,10 @@ export class CreateActComponent implements OnInit, OnDestroy {
   idPatient!: number;
   patientData!: User;
   subscriptions: Subscription[] = [];
+  currentDate: string;
 
   actForm = this.fb.group({
-    minor_age: [false, {disabled: false}, [Validators.required]],
+    minor_age: [false, [Validators.required]],
 
     disability: [false, [Validators.required]],
 
@@ -49,6 +50,15 @@ export class CreateActComponent implements OnInit, OnDestroy {
 
     id_patient: [Number(this.dynamicDialogConfig.data.idPatient)],
   })
+
+  constructor() {
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.toLocaleString('default', { month: 'long' });
+    const year = now.getFullYear();
+    this.currentDate = `En Santo Domingo, a ${day} de ${month}, de ${year}`;
+  }
+
 
   ngOnInit(): void {
 
@@ -127,10 +137,112 @@ export class CreateActComponent implements OnInit, OnDestroy {
 
 
   //? Metodo para crear un nuevo Acta
+    createAct(){
+      
+      this.actForm.patchValue({
+        id_patient: this.idPatient
+      });
 
+
+
+      const actData = this.actForm.value
+
+      //si el paciente es menor de edad asignamos true a la propiedad minor_age
+      if (this.patientData.user_age < 18) {
+        actData.minor_age = true;
+      }else{
+        actData.minor_age = false;
+      }
+
+      //si el paciente es menor de edad o tiene discapacidad, se debe validar que los campos del tutor esten llenos
+      if (actData.minor_age || actData.disability || actData.illiteracy) {
+        if (!actData.tutor_names || !actData.tutor_ced || !actData.tutor_phone || !actData.tutor_email || !actData.tutor_motive) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Debe completar los datos del tutor',
+          });
+          return;
+        }
+      }
+
+      console.log(`Valores de ActData =>`, actData);
+
+      this.confirmationService.confirm({
+        message: 'Está seguro que desea crear esta Acta?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon: 'none',
+        rejectIcon: 'none',
+        rejectButtonStyleClass: 'p-button-danger, padding: 10px; borer-radius: 5px; border: 1px solid red;',
+        acceptButtonStyleClass: 'p-button-success',
+        accept: () => {
+  
+          this.actService.createAct( actData )
+          .subscribe({
+            next: (data) => {
+              console.log(data);
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Acta creada correctamente',
+              });
+              this.actComponent.ngOnInit();
+              setTimeout(() => {
+                this.ref.close();
+              }, 1750)
+            },
+            error: (error) => {
+              console.error(error);
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Error al crear el Acta',
+              });
+            }
+          });
+        },
+        reject: () => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Info',
+            detail: 'Operación cancelada',
+          });
+        }
+      });
+
+    }
 
 
   //? Metodo para cancelar un nuevo Acta
+  cancelAct(){
+    this.confirmationService.confirm({
+      message: 'Está seguro que desea cancelar la creación de esta Acta?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-danger, padding: 10px; borer-radius: 5px; border: 1px solid red;',
+      acceptButtonStyleClass: 'p-button-success',
+      accept: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Info',
+          detail: 'Operación cancelada',
+        });
+        setTimeout(() => {
+          this.ref.close();
+        }, 1250)
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Operación no cancelada',
+        });
+      }
+    });
+  }
 
 
   //? Metodo para cerrar el Dialogo

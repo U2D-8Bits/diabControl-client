@@ -14,6 +14,23 @@ export class ActService {
         private readonly baseUrl: string = environment.baseUrl;
 
 
+        //? Metodo para crear un acta
+        createAct(actData: any): Observable<ActInterface>{
+
+            const url = `${this.baseUrl}/act`;
+
+            return this.httpClient.post<ActInterface>(url, actData)
+            .pipe(
+                map((act: ActInterface) => {
+                    return act;
+                }),
+                catchError((err: any) => {
+                    return throwError(err);
+                })
+            )
+        }
+
+
         //? Metodo para obtener todas las actas
         getAllActs(): Observable<ActInterface[]>{
 

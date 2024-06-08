@@ -8,8 +8,6 @@ export interface ActCreateInterface {
 
     tutor_names: string;
 
-    tutor_lastname: string;
-
     tutor_ced: string;
 
     tutor_phone: string;
