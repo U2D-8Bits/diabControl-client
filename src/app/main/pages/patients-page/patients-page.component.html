@@ -85,6 +85,9 @@
                 <button [routerLink]="['/main/patients', patient.id_user]" pTooltip="Historias clinicas" tooltipPosition="right"  class="btn-action" mat-raised-button>
                     <span class="pi pi-receipt"></span>
                 </button>
+                <button [routerLink]="['/main/patients', patient.id_user,'consentimiento']" pTooltip="Concentimiento informado" tooltipPosition="right"  class="btn-action" mat-raised-button>
+                    <span class="pi pi-file-check"></span>
+                </button>
                 <button pTooltip="Cambiar estado" tooltipPosition="right" (click)="changeStatePatient(patient.id_user)" class="btn-action" mat-raised-button>
                     <span class="pi pi-sync"></span>
                 </button>

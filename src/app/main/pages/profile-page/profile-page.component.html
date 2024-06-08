@@ -1,5 +1,5 @@
 <section class=" py-1 bg-blueGray-50">
-    <div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+    <div class="w-full lg:w-11/12 px-4 mx-auto mt-6">
         <div
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-2">
             <div class="rounded-t bg-white mb-0 px-6 py-6">
@@ -96,7 +96,7 @@
                                     htmlfor="grid-password">
                                     Genero
                                 </label>
-                                <!-- Select para escoger el sexo -->
+
                                 <select
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                     formControlName="user_genre" [value]="userData?.user_genre" required>
@@ -223,3 +223,66 @@
 
     </div>
 </section>
+
+
+
+<div class="w-full lg:w-11/12 px-4 mx-auto mt-6"  *ngIf="userData?.user_admin === true">
+    <p-accordion [activeIndex]="0" class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-2">
+        <p-accordionTab header="Médicos Registrados">
+            <table class="border-collapse w-full px-2">
+                <thead>
+                    <tr>
+                        <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                            Código
+                        </th>
+                        <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                            Nombre
+                        </th>
+                        <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                            Apellido
+                        </th>
+                        <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                            Cédula
+                        </th>
+                        <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                            Correo Electrónico
+                        </th>
+                        <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let medic of registeredMedics" class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                        <td
+                        class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                        {{medic.id_user}}
+                        </td>
+                        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                            {{medic.user_name}}
+                        </td>
+                        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                            {{medic.user_lastname}}
+                        </td>
+                        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                            {{medic.user_ced}}
+                        </td>
+                        <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                            {{medic.user_email}}
+                        </td>
+                        <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
+                            <button (click)="getIdMedicToView(medic.id_user)" (click)="showDialog('view', 'Información Medico')" class="bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto" type="button">
+                                <span class="pi pi-eye"></span>
+                            </button>
+                            <button (click)="deleteMedic(medic.id_user)"
+                            class="bg-red-600 text-white active:bg-red-700 font-medium uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-red-400 pointer-events-auto" type="button">
+                                <span class="pi pi-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </p-accordionTab>
+    </p-accordion>
+</div>

@@ -61,7 +61,6 @@ export class HistoriesPageComponent implements OnInit {
 
   //? Metodo para abrir el dialogo de historia clinica
   showDialog(componentName: string, headerText: string) {
-    //* Mostrar el compomente de agregar paciente
     if( componentName === 'create'){
       this.ref = this.dialigService.open(CreateHistoryComponent, {
         header: headerText,
