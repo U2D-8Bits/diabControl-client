@@ -8,6 +8,7 @@ import { FormsPageComponent } from './pages/forms-page/forms-page.component';
 import { ChatsPageComponent } from './pages/chats-page/chats-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
+import { ActPageComponent } from './pages/act-page/act-page.component';
 
 const routes: Routes = [
   {
@@ -22,26 +23,28 @@ const routes: Routes = [
       {
         path: 'patients',
         title: 'Pacientes',
-        //? Guard que verifica si el usuario tiene el rol de medico
         component: PatientsPageComponent
       },
       //Ruta para las historias clinicas de un paciente por id
       {
         path: 'patients/:id',
         title: 'Historias Clinicas',
-        //? Guard que verifica si el usuario tiene el rol de medico
         component: HistoriesPageComponent
+      },
+      //Ruat para el Acta CONSENTIMIENTO INFORMADO DE PACIENTES
+      {
+        path: 'patients/:id/consentimiento',
+        title: 'Consentimiento Informado',
+        component: ActPageComponent
       },
       {
         path: 'informs',
         title: 'Informes',
-        //? Guard que verifica si el usuario tiene el rol de medico
         component: InformsPageComponent
       },
       {
         path: 'forms',
         title: 'Formularios',
-        //? Guard que verifica si el usuario tiene el rol de paciente
         component: FormsPageComponent
       },
       {

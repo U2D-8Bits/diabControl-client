@@ -19,7 +19,8 @@ import { TagModule } from 'primeng/tag';
 import { PasswordModule } from 'primeng/password';
 import { AccordionModule } from 'primeng/accordion';
 import { InputTextModule } from 'primeng/inputtext';
-
+import { TabViewModule } from 'primeng/tabview';
+import { InputSwitchModule } from 'primeng/inputswitch';
 @NgModule({
   declarations: [],
   exports: [
@@ -39,7 +40,9 @@ import { InputTextModule } from 'primeng/inputtext';
     TagModule,
     PasswordModule,
     AccordionModule,
-    InputTextModule
+    InputTextModule,
+    TabViewModule,
+    InputSwitchModule,
   ],
 })
 export class PrimengModule { }

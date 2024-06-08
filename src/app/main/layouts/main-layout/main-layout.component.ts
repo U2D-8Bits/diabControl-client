@@ -75,13 +75,6 @@ export class MainLayoutComponent implements OnInit {
         ],
       },
     ];
-
-    
-
-
-
-    //? Menu de opciones para vista de telefono
-    this.setupPhoneMenu();
   }
 
 
@@ -96,6 +89,7 @@ export class MainLayoutComponent implements OnInit {
       .subscribe((role) => {
         this.roleUser = role.role_name;
         console.log(`Role: ${this.roleUser}`);
+        this.setupPhoneMenu();
       });
 
     this.userInfo = localStorage.getItem('user_name')?.toString() || '';
@@ -124,19 +118,19 @@ export class MainLayoutComponent implements OnInit {
         label: 'Pacientes',
         icon: 'pi pi-users',
         routerLink: ['/main/patients'],
-        visible: this.roleUser === 'medico',
+        visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
       },
       {
         label: 'Informes',
         icon: 'pi pi-clipboard',
         routerLink: ['/main/informs'],
-        visible: this.roleUser === 'medico',
+        visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
       },
       {
         label: 'Formularios',
         icon: 'pi pi-file',
         routerLink: ['/main/forms'],
-        visible: this.roleUser === 'paciente',
+        visible: this.roleUser.toLowerCase() === 'paciente'
       },
       {
         label: 'Mi Perfil',
