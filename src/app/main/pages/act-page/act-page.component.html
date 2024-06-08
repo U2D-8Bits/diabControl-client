@@ -1,6 +1,6 @@
 <div class="flex justify-between items-center p-2">
     <h1 class="text-2xl text-gray-700">Consentimiento Informado de <label class="font-medium"
-            for="">{{patientData.user_name}} {{patientData.user_lastname}}</label> </h1>
+            for="">{{patientData?.user_name}} {{patientData?.user_lastname}}</label> </h1>
     <div class="flex flex-wrap items-center justify-center gap-2">
         <button [disabled]="actData" (click)="showDialog('create', 'Generar Consentimiento Informado de Paciente')"
             class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
@@ -30,6 +30,50 @@
 </div>
 
 
-<div *ngIf="actData">
-    <p>Si existe Acta</p>
-</div>
+<table *ngIf="actData" class="border-collapse w-full px-2">
+    <thead>
+        <tr>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Codigo</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Fecha de creación</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Última modificación</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                {{actData.id}}
+            </td>
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                {{actData.created_at | date: 'dd/MM/yyyy'}}
+            </td>
+            <td
+                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                {{actData.updated_at | date: 'dd/MM/yyyy'}}
+            </td>
+            <td
+                class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
+                <button
+                    (click)="showDialog('view', 'Ver Consentimiento Informado')" pTooltip="Ver Consentimiento Informado" pTooltipStyleClass="rounded-lg shadow-lg"
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true">
+                    <span class="pi pi-eye"></span>
+                </button>
+                <button pTooltip="Eliminar Consentimiento Informado"
+                    pTooltipPosition="right" pTooltipStyleClass="rounded-lg shadow-lg"
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true">
+                    <span class="pi pi-trash"></span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

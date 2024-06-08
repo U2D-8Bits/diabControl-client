@@ -95,7 +95,7 @@ export class ActPageComponent implements OnInit, OnDestroy {
         contentStyle: { overflow: 'auto' },
         data: {
           idPatient: this.idPatient,
-          idActy: this.actData.id
+          idAct: this.actData.id
         }
       })
     }

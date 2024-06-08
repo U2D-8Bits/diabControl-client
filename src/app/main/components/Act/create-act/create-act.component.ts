@@ -169,7 +169,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
       console.log(`Valores de ActData =>`, actData);
 
       this.confirmationService.confirm({
-        message: 'Está seguro que desea crear esta Acta?',
+        message: 'Está seguro que desea crear este Consentimiento Informado?',
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: 'none',
@@ -185,7 +185,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
               this.messageService.add({
                 severity: 'success',
                 summary: 'Success',
-                detail: 'Acta creada correctamente',
+                detail: 'Consentimiento Informado creado correctamente',
               });
               this.actComponent.ngOnInit();
               setTimeout(() => {
@@ -197,7 +197,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Error al crear el Acta',
+                detail: 'Error al crear el Consentimiento Informado',
               });
             }
           });
@@ -217,7 +217,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
   //? Metodo para cancelar un nuevo Acta
   cancelAct(){
     this.confirmationService.confirm({
-      message: 'Está seguro que desea cancelar la creación de esta Acta?',
+      message: 'Está seguro que desea cancelar la creación de este Consntimiento Informado?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
