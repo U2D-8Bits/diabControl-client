@@ -21,6 +21,10 @@ import { AccordionModule } from 'primeng/accordion';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabViewModule } from 'primeng/tabview';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { FileUploadModule } from 'primeng/fileupload';
+import { BadgeModule } from 'primeng/badge';
+import { ProgressBarModule } from 'primeng/progressbar';
+
 @NgModule({
   declarations: [],
   exports: [
@@ -43,6 +47,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     InputTextModule,
     TabViewModule,
     InputSwitchModule,
+    FileUploadModule,
+    BadgeModule,
+    ProgressBarModule
   ],
 })
 export class PrimengModule { }
