@@ -11,7 +11,7 @@ import { CreateActComponent } from '../../components/Act/create-act/create-act.c
 import { ViewActComponent } from '../../components/Act/view-act/view-act.component';
 import { FileService } from '../../services/file.service';
 import { FileInterface } from '../../interfaces/files/file.interface';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-act-page',
@@ -25,11 +25,8 @@ export class ActPageComponent implements OnInit {
     private sanitizer: DomSanitizer
   ){}
 
-  fileUrl: SafeResourceUrl = '';
-  files = [];
 
-  totalSize : number = 0;
-  totalSizePercent : number = 0;
+
 
   //? Variables e Inyecciones
   private userService = inject(UserService);
@@ -41,7 +38,11 @@ export class ActPageComponent implements OnInit {
   private idPatient!: number;
   public patientData!: User;
   existAct: boolean = false;
+  existFile: boolean = false;
   public actData!: ActInterface;
+  fileUrl: SafeResourceUrl = '';
+  selectedFile!: File;
+  idFile!: number;
   
   ngOnInit() {
     console.log(`Componente ActPage creado`)
@@ -118,45 +119,54 @@ export class ActPageComponent implements OnInit {
 
   //? Metodo para eliminar el acta
   deleteAct(){
-    Swal.fire({
-      title: '¿Estas seguro?',
-      text: "No podras revertir esta acción!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar acta!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.actService.deleteAct(this.actData.id)
-        .subscribe({
-          next: (resp: any) => {
-            Swal.fire(
-              'Eliminado!',
-              'El acta ha sido eliminada.',
-              'success'
-            )
-            //Recargamos el componente
-            this.ngOnDestroy();
-            this.ngOnInit();
-          },
-          error: (err: any) => {
-            Swal.fire(
-              'Error!',
-              'Ha ocurrido un error al eliminar el acta.',
-              'error'
-            )
-          }
-        })
-      }
-      if(result.isDismissed){
-        Swal.fire(
-          'Cancelado',
-          'La acción ha sido cancelada',
-          'info'
-        )
-      }
-    })
+
+    if(this.existFile){
+      Swal.fire(
+        'Error!',
+        'No puedes eliminar el acta si existe un archivo adjunto.',
+        'error'
+      )
+    }else{
+      Swal.fire({
+        title: '¿Estas seguro?',
+        text: "No podras revertir esta acción!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar acta!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.actService.deleteAct(this.actData.id)
+          .subscribe({
+            next: (resp: any) => {
+              Swal.fire(
+                'Eliminado!',
+                'El acta ha sido eliminada.',
+                'success'
+              )
+              //Recargamos el componente
+              this.ngOnDestroy();
+              this.ngOnInit();
+            },
+            error: (err: any) => {
+              Swal.fire(
+                'Error!',
+                'Ha ocurrido un error al eliminar el acta.',
+                'error'
+              )
+            }
+          })
+        }
+        if(result.isDismissed){
+          Swal.fire(
+            'Cancelado',
+            'La acción ha sido cancelada',
+            'info'
+          )
+        }
+      })
+    }
   }
 
 
@@ -176,24 +186,103 @@ export class ActPageComponent implements OnInit {
   }
 
 
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
+
+
+  uploadFile(): void {
+    if( this.selectedFile){
+      this.fileService.uploadFile(this.idPatient, this.selectedFile)
+      .subscribe({
+        next: (resp: any) => {
+          Swal.fire(
+            'Archivo subido!',
+            'El archivo ha sido subido correctamente.',
+            'success'
+          )
+          //Recargamos el componente
+          this.existFile = true;
+          this.ngOnDestroy();
+          this.ngOnInit();
+        },
+        error: (err: any) => {
+          Swal.fire(
+            'Error!',
+            err.error.message,
+            'error'
+          )
+        }
+      })
+    }
+  }
+
+
 
   //? Metodo para obtener el archivo
   getFileByUser(){
     this.fileService.getFile(this.idPatient)
     .subscribe({
       next: (file) => {
-        const url = `http://localhost:3000${file.url}`
+        const url = `${file.url}`
         this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-        console.log(`fileUrl:`, this.fileUrl)
+        this.idFile = file.id;
+        this.existFile = true;
       },
       error: (err: any) => {
-        Swal.fire(
-          'Error!',
-          err.error.message,
-          'error'
-        )
+        console.error(err);
       }
     })
+  }
+
+
+  //? Metodo para eliminar el Archivo
+  deleteFile(): void {
+
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "No podras revertir esta acción!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar archivo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.fileService.deleteFile(this.idFile)
+        .subscribe({
+          next: (resp: any) => {
+            Swal.fire(
+              'Eliminado!',
+              'El archivo ha sido eliminado.',
+              'success'
+            ),
+
+            //Recargamos el componente
+            this.existFile = false;
+            this.ngOnDestroy();
+            this.ngOnInit();
+          },
+          error: (err: any) => {
+            Swal.fire(
+              'Error!',
+              err.error.message,
+              'error'
+            )
+          }
+        })
+      }
+      if(result.isDismissed){
+        Swal.fire(
+          'Cancelado',
+          'La acción ha sido cancelada',
+          'info'
+        )
+      }
+    
+    })
+
   }
 
   ngOnDestroy(): void {

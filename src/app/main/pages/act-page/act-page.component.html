@@ -30,7 +30,7 @@
 </div>
 
 
-<table *ngIf="existAct" class="border-collapse w-full px-2">
+<table *ngIf="existAct" class="border-collapse w-full lg: px-4 mx-auto">
     <thead>
         <tr>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
@@ -84,20 +84,57 @@
     </tbody>
 </table>
 
-<!-- Apartado Para subir un Archivo -->
-<div class="w-full mx-auto my-10 mt-10 bg-white rounded-lg shadow-xl p-5">
-    <div class="flex justify-center mt-5">
-      <a href="#" class="text-blue-500 hover:text-blue-700 mx-3">Twitter</a>
-      <a href="#" class="text-blue-500 hover:text-blue-700 mx-3">LinkedIn</a>
-      <a href="#" class="text-blue-500 hover:text-blue-700 mx-3">GitHub</a>
-    </div>
-    <div class="mt-5">
-      <h3 class="text-xl font-semibold">Bio</h3>
-      <p class="text-gray-600 mt-2">John is a software engineer with over 10 years of experience in developing web and mobile applications. He is skilled in JavaScript, React, and Node.js.</p>
-    </div>
-  </div>
+
+<section *ngIf="existAct" class=" py-1 bg-blueGray-50">
+    <div class="flex px-4 mx-auto mt-6">
+        <div
+            class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-2">
+            <div class="rounded-t bg-white mb-0 px-6 py-6">
+                <div class="text-center flex flex-wrap justify-start gap-5">
+                    <label for="selectFile" pTooltip="Seleccionar Archivo"
+                        class="flex items-center cursor-pointer justify-center middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-2xl bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                        <span class="pi pi-file-plus"></span>
+                        <input [disabled]="existFile" id="selectFile"
+                            class="text-sm cursor-pointer w-36 hidden disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            type="file" (change)="onFileSelected($event)" accept="application/pdf" />
+                    </label>
 
 
-<!-- <div class="flex mt-3 mx-3 items-center justify-center">
-    <iframe [src]="fileUrl" class="w-4/6" height="600px" frameborder="0"></iframe>
-</div> -->
+
+                    <button id="uploadFile" pTooltip="Subir Archivo"
+                        class="flex items-center cursor-pointer justify-center middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-2xl bg-green-600 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        (click)="uploadFile()">
+                        <span class="pi pi-upload"></span>
+                    </button>
+
+
+
+
+                    <button [disabled]="!fileUrl" id="deleteFile" pTooltip="Eliminar Archivo"
+                        class="flex items-center cursor-pointer justify-center middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-2xl bg-red-700 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-red-700/20 transition-all hover:shadow-lg hover:shadow-red-700/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        (click)="deleteFile()">
+                        <span class="pi pi-trash"></span>
+                    </button>
+
+
+                </div>
+
+                <div *ngIf="existFile" class="text-center flex flex-wrap justify-start gap-5">
+                    <iframe [src]="fileUrl" class="w-full" height="400" frameborder="0"></iframe>
+
+                </div>
+                <div *ngIf="!existFile" class="flex items-center mt-6 text-center border rounded-lg h-96 mx-2">
+                    <div class="flex flex-col w-full max-w-sm px-4 mx-auto">
+                        <div class="p-3 mx-auto text-blue-500 bg-blue-100 rounded-full ">
+                            <span class="pi pi-info-circle text-3xl"></span>
+                        </div>
+                        <h1 class="mt-3 text-lg text-gray-800 ">No existe Ningun Archivo para este Paciente</h1>
+                        <p class="mt-2 text-gray-500 ">Este paciente no tiene cargado ningun archivo .pdf en
+                            su cuenta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
