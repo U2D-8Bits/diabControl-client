@@ -26,7 +26,10 @@ export class ActPageComponent implements OnInit {
   ){}
 
   fileUrl: SafeResourceUrl = '';
+  files = [];
 
+  totalSize : number = 0;
+  totalSizePercent : number = 0;
 
   //? Variables e Inyecciones
   private userService = inject(UserService);
@@ -173,6 +176,7 @@ export class ActPageComponent implements OnInit {
   }
 
 
+
   //? Metodo para obtener el archivo
   getFileByUser(){
     this.fileService.getFile(this.idPatient)
@@ -183,7 +187,11 @@ export class ActPageComponent implements OnInit {
         console.log(`fileUrl:`, this.fileUrl)
       },
       error: (err: any) => {
-        console.error(err);
+        Swal.fire(
+          'Error!',
+          err.error.message,
+          'error'
+        )
       }
     })
   }

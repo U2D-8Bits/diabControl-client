@@ -61,20 +61,20 @@
             </td>
             <td
                 class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
-                <button
-                    (click)="showDialog('view', 'Ver Consentimiento Informado')" pTooltip="Ver Consentimiento Informado" pTooltipStyleClass="rounded-lg shadow-lg"
+                <button (click)="showDialog('view', 'Ver Consentimiento Informado')"
+                    pTooltip="Ver Consentimiento Informado" pTooltipStyleClass="rounded-lg shadow-lg"
                     class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button" data-ripple-light="true">
                     <span class="pi pi-eye"></span>
                 </button>
-                <button (click)="downloadPDF()" pTooltip="Descargar Consentimiento Informado" 
-                pTooltipPosition="right" pTooltipStyleClass="rounded-lg shadow-lg"
-                class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                type="button" data-ripple-light="true">
-                <span class="pi pi-download"></span>
+                <button (click)="downloadPDF()" pTooltip="Descargar Consentimiento Informado" pTooltipPosition="right"
+                    pTooltipStyleClass="rounded-lg shadow-lg"
+                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button" data-ripple-light="true">
+                    <span class="pi pi-download"></span>
                 </button>
-                <button (click)="deleteAct()" pTooltip="Eliminar Consentimiento Informado" 
-                    pTooltipPosition="right" pTooltipStyleClass="rounded-lg shadow-lg"
+                <button (click)="deleteAct()" pTooltip="Eliminar Consentimiento Informado" pTooltipPosition="right"
+                    pTooltipStyleClass="rounded-lg shadow-lg"
                     class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button" data-ripple-light="true">
                     <span class="pi pi-trash"></span>
@@ -84,10 +84,20 @@
     </tbody>
 </table>
 
+<!-- Apartado Para subir un Archivo -->
+<div class="w-full mx-auto my-10 mt-10 bg-white rounded-lg shadow-xl p-5">
+    <div class="flex justify-center mt-5">
+      <a href="#" class="text-blue-500 hover:text-blue-700 mx-3">Twitter</a>
+      <a href="#" class="text-blue-500 hover:text-blue-700 mx-3">LinkedIn</a>
+      <a href="#" class="text-blue-500 hover:text-blue-700 mx-3">GitHub</a>
+    </div>
+    <div class="mt-5">
+      <h3 class="text-xl font-semibold">Bio</h3>
+      <p class="text-gray-600 mt-2">John is a software engineer with over 10 years of experience in developing web and mobile applications. He is skilled in JavaScript, React, and Node.js.</p>
+    </div>
+  </div>
 
-<!-- Apartado para la carga y visualizacion del archivo PDF -->
 
-<div class="flex mt-3 mx-3 items-center justify-center">
+<!-- <div class="flex mt-3 mx-3 items-center justify-center">
     <iframe [src]="fileUrl" class="w-4/6" height="600px" frameborder="0"></iframe>
-</div>
-
+</div> -->
