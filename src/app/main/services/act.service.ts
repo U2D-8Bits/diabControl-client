@@ -82,13 +82,13 @@ export class ActService {
 
 
         //? Metodo para descargar el acta en pdf
-        downloadPDF(id: number): Observable<Blob>{
-            const url = `${this.baseUrl}/act/download/${id}`;
+        downloadAct(id: number): Observable<Blob>{
+            const url = `${this.baseUrl}/act/pdf/${id}`;
 
             return this.httpClient.get(url, {responseType: 'blob'})
             .pipe(
-                map((pdf: Blob) => {
-                    return pdf;
+                map((act: any) => {
+                    return act;
                 }),
                 catchError((err: any) => {
                     return throwError(err);

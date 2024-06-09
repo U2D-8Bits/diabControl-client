@@ -67,6 +67,12 @@
                     type="button" data-ripple-light="true">
                     <span class="pi pi-eye"></span>
                 </button>
+                <button (click)="downloadPDF()" pTooltip="Descargar Consentimiento Informado" 
+                pTooltipPosition="right" pTooltipStyleClass="rounded-lg shadow-lg"
+                class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button" data-ripple-light="true">
+                <span class="pi pi-download"></span>
+                </button>
                 <button (click)="deleteAct()" pTooltip="Eliminar Consentimiento Informado" 
                     pTooltipPosition="right" pTooltipStyleClass="rounded-lg shadow-lg"
                     class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -77,3 +83,11 @@
         </tr>
     </tbody>
 </table>
+
+
+<!-- Apartado para la carga y visualizacion del archivo PDF -->
+
+<div class="flex mt-3 mx-3 items-center justify-center">
+    <iframe [src]="fileUrl" class="w-4/6" height="600px" frameborder="0"></iframe>
+</div>
+

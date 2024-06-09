@@ -9,6 +9,9 @@ import { DialogService } from 'primeng/dynamicdialog';
 import Swal from 'sweetalert2';
 import { CreateActComponent } from '../../components/Act/create-act/create-act.component';
 import { ViewActComponent } from '../../components/Act/view-act/view-act.component';
+import { FileService } from '../../services/file.service';
+import { FileInterface } from '../../interfaces/files/file.interface';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-act-page',
@@ -18,9 +21,17 @@ import { ViewActComponent } from '../../components/Act/view-act/view-act.compone
 })
 export class ActPageComponent implements OnInit {
 
+  constructor(
+    private sanitizer: DomSanitizer
+  ){}
+
+  fileUrl: SafeResourceUrl = '';
+
+
   //? Variables e Inyecciones
   private userService = inject(UserService);
   private actService = inject(ActService);
+  private fileService = inject( FileService );
   private route = inject( ActivatedRoute )
   private dialogService = inject( DialogService );
 
@@ -28,15 +39,13 @@ export class ActPageComponent implements OnInit {
   public patientData!: User;
   existAct: boolean = false;
   public actData!: ActInterface;
-
   
   ngOnInit() {
     console.log(`Componente ActPage creado`)
-
     this.idPatient = Number(this.route.snapshot.params['id']);
-
     this.getPatientData();
     this.getActaByPatientId();
+    this.getFileByUser();
   }
 
 
@@ -150,11 +159,28 @@ export class ActPageComponent implements OnInit {
 
   //? Metodo para descargar el acta en pdf
   downloadPDF(){
-    this.actService.downloadPDF(this.actData.id)
+    this.actService.downloadAct(this.actData.id)
     .subscribe({
-      next: (pdf: Blob) => {
-        const url = window.URL.createObjectURL(pdf);
+      next: (resp: any) => {
+        const blob = new Blob([resp], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
         window.open(url);
+      },
+      error: (err: any) => {
+        console.error(err);
+      }
+    })
+  }
+
+
+  //? Metodo para obtener el archivo
+  getFileByUser(){
+    this.fileService.getFile(this.idPatient)
+    .subscribe({
+      next: (file) => {
+        const url = `http://localhost:3000${file.url}`
+        this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        console.log(`fileUrl:`, this.fileUrl)
       },
       error: (err: any) => {
         console.error(err);

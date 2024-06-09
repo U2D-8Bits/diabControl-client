@@ -28,6 +28,7 @@ import { ViewHistoryComponent } from './components/histories/view-history/view-h
 import { ActPageComponent } from './pages/act-page/act-page.component';
 import { CreateActComponent } from './components/Act/create-act/create-act.component';
 import { ViewActComponent } from './components/Act/view-act/view-act.component';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ViewActComponent } from './components/Act/view-act/view-act.component';
     ActPageComponent,
     CreateActComponent,
     ViewActComponent,
+    SafeUrlPipe
   ],
   imports: [
     CommonModule,
