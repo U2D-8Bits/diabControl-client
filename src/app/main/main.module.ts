@@ -29,6 +29,13 @@ import { ActPageComponent } from './pages/act-page/act-page.component';
 import { CreateActComponent } from './components/Act/create-act/create-act.component';
 import { ViewActComponent } from './components/Act/view-act/view-act.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { MedsPageComponent } from './pages/meds-page/meds-page.component';
+import { ListMedicineComponent } from './components/medicines/list-medicine/list-medicine.component';
+import { CreateMedicineComponent } from './components/medicines/create-medicine/create-medicine.component';
+import { ViewMedicineComponent } from './components/medicines/view-medicine/view-medicine.component';
+import { ListCategoriesComponent } from './components/categories/list-categories/list-categories.component';
+import { CreateCategoryComponent } from './components/categories/create-category/create-category.component';
+import { ViewCategoryComponent } from './components/categories/view-category/view-category.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +59,14 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     ActPageComponent,
     CreateActComponent,
     ViewActComponent,
-    SafeUrlPipe
+    SafeUrlPipe,
+    MedsPageComponent,
+    ListMedicineComponent,
+    CreateMedicineComponent,
+    ViewMedicineComponent,
+    ListCategoriesComponent,
+    CreateCategoryComponent,
+    ViewCategoryComponent
   ],
   imports: [
     CommonModule,

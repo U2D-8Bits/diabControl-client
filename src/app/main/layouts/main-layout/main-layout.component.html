@@ -20,15 +20,19 @@
           Inicio
         </a>
 
-        <a *ngIf="roleUser === 'medico'" routerLink="/main/patients" routerLinkActive="active" class="text-white">
+        <a *ngIf="roleUser.toLocaleLowerCase() === 'medico' || roleUser.toLocaleLowerCase() === 'médico' " routerLink="/main/patients" routerLinkActive="active" class="text-white">
           <span class="pi pi-users"></span>
           Pacientes
         </a>
-        <a *ngIf="roleUser === 'medico'"  routerLink="/main/informs" routerLinkActive="active" class="text-white">
+        <a *ngIf="roleUser.toLocaleLowerCase() === 'medico' || roleUser.toLocaleLowerCase() === 'médico'"  routerLink="/main/informs" routerLinkActive="active" class="text-white">
           <span class="pi pi-clipboard"></span>
           Informes
         </a>
-        <a *ngIf="roleUser === 'Paciente' || roleUser === 'paciente' " routerLink="/main/forms" routerLinkActive="active" class="text-white">
+        <a *ngIf="roleUser.toLocaleLowerCase() === 'medico' || roleUser.toLocaleLowerCase() === 'médico'"  routerLink="/main/medicines" routerLinkActive="active" class="text-white">
+          <span class="pi pi-box"></span>
+          Medicamentos
+        </a>
+        <a *ngIf="roleUser.toLocaleLowerCase() === 'paciente' " routerLink="/main/forms" routerLinkActive="active" class="text-white">
           <span class="pi pi-file"></span>
           Formularios
         </a>

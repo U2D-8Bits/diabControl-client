@@ -9,6 +9,7 @@ import { ChatsPageComponent } from './pages/chats-page/chats-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
 import { ActPageComponent } from './pages/act-page/act-page.component';
+import { MedsPageComponent } from './pages/meds-page/meds-page.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,11 @@ const routes: Routes = [
         path: 'informs',
         title: 'Informes',
         component: InformsPageComponent
+      },
+      {
+        path: 'medicines',
+        title: 'Medicamentos',
+        component: MedsPageComponent
       },
       {
         path: 'forms',
