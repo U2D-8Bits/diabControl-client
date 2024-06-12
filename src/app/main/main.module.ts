@@ -7,7 +7,6 @@ import { HeroPageComponent } from './pages/hero-page/hero-page.component';
 import { PatientsPageComponent } from './pages/patients-page/patients-page.component';
 import { InformsPageComponent } from './pages/informs-page/informs-page.component';
 import { FormsPageComponent } from './pages/forms-page/forms-page.component';
-import { ChatsPageComponent } from './pages/chats-page/chats-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { RouterModule } from '@angular/router';
 import { PrimengModule } from '../primeng/primeng.module';
@@ -39,34 +38,32 @@ import { ViewCategoryComponent } from './components/categories/view-category/vie
 
 @NgModule({
   declarations: [
-    MainLayoutComponent,
-    HeroPageComponent,
-    PatientsPageComponent,
-    InformsPageComponent,
-    FormsPageComponent,
-    ChatsPageComponent,
-    ProfilePageComponent,
-    FirstCharacterPipe,
-    ViewPatientComponent,
-    CreatePatientComponent,
-    CreateMedicComponent,
-    ViewMedicComponent,
-    CreateFormComponent,
-    ViewFormComponent,
-    HistoriesPageComponent,
-    CreateHistoryComponent,
-    ViewHistoryComponent,
     ActPageComponent,
     CreateActComponent,
-    ViewActComponent,
-    SafeUrlPipe,
-    MedsPageComponent,
-    ListMedicineComponent,
-    CreateMedicineComponent,
-    ViewMedicineComponent,
-    ListCategoriesComponent,
     CreateCategoryComponent,
-    ViewCategoryComponent
+    CreateFormComponent,
+    CreateHistoryComponent,
+    CreateMedicComponent,
+    CreateMedicineComponent,
+    CreatePatientComponent,
+    FirstCharacterPipe,
+    FormsPageComponent,
+    HeroPageComponent,
+    HistoriesPageComponent,
+    InformsPageComponent,
+    ListCategoriesComponent,
+    ListMedicineComponent,
+    MainLayoutComponent,
+    MedsPageComponent,
+    PatientsPageComponent,
+    ProfilePageComponent,
+    SafeUrlPipe,
+    ViewActComponent,
+    ViewCategoryComponent,
+    ViewHistoryComponent,
+    ViewMedicComponent,
+    ViewMedicineComponent,
+    ViewPatientComponent,
   ],
   imports: [
     CommonModule,
@@ -76,7 +73,8 @@ import { ViewCategoryComponent } from './components/categories/view-category/vie
 
     PrimengModule,
     MaterialuiModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   exports: [
     MainLayoutComponent,
@@ -84,7 +82,6 @@ import { ViewCategoryComponent } from './components/categories/view-category/vie
     PatientsPageComponent,
     InformsPageComponent,
     FormsPageComponent,
-    ChatsPageComponent,
     ProfilePageComponent,
   ]
 })
