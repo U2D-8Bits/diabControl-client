@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CategoryService } from '../../../services/categories.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { CategoryService } from '../../../services/meds/categories.service';
 
 @Component({
   selector: 'main-create-category',

@@ -6,7 +6,6 @@ import { PatientsPageComponent } from './pages/patients-page/patients-page.compo
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
 import { ActPageComponent } from './pages/act-page/act-page.component';
-import { MedsPageComponent } from './pages/meds-page/meds-page.component';
 import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/show-medicine-page.component';
 
 const routes: Routes = [

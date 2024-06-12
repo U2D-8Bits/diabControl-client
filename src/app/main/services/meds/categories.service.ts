@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environments';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Category } from '../interfaces/categories/category.interface';
+import { environment } from '../../../environments/environments';
+import { Category } from '../../interfaces/categories/category.interface';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
