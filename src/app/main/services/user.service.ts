@@ -183,4 +183,20 @@ export class UserService {
       })
     );
   }
+
+    //? Obtener el usuario actual
+    getCurrentUser(): Observable<User> {
+      const token = localStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+      return this.http.get<User>(`${this.baseUrl}/auth/me`, { headers })
+        .pipe(
+          map((user: User) => {
+            return user;
+          }),
+          catchError((err: any) => {
+            return throwError(err);
+          })
+        );
+    }
 }

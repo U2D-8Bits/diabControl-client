@@ -51,8 +51,6 @@ export class MainLayoutComponent implements OnInit {
   ngOnInit() {
 
     this.loadUserData();
-    console.log(`userInfo: ${this.userInfo}`);
-    console.log(`nameUser: ${this.nameUser}`);
 
     //? Menu de opciones del icono de usuario
     this.items = [
