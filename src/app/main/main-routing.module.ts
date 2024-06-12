@@ -3,13 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { HeroPageComponent } from './pages/hero-page/hero-page.component';
 import { PatientsPageComponent } from './pages/patients-page/patients-page.component';
-import { InformsPageComponent } from './pages/informs-page/informs-page.component';
-import { FormsPageComponent } from './pages/forms-page/forms-page.component';
-import { ChatsPageComponent } from './pages/chats-page/chats-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
 import { ActPageComponent } from './pages/act-page/act-page.component';
 import { MedsPageComponent } from './pages/meds-page/meds-page.component';
+import { ShowMedicinePageComponent } from './pages/meds/show-medicine-page/show-medicine-page.component';
 
 const routes: Routes = [
   {
@@ -39,24 +37,13 @@ const routes: Routes = [
         component: ActPageComponent
       },
       {
-        path: 'informs',
-        title: 'Informes',
-        component: InformsPageComponent
-      },
-      {
         path: 'medicines',
         title: 'Medicamentos',
-        component: MedsPageComponent
-      },
-      {
-        path: 'forms',
-        title: 'Formularios',
-        component: FormsPageComponent
+        component: ShowMedicinePageComponent
       },
       {
         path: 'chats',
         title: 'Chats',
-        component: ChatsPageComponent
       },
       {
         path: 'profile',
