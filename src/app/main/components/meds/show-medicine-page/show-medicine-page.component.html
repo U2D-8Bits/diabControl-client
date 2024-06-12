@@ -1,0 +1,12 @@
+<mat-tab-group (selectedTabChange)="onTabChange($event)">
+    <mat-tab id="mat-tab" label="Categorias">
+      <ng-container *ngIf="selectedIndex === 0">
+        <main-categories-page />
+      </ng-container>
+    </mat-tab>
+    <mat-tab id="mat-tab" label="Medicinas">
+      <ng-container *ngIf="selectedIndex === 1">
+        <main-medicines-page />
+      </ng-container>
+    </mat-tab>
+  </mat-tab-group>

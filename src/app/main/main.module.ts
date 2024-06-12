@@ -11,12 +11,9 @@ import { FirstCharacterPipe } from './pipes/first-character.pipe';
 import { HeroPageComponent } from './pages/hero-page/hero-page.component';
 import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
 import { InformsPageComponent } from './pages/informs-page/informs-page.component';
-import { ListCategoriesComponent } from './components/categories/list-categories/list-categories.component';
-import { ListMedicineComponent } from './components/medicines/list-medicine/list-medicine.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { MainRoutingModule } from './main-routing.module';
 import { MaterialuiModule } from '../materialui/materialui.module';
-import { MedsPageComponent } from './pages/meds-page/meds-page.component';
 import { NgModule } from '@angular/core';
 import { PatientsPageComponent } from './pages/patients-page/patients-page.component';
 import { PrimengModule } from '../primeng/primeng.module';
@@ -25,13 +22,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { SharedModule } from '../shared/shared.module';
-import { ShowMedicinePageComponent } from './pages/meds/show-medicine-page/show-medicine-page.component';
 import { ViewActComponent } from './components/Act/view-act/view-act.component';
 import { ViewCategoryComponent } from './components/categories/view-category/view-category.component';
 import { ViewHistoryComponent } from './components/histories/view-history/view-history.component';
 import { ViewMedicComponent } from './components/medic/view-medic/view-medic.component';
 import { ViewMedicineComponent } from './components/medicines/view-medicine/view-medicine.component';
 import { ViewPatientComponent } from './components/patient/view-patient/view-patient.component';
+import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/show-medicine-page.component';
+import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
+import { MedicinesPageComponent } from './pages/medicines-page/medicines-page.component';
 
 @NgModule({
   declarations: [
@@ -46,10 +45,7 @@ import { ViewPatientComponent } from './components/patient/view-patient/view-pat
     HeroPageComponent,
     HistoriesPageComponent,
     InformsPageComponent,
-    ListCategoriesComponent,
-    ListMedicineComponent,
     MainLayoutComponent,
-    MedsPageComponent,
     PatientsPageComponent,
     ProfilePageComponent,
     SafeUrlPipe,
@@ -60,6 +56,8 @@ import { ViewPatientComponent } from './components/patient/view-patient/view-pat
     ViewMedicineComponent,
     ViewPatientComponent,
     ShowMedicinePageComponent,
+    CategoriesPageComponent,
+    MedicinesPageComponent,
   ],
   imports: [
     CommonModule,
