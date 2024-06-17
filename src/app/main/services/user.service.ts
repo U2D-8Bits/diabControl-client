@@ -1,6 +1,6 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { User } from '../../auth/interfaces';
 
@@ -53,6 +53,31 @@ export class UserService {
     .pipe(
       map((users: User[]) => {
         return users
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+
+  //? Obtener todos los usuarios de rol pacientes paginados
+  getAllPatientsPaginated(page: number, limit: number, search: string): Observable<any>{
+    const url = `${this.baseUrl}/users/pacientes/paginated`;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    let params = new HttpParams()
+      .set('page', page)
+      .set('limit', limit)
+      if(search){
+        params = params.set('search', search)
+      }
+
+    return this.http.get<any>(url, {headers, params})
+    .pipe(
+      map((resp: any) => {
+        return resp
       }),
       catchError((err: any) => {
         return throwError(err);
@@ -183,4 +208,20 @@ export class UserService {
       })
     );
   }
+
+    //? Obtener el usuario actual
+    getCurrentUser(): Observable<User> {
+      const token = localStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+      return this.http.get<User>(`${this.baseUrl}/auth/me`, { headers })
+        .pipe(
+          map((user: User) => {
+            return user;
+          }),
+          catchError((err: any) => {
+            return throwError(err);
+          })
+        );
+    }
 }
