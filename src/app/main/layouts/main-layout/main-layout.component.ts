@@ -51,8 +51,6 @@ export class MainLayoutComponent implements OnInit {
   ngOnInit() {
 
     this.loadUserData();
-    console.log(`userInfo: ${this.userInfo}`);
-    console.log(`nameUser: ${this.nameUser}`);
 
     //? Menu de opciones del icono de usuario
     this.items = [
@@ -124,6 +122,12 @@ export class MainLayoutComponent implements OnInit {
         label: 'Informes',
         icon: 'pi pi-clipboard',
         routerLink: ['/main/informs'],
+        visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
+      },
+      {
+        label: 'Medicamentos',
+        icon: 'pi pi-box',
+        routerLink: ['/main/medicines'],
         visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
       },
       {

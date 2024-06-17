@@ -28,6 +28,10 @@ export class PatientsPageComponent implements OnInit{
   
 
   public patients: User[] = []
+  public totalPatients: number = 0
+  public currentPage: number = 1
+  public pageSize: number = 10
+  public search: string = ''
 
 
 
@@ -78,7 +82,26 @@ export class PatientsPageComponent implements OnInit{
       })
   }
 
+  loadPatients(){
+    this.userService.getAllPatientsPaginated(this.currentPage, this.pageSize, this.search)
+    .subscribe({
+      next: (resp: any) => {
+        this.patients = resp.data
+        this.totalPatients = resp.total
+      }
+    })
+  }
 
+  onSearchChange(search: string){
+    this.search = search
+    this.currentPage = 1
+    this.loadPatients()
+  }
+
+  onPageChange(page: number){
+    this.currentPage = page
+    this.loadPatients()
+  }
 
 
 
@@ -145,7 +168,8 @@ export class PatientsPageComponent implements OnInit{
 
   ngOnInit(): void {
     console.log('Componente de PatientsPageComponent creado')
-    this.getAllPatients()
+    // this.getAllPatients()
+    this.loadPatients()
   }
 
 
