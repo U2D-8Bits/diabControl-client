@@ -24,6 +24,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { FileUploadModule } from 'primeng/fileupload';
 import { BadgeModule } from 'primeng/badge';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [],
@@ -49,7 +50,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
     InputSwitchModule,
     FileUploadModule,
     BadgeModule,
-    ProgressBarModule
+    ProgressBarModule,
+    ScrollPanelModule,
   ],
 })
 export class PrimengModule { }

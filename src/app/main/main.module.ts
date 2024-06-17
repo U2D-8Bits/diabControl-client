@@ -10,7 +10,6 @@ import { CreatePatientComponent } from './components/patient/create-patient/crea
 import { FirstCharacterPipe } from './pipes/first-character.pipe';
 import { HeroPageComponent } from './pages/hero-page/hero-page.component';
 import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
-import { InformsPageComponent } from './pages/informs-page/informs-page.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { MainRoutingModule } from './main-routing.module';
 import { MaterialuiModule } from '../materialui/materialui.module';
@@ -31,6 +30,7 @@ import { ViewPatientComponent } from './components/patient/view-patient/view-pat
 import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/show-medicine-page.component';
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 import { MedicinesPageComponent } from './pages/medicines-page/medicines-page.component';
+import { FollowUpComponent } from './components/histories/follow-up/follow-up.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,6 @@ import { MedicinesPageComponent } from './pages/medicines-page/medicines-page.co
     FirstCharacterPipe,
     HeroPageComponent,
     HistoriesPageComponent,
-    InformsPageComponent,
     MainLayoutComponent,
     PatientsPageComponent,
     ProfilePageComponent,
@@ -58,6 +57,7 @@ import { MedicinesPageComponent } from './pages/medicines-page/medicines-page.co
     ShowMedicinePageComponent,
     CategoriesPageComponent,
     MedicinesPageComponent,
+    FollowUpComponent,
   ],
   imports: [
     CommonModule,
@@ -74,7 +74,6 @@ import { MedicinesPageComponent } from './pages/medicines-page/medicines-page.co
     MainLayoutComponent,
     HeroPageComponent,
     PatientsPageComponent,
-    InformsPageComponent,
     ProfilePageComponent,
   ]
 })

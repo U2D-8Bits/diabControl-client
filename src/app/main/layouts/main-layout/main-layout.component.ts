@@ -119,22 +119,10 @@ export class MainLayoutComponent implements OnInit {
         visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
       },
       {
-        label: 'Informes',
-        icon: 'pi pi-clipboard',
-        routerLink: ['/main/informs'],
-        visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
-      },
-      {
         label: 'Medicamentos',
         icon: 'pi pi-box',
         routerLink: ['/main/medicines'],
         visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
-      },
-      {
-        label: 'Formularios',
-        icon: 'pi pi-file',
-        routerLink: ['/main/forms'],
-        visible: this.roleUser.toLowerCase() === 'paciente'
       },
       {
         label: 'Mi Perfil',

@@ -24,17 +24,9 @@
           <span class="pi pi-users"></span>
           Pacientes
         </a>
-        <a *ngIf="roleUser.toLocaleLowerCase() === 'medico' || roleUser.toLocaleLowerCase() === 'médico'"  routerLink="/main/informs" routerLinkActive="active" class="text-white">
-          <span class="pi pi-clipboard"></span>
-          Informes
-        </a>
         <a *ngIf="roleUser.toLocaleLowerCase() === 'medico' || roleUser.toLocaleLowerCase() === 'médico'"  routerLink="/main/medicines" routerLinkActive="active" class="text-white">
           <span class="pi pi-box"></span>
           Medicamentos
-        </a>
-        <a *ngIf="roleUser.toLocaleLowerCase() === 'paciente' " routerLink="/main/forms" routerLinkActive="active" class="text-white">
-          <span class="pi pi-file"></span>
-          Formularios
         </a>
         <a routerLink="/main/chats" routerLinkActive="active" class="text-white">
           <span class="pi pi-comments"></span>
