@@ -18,7 +18,7 @@ import { NgModule } from '@angular/core';
 import { PatientsPageComponent } from './pages/patients-page/patients-page.component';
 import { PrimengModule } from '../primeng/primeng.module';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { SharedModule } from '../shared/shared.module';
@@ -68,6 +68,7 @@ import { MedicinesPageComponent } from './pages/medicines-page/medicines-page.co
     PrimengModule,
     MaterialuiModule,
     SharedModule,
+    FormsModule,
   ],
   exports: [
     MainLayoutComponent,
