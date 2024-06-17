@@ -1,0 +1,193 @@
+<div class="card border border-red-950 rounded-none p-3 h-full">
+    <p-scrollPanel [style]="{ width: '100%', height: '100%' }">
+
+        <table class="border-collapse w-full mb-8">
+            <Label class="font-semibold size-10 text-black">Información del Paciente</Label>
+            <tr
+                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td
+                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                    Nombres Completos del Paciente
+                </td>
+                <td
+                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" [value]="userData?.user_name + ' ' + userData?.user_lastname"
+                        class="text-black" placeholder="Nombre y Apellido">
+                </td>
+            </tr>
+            <tr
+                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td
+                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                    Cédula de Identidad
+                </td>
+                <td
+                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" [value]="userData?.user_ced" class="text-black"
+                        placeholder="Nombre y Apellido">
+                </td>
+            </tr>
+            <tr
+                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td
+                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                    Edad
+                </td>
+                <td
+                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" [value]="userData?.user_age" class="text-black">
+                </td>
+            </tr>
+            <tr
+                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td
+                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                    Género
+                </td>
+                <td
+                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" [value]="userData?.user_genre" class="text-black">
+                </td>
+            </tr>
+        </table>
+
+        <Label class="font-semibold size-10 text-black">Historias Clínicas</Label>
+        <table *ngFor="let history of histories" class="border-collapse w-full mb-8">
+
+            <tr
+                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td
+                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                    Código de Historia Clínica</td>
+                <td
+                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" [value]="history.id_medic_history" class="text-black">
+                </td>
+            </tr>
+            <tr
+                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td
+                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                    Fecha de consulta</td>
+                <td
+                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" [value]="history.created_at | date: 'dd/MM/yyyy'" class="text-black">
+                </td>
+            </tr>
+            <tr
+                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td
+                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                    Atendido Por</td>
+                <td
+                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" [value]="history.medico.user_name + ' ' + history.medico.user_lastname" class="text-black">
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Peso (Peso x Talla)</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <input disabled type="text" [value]="history.weight_patient + ' ' + 'Kilo/Z'" class="text-black">
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Talla (Talla x Edad)</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <input disabled type="text" [value]="history.tall_patient + ' ' + 'c.m/Z' " class="text-black">
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Pulso (Peso x Edad)</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <input disabled type="text" [value]="history.pulse_patient + ' ' + 'Pulsaciones X Min' " class="text-black">
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Presión Arterial</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <input disabled type="text" [value]="history.presure_patient + ' ' + 'mmHg' " class="text-black">
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Frecuencia Cardiaca</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <input disabled type="text" [value]="history.frequency_patient + ' ' + 'X Min.' " class="text-black">
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Temperatura</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <input disabled type="text" [value]="history.temperature_patient + ' ' + '°C' " class="text-black">
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Motivo de consulta</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <textarea disabled [value]="history.consult_reason" rows="4"
+                class="w-full text-gray-900" required></textarea>
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Exámen físico</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <textarea disabled [value]="history.fisic_exam" rows="4"
+                class="w-full text-gray-900" required></textarea>
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Impresión diagnóstico / Prescipción</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <textarea disabled [value]="history.diagnostic" rows="4"
+                class="w-full text-gray-900" required></textarea>
+            </tr>
+
+            <tr
+            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td
+                class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
+                Indicaciones médicas</td>
+            <td
+                class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                <textarea disabled [value]="history.recipe" rows="4"
+                class="w-full text-gray-900" required></textarea>
+            </tr>
+
+        </table>
+    </p-scrollPanel>
+</div>
