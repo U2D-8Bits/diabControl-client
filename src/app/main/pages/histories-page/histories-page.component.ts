@@ -9,6 +9,7 @@ import { CreateHistoryComponent } from '../../components/histories/create-histor
 import { User } from '../../../auth/interfaces';
 import { ViewHistoryComponent } from '../../components/histories/view-history/view-history.component';
 import Swal from 'sweetalert2';
+import { FollowUpComponent } from '../../components/histories/follow-up/follow-up.component';
 
 @Component({
   selector: 'app-histories-page',
@@ -88,6 +89,20 @@ export class HistoriesPageComponent implements OnInit {
         data: {
           idPatient: this.idPatient,
           idHistory: this.idHistory
+        }
+      })
+    }
+
+    if( componentName === 'control'){
+      this.ref = this.dialigService.open(FollowUpComponent, {
+        header: headerText,
+        maximizable: true,
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '100vw', width: '80vw' },
+        height: '80%',
+        contentStyle: { overflow: 'auto' },
+        data: {
+          idPatient: this.idPatient,
         }
       })
     }
