@@ -19,15 +19,24 @@ export class CategoriesPageComponent implements OnInit {
   private categoryService = inject(CategoryService);
   public dialogService = inject(DialogService);
   ref: DynamicDialogRef | undefined;
+
+
   public categories: Category[] = [];
   public existCategories: boolean = false;
   public idCategory!: number;
+  public totalCategories: number = 0
+  public currentPage: number = 1
+  public pageSize: number = 10
+  public search: string = ''
+
+
+
 
   ngOnInit(): void {
     this.getCategories();
   }
 
-  // Metodo para obtener todas las categorias existentes
+  //? Metodo para obtener todas las categorias existentes
   getCategories() {
     this.categoryService.getAllCategories().subscribe({
       next: (categories: Category[]) => {
@@ -42,12 +51,41 @@ export class CategoriesPageComponent implements OnInit {
     });
   }
 
-  // Metodo para obtener el id de una categoria
+
+
+  //? Método para cargar las categorias
+  loadCategories(){
+    this.categoryService.getAllCategoriesPaginated(this.currentPage, this.pageSize, this.search)
+    .subscribe({
+      next: (resp: any) => {
+        this.categories = resp.data;
+        this.totalCategories = resp.total;
+      }
+    })
+  }
+
+
+  onPageChange(page: number){
+    this.currentPage = page
+    this.loadCategories()
+  }
+
+
+  //? Metodo para buscar categorias
+  onSearchChange(search: string){
+    this.search = search
+    this.currentPage = 1
+    this.loadCategories()
+  }
+
+
+
+  //? Metodo para obtener el id de una categoria
   getIdCategory(id: number) {
     this.idCategory = id;
   }
 
-  // Metodo para abrir el modal
+  //? Metodo para abrir el modal
   showModal(componentName: string, headerText: string) {
     if (componentName === 'create') {
       this.dialogService.open(CreateCategoryComponent, {
@@ -73,7 +111,7 @@ export class CategoriesPageComponent implements OnInit {
     }
   }
 
-  // Metodo para eliminar una categoria
+  //? Metodo para eliminar una categoria
   deleteCategory(id: number) {
     Swal.fire({
       title: '¿Estás seguro?',
