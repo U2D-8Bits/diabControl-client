@@ -59,19 +59,15 @@ export class CategoriesPageComponent implements OnInit {
         style: { 'max-width': '100vw', width: '30vw' },
         height: '50%',
         contentStyle: { overflow: 'auto' },
-        data: {
-
-        }
       })
     }
 
     if(componentName === 'view'){
       this.dialigService.open(ViewCategoryComponent, {
         header: headerText,
-        maximizable: true,
         breakpoints: { '960px': '500px', '640px': '100vw' },
-        style: { 'max-width': '100vw', width: '80vw' },
-        height: '80%',
+        style: { 'max-width': '100vw', width: '30vw' },
+        height: '50%',
         contentStyle: { overflow: 'auto' },
         data: {
           idCategory: this.idCategory,

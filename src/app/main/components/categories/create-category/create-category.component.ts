@@ -34,7 +34,6 @@ export class CreateCategoryComponent implements OnInit {
   });
 
   ngOnInit() {
-    console.log(`CreateCategoryComponent initialized!`);
   }
 
   //? Metodo para crear una categoria
@@ -116,6 +115,5 @@ export class CreateCategoryComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log(`CreateCategoryComponent destroyed!`);
   }
 }

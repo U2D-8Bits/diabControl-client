@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../../environments/environments';
 import { Category } from '../../interfaces/categories/category.interface';
 
@@ -23,7 +23,7 @@ export class CategoryService {
             return category
         }),
         catchError((err: any) => {
-            return throwError(err)
+            return of(err)
         })
     )
   }
@@ -39,7 +39,7 @@ export class CategoryService {
             return categories
         }),
         catchError((err: any) => {
-            return throwError(err)
+            return of(err)
         })
     )
   }
@@ -55,7 +55,7 @@ export class CategoryService {
             return category
         }),
         catchError((err: any) => {
-            return throwError(err)
+            return of(err)
         })
     )
   }
@@ -66,13 +66,13 @@ export class CategoryService {
 
     const url = `${this.baseUrl}/categories/${id}`;
 
-    return this.http.put<Category>(url, categoryData)
+    return this.http.patch<Category>(url, categoryData)
     .pipe(
         map((category: Category) => {
             return category
         }),
         catchError((err: any) => {
-            return throwError(err)
+            return of(err)
         })
     )
 
