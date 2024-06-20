@@ -2,18 +2,30 @@
 <p-confirmDialog></p-confirmDialog>
 
 <div class="max-w-full mx-auto bg-white p-8">
-    <form action="" [formGroup]="medicineForm">
+    <form action="" [formGroup]="medicineForm" (ngSubmit)="createMedicine()">
         <div class="grid gap-6 mb-6 lg:grid-cols-1">
             <div class="flex flex-col">
-                <label for="">Nombre de la Categoría</label>
-                <input type="text" formControlName="name_category" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200 invalid:border-red-600" placeholder="Nombre de Categoría de medicamento" required>
+                <label for="">Nombre de la Medicina</label>
+                <input type="text" formControlName="name_medicine" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200 invalid:border-red-600" placeholder="Nombre de Medicamento" required>
+            </div>
+            <div class="flex flex-col">
+                <label for="">Nombre Genérico de la Medicina</label>
+                <input type="text" formControlName="generic_name" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200 invalid:border-red-600" placeholder="Nombre de Genérico de Medicamento" required>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="">Categoría de Medicina</label>
+                <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 invalid:border-red-600" formControlName="idCategory" required>
+                    <option value="" disabled selected>Seleccione una categoría</option>
+                    <option *ngFor="let category of categories" [value]="category.id">{{category.name_category}}</option>
+                </select>
             </div>
         </div>
         <div class="grid gap-6 mb-6 lg:grid-cols-1">
-            <button [disabled]="medicineForm.invalid" type="submit"
+            <button [disabled]="medicineForm.invalid" type="submit" (click)="createMedicine()"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">Crear Categoría</button>
     
-            <button 
+            <button (click)="cancelMedicine()"
             class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:red:ring-blue-800">Cancelar Categoría</button>
         </div>
     </form>

@@ -8,6 +8,8 @@ import { CreateMedicComponent } from '../../components/medic/create-medic/create
 import { ViewMedicComponent } from '../../components/medic/view-medic/view-medic.component';
 import { CategoryService } from '../../services/meds/categories.service';
 import { Category } from '../../interfaces/categories/category.interface';
+import { ViewMedicineComponent } from '../../components/medicines/view-medicine/view-medicine.component';
+import { CreateMedicineComponent } from '../../components/medicines/create-medicine/create-medicine.component';
 @Component({
   selector: 'main-medicines-page',
   templateUrl: './medicines-page.component.html',
@@ -23,9 +25,10 @@ export class MedicinesPageComponent implements OnInit{
   private categoryService = inject(CategoryService);
 
 
-  medicines: Medicine[] = [];
+  public medicines: Medicine[] = [];
   idMedicine: number | undefined;
   existCategories: boolean = false;
+  existMedicines: boolean = false;
 
   ngOnInit(): void {
     this.getAllMedicines();
@@ -33,7 +36,7 @@ export class MedicinesPageComponent implements OnInit{
 
 
   //? Método para obtener todas las categorías
-  getAllCategories(): void{
+  getAllCategories(){
     this.categoryService
     .getAllCategories()
     .subscribe({
@@ -43,7 +46,7 @@ export class MedicinesPageComponent implements OnInit{
         }
       },
       error: (erResponse: any) => {
-        this.existCategories = false; 
+        this.existCategories = false;
       }
     })
   }
@@ -55,10 +58,15 @@ export class MedicinesPageComponent implements OnInit{
     .subscribe({
       next: (medicines: Medicine[]) => {
         this.getAllCategories();
-        this.medicines = medicines;
+        if(medicines.length > 0){
+          this.existMedicines = true;
+          this.medicines = medicines;
+        }
+        console.log(medicines);
+        console.log("Tamaño de medicinas: ", medicines.length);
       },
       error: (erResponse: any) => {
-        
+        console.log("Tamaño de medicinas: ", this.medicines.length);
       }
     })
   }
@@ -81,12 +89,12 @@ export class MedicinesPageComponent implements OnInit{
         .deleteMedicine(id)
         .subscribe({
           next: (response: any) => {
-            this.getAllMedicines();
             Swal.fire(
               '¡Eliminado!',
               'La medicina ha sido eliminada.',
               'success'
             )
+            this.ngOnInit();
           },
           error: (erResponse: any) => {
             Swal.fire(
@@ -106,21 +114,21 @@ export class MedicinesPageComponent implements OnInit{
   showModal(componentName: string, headerText: string){
 
     if(componentName === 'create'){
-      this.dialogService.open( CreateMedicComponent, {
+      this.dialogService.open( CreateMedicineComponent, {
         header: headerText,
         breakpoints: { '960px': '500px', '640px': '100vw' },
         style: { 'max-width': '100vw', width: '50vw' },
-        height: '50%',
+        height: '70%',
         baseZIndex: 10000
       })
     }
 
     if(componentName === 'view'){
-      this.dialogService.open( ViewMedicComponent, {
+      this.dialogService.open( ViewMedicineComponent, {
         header: headerText,
         breakpoints: { '960px': '500px', '640px': '100vw' },
         style: { 'max-width': '100vw', width: '50vw' },
-        height: '50%',
+        height: '70%',
         baseZIndex: 10000,
         data: {
           idMedicine: this.idMedicine

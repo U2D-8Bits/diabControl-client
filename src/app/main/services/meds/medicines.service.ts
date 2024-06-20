@@ -36,7 +36,7 @@ export class MedicineService {
         )
     }
 
-    createMedicine(medicine: CreateMedicine): Observable<Medicine>{
+    createMedicine(medicine: any): Observable<Medicine>{
         const url = `${this.baseUrl}/medicines`;
 
         return this.http.post<Medicine>(url, medicine)
@@ -51,7 +51,7 @@ export class MedicineService {
     updateMedicine(id: number, medicine: CreateMedicine): Observable<Medicine>{
         const url = `${this.baseUrl}/medicines/${id}`;
 
-        return this.http.put<Medicine>(url, medicine)
+        return this.http.patch<Medicine>(url, medicine)
         .pipe(
             map((medicine: Medicine) => medicine),
             catchError((err: any) => {
