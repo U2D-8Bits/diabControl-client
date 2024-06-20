@@ -38,7 +38,7 @@
             </svg>
         </div>
         <h1 class="mt-3 text-lg text-gray-800 ">No existen Pacientes</h1>
-        <p class="mt-2 text-gray-500 ">Actualmente no se encuentra registrado ningun paciente dentro de la aplicacion.
+        <p class="mt-2 text-gray-500 ">Actualmente no se encuentra registrado ningun paciente dentro de la aplicación.
         </p>
         <div class="flex items-center mt-4 sm:mx-auto gap-x-3">
             <button (click)="showDialog('create', 'Agregar Usuario')"
@@ -60,7 +60,7 @@
     <thead>
         <tr>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                Codigo</th>
+                Código</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
                 Nombres</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
@@ -68,10 +68,10 @@
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
                 Correo</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                Fecha de Creacion
+                Fecha de Creación
             </th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                Ultima Modificacion</th>
+                Última Modificación</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
                 Estado</th>
             <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
@@ -118,7 +118,7 @@
                     type="button" data-ripple-light="true">
                     <span class="pi pi-eye"></span>
                 </button>
-                <button [routerLink]="['/main/patients', patient.id_user]" pTooltip="Historias clinicas"
+                <button [routerLink]="['/main/patients', patient.id_user]" pTooltip="Historias clínicas"
                     class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button" data-ripple-light="true">
                     <span class="pi pi-receipt"></span>

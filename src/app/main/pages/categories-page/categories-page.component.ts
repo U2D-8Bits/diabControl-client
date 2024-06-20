@@ -7,6 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateCategoryComponent } from '../../components/categories/create-category/create-category.component';
 import { ViewCategoryComponent } from '../../components/categories/view-category/view-category.component';
 
+
 @Component({
   selector: 'main-categories-page',
   templateUrl: './categories-page.component.html',
@@ -34,9 +35,9 @@ export class CategoriesPageComponent implements OnInit {
     .subscribe({
       next: (categories: Category[]) => {
         this.categories = categories;
+        console.log(this.categories)
       },
       error: (err: any ) => {
-        console.log("Error:", err.error.message)
       }
     })
   }
@@ -54,10 +55,9 @@ export class CategoriesPageComponent implements OnInit {
     if(componentName === 'create'){
       this.dialigService.open(CreateCategoryComponent, {
         header: headerText,
-        maximizable: true,
         breakpoints: { '960px': '500px', '640px': '100vw' },
-        style: { 'max-width': '100vw', width: '80vw' },
-        height: '80%',
+        style: { 'max-width': '100vw', width: '30vw' },
+        height: '50%',
         contentStyle: { overflow: 'auto' },
         data: {
 
@@ -100,15 +100,15 @@ export class CategoriesPageComponent implements OnInit {
           next: (category: Category) => {
             Swal.fire(
               'Borrado!',
-              'La historia clinica ha sido eliminada.',
+              'La categoría ha sido eliminada.',
               'success'
             )
-            this.getCategories()
+            this.ngOnInit();
           },
           error: (err: any) => {
             Swal.fire(
               'Error!',
-              'Ha ocurrido un error al eliminar la historia clinica.',
+              'Ha ocurrido un error al eliminar la categoría.',
               'error'
             )
           }
