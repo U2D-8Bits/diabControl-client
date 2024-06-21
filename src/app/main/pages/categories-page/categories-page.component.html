@@ -1,99 +1,84 @@
 <div class="flex justify-between items-center p-2">
-
     <h1 class="text-2xl text-gray-700">Categorías</h1>
-
-    <!-- Boton para agregar paciente -->
-    <button (click)="showModal('create', 'Agregar Usuario')"
-        class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
-        type="button">
+    <button (click)="showModal('create', 'Agregar Categoría')" class="flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto" type="button">
         <span class="pi pi-plus"></span>
         Agregar categoría
     </button>
-
 </div>
 
+<div class="relative w-9/12 mb-3 ml-3">
+    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd"></path>
+        </svg>
+    </div>
+    <input type="text" id="voice-search" [(ngModel)]="search" (ngModelChange)="onSearchChange($event)"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+        placeholder="Buscar una categoria por el nombre" required>
+</div>
 
 <div *ngIf="categories.length === 0" class="flex items-center mt-6 text-center border rounded-lg h-96 mx-2">
     <div class="flex flex-col w-full max-w-sm px-4 mx-auto">
-        <div class="p-3 mx-auto text-blue-500 bg-blue-100 rounded-full ">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        <div class="p-3 mx-auto text-blue-500 bg-blue-100 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
         </div>
-        <h1 class="mt-3 text-lg text-gray-800 ">No existen Categorías</h1>
-        <p class="mt-2 text-gray-500 ">Actualmente no se encuentra registrada ninguna categoría dentro de la aplicación.
-        </p>
+        <h1 class="mt-3 text-lg text-gray-800">No existen Categorías</h1>
+        <p class="mt-2 text-gray-500">Actualmente no se encuentra registrada ninguna categoría dentro de la aplicación.</p>
         <div class="flex items-center mt-4 sm:mx-auto gap-x-3">
-            <button (click)="showModal('create', 'Agregar Usuario')"
-                class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <button (click)="showModal('create', 'Agregar Categoría')" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-
                 <span>Agregar Categoría</span>
             </button>
         </div>
     </div>
 </div>
 
-
 <table *ngIf="categories.length > 0" class="border-collapse w-full">
     <thead>
         <tr>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                Codigo
-            </th>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                Nombres de categoría
-            </th>
-            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                Acciones           
-            </th>
-            
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Codigo</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombres de categoría</th>
+            <th class="p-3 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Acciones</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let category of categories"
-            class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-            <td
-                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-            </td>
-            <td
-                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-            </td>
-            <td
-                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
-            </td>
-            <td
-                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
-            </td>
-            <td
-                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
-            </td>
-            <td
-                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b  block lg:table-cell relative lg:static">
-            </td>
-            <td
-                class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-            </td>
-            <td
-                class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
-                <button pTooltip="Ver Categoría" (click)="getIdCategory(category.id)"
-                    (click)="showModal('view', 'Ver Categoría')"
-                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    type="button" data-ripple-light="true">
+        <tr *ngFor="let category of categories" class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">{{ category.id }}</td>
+            <td class="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">{{ category.name_category | uppercase }}</td>
+            <td class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
+                <button pTooltip="Ver Categoría" (click)="getIdCategory(category.id)" (click)="showModal('view', 'Ver Categoría')" class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button" data-ripple-light="true">
                     <span class="pi pi-eye"></span>
                 </button>
-                <button pTooltip="Eliminar Categoría" (click)="deleteCategory(category.id)"
-                    class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    type="button" data-ripple-light="true">
+                <button pTooltip="Eliminar Categoría" (click)="deleteCategory(category.id)" class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button" data-ripple-light="true">
                     <span class="pi pi-trash"></span>
                 </button>
             </td>
         </tr>
     </tbody>
 </table>
+
+<div class="flex items-center justify-center">
+    <div
+        class="max-w-full md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto bg-white p-6 rounded-lg shadow-sm">
+        <div class="flex justify-center">
+            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
+                class="relative inline-flex items-center px-4 py-2 text-sm bg-blue-600 border border-fuchsia-100 hover:border-violet-100 text-white font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">Anterior
+            </button>
+            <span
+                class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-fuchsia-100 hover:bg-fuchsia-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                Página {{ currentPage }}
+            </span>
+            <button (click)="onPageChange(currentPage + 1)" [disabled]="(currentPage * pageSize) >= totalCategories"
+                class="relative inline-flex items-center px-4 py-2 text-sm bg-blue-600 border border-fuchsia-100 hover:border-violet-100 text-white font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                Siguiente
+            </button>
+        </div>
+    </div>
+</div>

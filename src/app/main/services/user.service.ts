@@ -1,7 +1,7 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { User } from '../../auth/interfaces';
 
 @Injectable({
@@ -80,7 +80,7 @@ export class UserService {
         return resp
       }),
       catchError((err: any) => {
-        return throwError(err);
+        return of(err);
       })
     );
   }

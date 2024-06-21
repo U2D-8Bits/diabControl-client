@@ -51,6 +51,7 @@ export class HistoriesPageComponent implements OnInit {
       },
       error: (err: any) => {
         console.error(err);
+        console.log('Tamaño de historias: ', this.historiesPatient.length)
       }
     })
   }

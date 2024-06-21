@@ -78,10 +78,9 @@ export class CreatePatientComponent implements OnInit {
         this.userService.createUser(patientData)
           .subscribe({
             next: (data) => {
-              console.log(data);
               this.messageService.add({
                 severity: 'success',
-                summary: 'Success',
+                summary: 'Éxito',
                 detail: 'Paciente creado correctamente',
               });
 
@@ -92,7 +91,6 @@ export class CreatePatientComponent implements OnInit {
               }, 1200)
             },
             error: (error) => {
-              console.error(error);
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',

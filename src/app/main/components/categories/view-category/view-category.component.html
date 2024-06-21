@@ -1,1 +1,21 @@
-<p>view-category works!</p>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="max-w-full mx-auto bg-white p-8">
+    <form action="" [formGroup]="categoryForm" (ngSubmit)="updateCategory()">
+        <div class="grid gap-6 mb-6 lg:grid-cols-1">
+            <div class="flex flex-col">
+                <label for="">Nombre de la Categoría</label>
+                <input type="text" formControlName="name_category" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200 invalid:border-red-600" placeholder="Nombre de Categoría de medicamento" required>
+            </div>
+        </div>
+        <div class="grid gap-6 mb-6 lg:grid-cols-1">
+            <button [disabled]="categoryForm.invalid || !categoryForm.dirty" (click)="updateCategory()"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">Crear Categoría</button>
+    
+            <button (click)="cancelUpdate()"
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:red:ring-blue-800">Cancelar Categoría</button>
+        </div>
+    </form>
+</div>
+
