@@ -15,112 +15,138 @@ import { ViewCategoryComponent } from '../../components/categories/view-category
 })
 export class CategoriesPageComponent implements OnInit {
 
-
-  //? Variables e Inyecciones
-  private categoryService = inject( CategoryService );
-  public dialigService = inject( DialogService )
+  // Variables e Inyecciones
+  private categoryService = inject(CategoryService);
+  public dialogService = inject(DialogService);
   ref: DynamicDialogRef | undefined;
+
+
   public categories: Category[] = [];
   public idCategory!: number;
+  public totalCategories: number = 0
+  public currentPage: number = 1
+  public pageSize: number = 10
+  public search: string = ''
+
+
+
 
   ngOnInit(): void {
-    this.getCategories();
+    // this.getCategories();
+    this.loadCategories()
+  }
+
+  //? Metodo para obtener todas las categorias existentes
+  getCategories() {
+    this.categoryService.getAllCategories().subscribe({
+      next: (categories: Category[]) => {
+        if (categories.length > 0) {
+          this.categories = categories;
+        }
+      },
+      error: (err: any) => {
+        console.error('Error fetching categories:', err);
+      }
+    });
   }
 
 
-  //? Metodo para obtener todas las categorias existentes
-  getCategories(){
-    this.categoryService.getAllCategories()
+
+  //? Método para cargar las categorias
+  loadCategories(){
+    this.categoryService.getAllCategoriesPaginated(this.currentPage, this.pageSize, this.search)
     .subscribe({
-      next: (categories: Category[]) => {
-        this.categories = categories;
-      },
-      error: (err: any ) => {
-        console.log("Error:", err.error.message)
+      next: (resp: any) => {
+        this.categories = resp.data;
+        this.totalCategories = resp.total;
       }
     })
   }
 
 
-  //? Metodo para obtener el id de una categoria
-  getIdCategory(id: number){
-    this.idCategory = id;
+  onPageChange(page: number){
+    this.currentPage = page
+    this.loadCategories()
+  }
+
+
+  //? Metodo para buscar categorias
+  onSearchChange(search: string){
+    this.search = search
+    this.currentPage = 1
+    this.loadCategories()
   }
 
 
 
-  //? Metodo para abrir el modal
-  showModal(componentName: string, headerText: string){
-    if(componentName === 'create'){
-      this.dialigService.open(CreateCategoryComponent, {
-        header: headerText,
-        maximizable: true,
-        breakpoints: { '960px': '500px', '640px': '100vw' },
-        style: { 'max-width': '100vw', width: '80vw' },
-        height: '80%',
-        contentStyle: { overflow: 'auto' },
-        data: {
+  //? Metodo para obtener el id de una categoria
+  getIdCategory(id: number) {
+    this.idCategory = id;
+  }
 
-        }
-      })
+  //? Metodo para abrir el modal
+  showModal(componentName: string, headerText: string) {
+    if (componentName === 'create') {
+      this.dialogService.open(CreateCategoryComponent, {
+        header: headerText,
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '100vw', width: '30vw' },
+        height: '50%',
+        contentStyle: { overflow: 'auto' },
+      });
     }
 
-    if(componentName === 'view'){
-      this.dialigService.open(ViewCategoryComponent, {
+    if (componentName === 'view') {
+      this.dialogService.open(ViewCategoryComponent, {
         header: headerText,
-        maximizable: true,
         breakpoints: { '960px': '500px', '640px': '100vw' },
-        style: { 'max-width': '100vw', width: '80vw' },
-        height: '80%',
+        style: { 'max-width': '100vw', width: '30vw' },
+        height: '50%',
         contentStyle: { overflow: 'auto' },
         data: {
           idCategory: this.idCategory,
         }
-      })
+      });
     }
   }
 
-
   //? Metodo para eliminar una categoria
-  deleteCategory(id: number){
-
+  deleteCategory(id: number) {
     Swal.fire({
-      title: '¿Estas seguro?',
-      text: "No podras revertir esto!",
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, borrar!',
+      confirmButtonText: 'Sí, borrar!',
       cancelButtonText: 'Cancelar'
-    }).then((result) =>{
-      if(result.isConfirmed){
-        this.categoryService.deleteCategory(id)
-        .subscribe({
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoryService.deleteCategory(id).subscribe({
           next: (category: Category) => {
             Swal.fire(
-              'Borrado!',
-              'La historia clinica ha sido eliminada.',
+              '¡Borrado!',
+              'La categoría ha sido eliminada.',
               'success'
-            )
-            this.getCategories()
+            );
+            this.getCategories();
           },
           error: (err: any) => {
             Swal.fire(
               'Error!',
-              'Ha ocurrido un error al eliminar la historia clinica.',
+              'Ha ocurrido un error al eliminar la categoría. Verifique que la categoría no tenga medicamentos asociados.',
               'error'
-            )
+            );
           }
-        })
+        });
       }
-    })
-
+    });
   }
-
 
   ngOnDestroy(): void {
-    
+    if (this.ref) {
+      this.ref.close();
+    }
   }
-
 }
