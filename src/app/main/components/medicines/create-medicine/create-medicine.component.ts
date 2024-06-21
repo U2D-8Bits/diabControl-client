@@ -29,7 +29,7 @@ export class CreateMedicineComponent implements OnInit {
   medicineForm = this.fb.group({
     name_medicine: ['', [Validators.required]],
     generic_name: ['', [Validators.required]],
-    idCategory: [0, [Validators.required]],
+    idCategory: [null, [Validators.required]],
   });
 
   ngOnInit(): void {
@@ -48,24 +48,22 @@ export class CreateMedicineComponent implements OnInit {
   //? Método para crear una medicina
   createMedicine() {
     if (this.medicineForm.valid) {
+      const medicineData = this.medicineForm.value as unknown as CreateMedicine;
 
-      const medicineData = this.medicineForm.value as CreateMedicine;
+      // Asegúrate de que idCategory sea un número
       medicineData.idCategory = Number(medicineData.idCategory);
+      console.log(medicineData);
 
-      
       this.confirmationService.confirm({
-        message: 'Está seguro que desea crear esta Categoría de Medicamento?',
+        message: '¿Está seguro que desea crear esta Categoría de Medicamento?',
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: 'none',
         rejectIcon: 'none',
-        rejectButtonStyleClass:
-          'p-button-danger, padding: 10px; borer-radius: 5px; border: 1px solid red;',
+        rejectButtonStyleClass: 'p-button-danger',
         acceptButtonStyleClass: 'p-button-success',
         accept: () => {
-          this.medicineService
-          .createMedicine(medicineData)
-          .subscribe({
+          this.medicineService.createMedicine(medicineData).subscribe({
             next: (resp: any) => {
               console.log(resp);
               this.messageService.add({
@@ -78,8 +76,7 @@ export class CreateMedicineComponent implements OnInit {
               setTimeout(() => {
                 this.medicineForm.reset();
                 this.closeModal();
-              }, 1500)
-              
+              }, 1500);
             },
             error: (erResponse: any) => {
               this.messageService.add({
@@ -87,16 +84,16 @@ export class CreateMedicineComponent implements OnInit {
                 summary: 'Error',
                 detail: erResponse.error.message || 'Error al crear la medicina',
               });
-            }
-          })
+            },
+          });
         },
         reject: () => {
           this.messageService.add({
             severity: 'info',
             summary: 'Rechazado',
-            detail: 'Se cancelo la creación de la medicina',
+            detail: 'Se canceló la creación de la medicina',
           });
-        }
+        },
       });
     }
   }

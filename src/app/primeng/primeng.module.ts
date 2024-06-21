@@ -25,6 +25,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { BadgeModule } from 'primeng/badge';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [],
@@ -52,6 +53,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     BadgeModule,
     ProgressBarModule,
     ScrollPanelModule,
+    DropdownModule
   ],
 })
 export class PrimengModule { }

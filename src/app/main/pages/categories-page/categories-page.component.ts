@@ -22,7 +22,6 @@ export class CategoriesPageComponent implements OnInit {
 
 
   public categories: Category[] = [];
-  public existCategories: boolean = false;
   public idCategory!: number;
   public totalCategories: number = 0
   public currentPage: number = 1
@@ -33,7 +32,8 @@ export class CategoriesPageComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getCategories();
+    // this.getCategories();
+    this.loadCategories()
   }
 
   //? Metodo para obtener todas las categorias existentes
@@ -41,7 +41,6 @@ export class CategoriesPageComponent implements OnInit {
     this.categoryService.getAllCategories().subscribe({
       next: (categories: Category[]) => {
         if (categories.length > 0) {
-          this.existCategories = true;
           this.categories = categories;
         }
       },
