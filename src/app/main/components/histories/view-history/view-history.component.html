@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
 <div class="max-w-full mx-auto bg-white p-8">
-    <form action="" [formGroup]="historyForm" >
+    <form action="" [formGroup]="historyForm">
         <label class="flex mb-5 font-bold text-black" for="">Datos y Signos Vitales</label>
         <div class="grid gap-6 mb-6 lg:grid-cols-2">
             <div class="flex flex-col">
@@ -12,13 +12,13 @@
             <div class="flex flex-col">
                 <label for="">Atendido por</label>
                 <input disabled type="text" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200"
-                [value]="medicNames" >
+                    [value]="medicNames">
             </div>
             <div class="flex flex-col">
                 <label for="">Peso/ Peso x Talla</label>
                 <div class="flex items-center gap-2">
                     <input type="number" formControlName="weight_patient"
-                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                        class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label for="">Kilos/Z</label>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <label for="">Talla/ Talla x Edad</label>
                 <div class="flex items-center gap-2">
                     <input type="number" formControlName="tall_patient"
-                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                        class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label for="">c.m/Z</label>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <label for="">Pulso / Peso x Edad</label>
                 <div class="flex items-center gap-2">
                     <input type="number" formControlName="pulse_patient"
-                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                        class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label for="">Pulsaciones X Min.</label>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                 <label for="">Presión Arterial</label>
                 <div class="flex items-center gap-2">
                     <input type="number" formControlName="presure_patient"
-                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                        class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label for="">mmHg</label>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <label for="">Frecuencia Cardiaca</label>
                 <div class="flex items-center gap-2">
                     <input type="number" formControlName="frequency_patient"
-                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                        class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label for="">X Min.</label>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 <label for="">Temperatura</label>
                 <div class="flex items-center gap-2">
                     <input type="number" formControlName="temperature_patient"
-                        class="w-4/5 border border-gray-300 p-2 rounded-md" >
+                        class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label for="">°C</label>
                 </div>
             </div>
@@ -71,37 +71,52 @@
                 <label for="">Motivo de consulta</label>
                 <textarea formControlName="consult_reason" id="message" rows="4"
                     class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="El motivo de consulta" required></textarea >
+                    placeholder="El motivo de consulta" required></textarea>
             </div>
 
             <div class="flex flex-col">
                 <label for="">Enfermedad actual</label>
                 <textarea formControlName="current_illness" id="message" rows="4"
-                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                    class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    required></textarea>
             </div>
 
             <div class="flex flex-col">
                 <label for="">Exámen Físico / Complementario</label>
                 <textarea formControlName="fisic_exam" id="message" rows="4"
-                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                    class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    required></textarea>
             </div>
 
             <div class="flex flex-col">
                 <label for="">Impresión diagnóstico / Prescripción</label>
                 <textarea formControlName="diagnostic" id="message" rows="4"
-                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                    class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    required></textarea>
             </div>
 
             <div class="flex flex-col">
-                <label for="">Medicamentos</label>
-                <textarea formControlName="recipe" id="message" rows="4"
-                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                <label>Medicamentos</label>
+                <p-multiSelect 
+                    [options]="medicines" 
+                    formControlName="recipe" 
+                    optionLabel="name_medicine"
+                    display="chip"
+                    optionValue="name_medicine"
+                    placeholder="Seleccione uno o varios Medicamentos"
+                    [ngClass]="{'ng-invalid': !historyForm.controls['recipe'].valid && historyForm.controls['recipe'].touched}"
+                    required
+                ></p-multiSelect>
+                <div *ngIf="historyForm.controls['recipe'].invalid && historyForm.controls['recipe'].touched" class="text-red-600 text-sm">
+                    Seleccione al menos un medicamento.
+                </div>
             </div>
 
             <div class="flex flex-col">
                 <label for="">Indicaciones Médicas</label>
                 <textarea formControlName="medic_indications" id="message" rows="4"
-                class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                    class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    required></textarea>
             </div>
 
         </div>
@@ -110,10 +125,12 @@
     <div class="grid gap-6 mb-6 lg:grid-cols-2">
 
         <button [disabled]="!historyForm.dirty || historyForm.invalid" (click)="updateHistory()"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">Actualizar Historia</button>
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">Actualizar
+            Historia</button>
 
-        <button [disabled]="!historyForm.dirty" (click)="calcelUpdate()"
-        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto">Cancelar Historia</button>
+        <button [disabled]="!historyForm.dirty" (click)="cancelUpdate()"
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto">Cancelar
+            Historia</button>
 
     </div>
 </div>

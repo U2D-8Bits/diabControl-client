@@ -5,39 +5,39 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { User } from '../../../../auth/interfaces/user.interface';
 import { UserService } from '../../../services/user.service';
 import { HistoryService } from '../../../services/history.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { History } from '../../../interfaces/history.interface';
+import { Medicine } from '../../../interfaces/Medicines/medicines.interface';
+import { MedicineService } from '../../../services/meds/medicines.service';
 
 @Component({
   selector: 'app-view-history',
   templateUrl: './view-history.component.html',
-  styleUrl: './view-history.component.css',
+  styleUrls: ['./view-history.component.css'],
   providers: [ConfirmationService, MessageService],
 })
 export class ViewHistoryComponent implements OnInit {
-  //? Variables e Inyecciones
-
   ref: DynamicDialogRef | undefined;
   private historyComponent = inject(HistoriesPageComponent);
-
   private idPatient!: number;
   private idMedic!: number;
   private idHistory!: number;
   dataMedic!: User;
   medicNames: string = '';
   historyFormData!: History;
+  medicines: Medicine[] = [];
 
   private dynamicDialogConfig = inject(DynamicDialogConfig);
+  private medicineService = inject(MedicineService);
   private userService = inject(UserService);
   private historyService = inject(HistoryService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
   private fb = inject(FormBuilder);
 
-  //? Establecemos una variable con la fecha actual
   currentDate: Date = new Date();
 
-  historyForm = this.fb.group({
+  historyForm: FormGroup = this.fb.group({
     medicoId: [this.idMedic],
     pacienteId: [this.idPatient],
     weight_patient: [0],
@@ -48,36 +48,29 @@ export class ViewHistoryComponent implements OnInit {
     temperature_patient: [0],
     consult_reason: ['', [Validators.required]],
     fisic_exam: ['', [Validators.required]],
-    recipe: [[], [Validators.required]], // Change the type from null to string[]
+    recipe: [[], [Validators.required]],
     current_illness: ['', [Validators.required]],
     diagnostic: ['', [Validators.required]],
     medic_indications: ['', [Validators.required]],
   });
 
-
   ngOnInit(): void {
-    console.log(`Componente ViewHistory creado`);
-
-    //? Obtenemos la data enviada a traves del Dialog de HistoryPageComponent
     this.idPatient = Number(this.dynamicDialogConfig.data.idPatient);
     this.idHistory = Number(this.dynamicDialogConfig.data.idHistory);
     this.idMedic = Number(localStorage.getItem('ID'));
 
     this.formatDate();
     this.getMedicData();
-    this.getHistoryData();
+    this.getMedicines();
   }
 
-  //? Metodo para formatear la fecha actual en formato YYYY-MM-DD
   formatDate() {
     const year = this.currentDate.getFullYear();
     const month = this.currentDate.getMonth() + 1;
     const day = this.currentDate.getDate();
-
     this.currentDate = new Date(`${year}-${month}-${day}`);
   }
 
-  //? Metodo para obtener la data del Medico
   getMedicData() {
     this.userService.getUserById(this.idMedic).subscribe({
       next: (data) => {
@@ -90,34 +83,57 @@ export class ViewHistoryComponent implements OnInit {
     });
   }
 
-  //? Metodo para obtener la data de la Historia
-  getHistoryData() {
-    this.historyService.getHistoryById(this.idHistory)
-    .subscribe({
-      next: (data) => {
+  getMedicines() {
+    this.medicineService.getAllMedicines().subscribe({
+      next: (resp: Medicine[]) => {
+        this.medicines = resp;
+        this.getHistoryData();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
 
-        // this.historyForm.patchValue({
-        //   ...data,
-        //   recipe: data.recipe.join(', '), 
-        // });
+  getHistoryData() {
+    this.historyService.getHistoryById(this.idHistory).subscribe({
+      next: (data) => {
+        
+        console.log("Valor de Data.recipe =>", data.recipe)
+        let recipeArray: string[] = [];
+
+        //le asignamos a recipeArray el valor de data.recipe separado por comas
+        recipeArray = data.recipe.filter((item: string) => item !== '').join(',').split(',');
+        console.log("Valor de recipeArray =>", recipeArray)
+        
+        this.historyForm.patchValue({
+          weight_patient: data.weight_patient,
+          tall_patient: data.tall_patient,
+          pulse_patient: data.pulse_patient,
+          presure_patient: data.presure_patient,
+          frequency_patient: data.frequency_patient,
+          temperature_patient: data.temperature_patient,
+          consult_reason: data.consult_reason,
+          fisic_exam: data.fisic_exam,
+          current_illness: data.current_illness,
+          diagnostic: data.diagnostic,
+          medic_indications: data.medic_indications,
+          recipe: recipeArray,
+        });
         this.historyForm.patchValue({
           medicoId: this.idMedic,
           pacienteId: this.idPatient,
         });
 
-        //* Formulario de la data original
         this.historyFormData = data;
-
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 
-  //? Metodo para actualizar la Historia
-  updateHistory(){
-
+  updateHistory() {
     const idHistory = this.idHistory;
     const historyData = this.historyForm.value;
 
@@ -128,15 +144,14 @@ export class ViewHistoryComponent implements OnInit {
       acceptIcon: 'pi pi-check',
       rejectIcon: 'pi pi-times',
       accept: () => {
-        this.historyService.updateHistory(idHistory, historyData)
-        .subscribe({
+        this.historyService.updateHistory(idHistory, historyData).subscribe({
           next: (data) => {
             this.messageService.add({
               severity: 'success',
               summary: 'Historia Actualizada',
               detail: 'La Historia ha sido actualizada con exito',
             });
-            
+
             this.historyComponent.ngOnInit();
             this.historyForm.markAsPristine();
           },
@@ -147,7 +162,7 @@ export class ViewHistoryComponent implements OnInit {
               summary: 'Error al Actualizar',
               detail: 'Ha ocurrido un error al actualizar la Historia',
             });
-          }
+          },
         });
       },
       reject: () => {
@@ -156,14 +171,11 @@ export class ViewHistoryComponent implements OnInit {
           summary: 'Actualización Cancelada',
           detail: 'La actualización de la Historia ha sido cancelada',
         });
-      }
-    
-    })
+      },
+    });
   }
 
-
-  //? Metodo para cancelar la actualización de la Historia
-  calcelUpdate(){
+  cancelUpdate() {
     this.confirmationService.confirm({
       message: '¿Esta seguro que desea cancelar la actualización de la Historia?',
       header: 'Cancelar Actualización',
@@ -171,31 +183,12 @@ export class ViewHistoryComponent implements OnInit {
       acceptIcon: 'pi pi-check',
       rejectIcon: 'pi pi-times',
       accept: () => {
-
         this.messageService.add({
           severity: 'info',
           summary: 'Actualización Cancelada',
           detail: 'La actualización de la Historia ha sido cancelada',
         });
-
-        // this.historyForm.setValue({
-        //   medicoId: this.idMedic,
-        //   pacienteId: this.idPatient,
-        //   weight_patient: this.historyFormData.weight_patient,
-        //   tall_patient: this.historyFormData.tall_patient,
-        //   pulse_patient: this.historyFormData.pulse_patient,
-        //   presure_patient: this.historyFormData.presure_patient,
-        //   frequency_patient: this.historyFormData.frequency_patient,
-        //   temperature_patient: this.historyFormData.temperature_patient,
-        //   consult_reason: this.historyFormData.consult_reason,
-        //   fisic_exam: this.historyFormData.fisic_exam,
-        //   recipe: this.historyFormData.recipe.join(', '),
-        //   current_illness: this.historyFormData.current_illness,
-        //   diagnostic: this.historyFormData.diagnostic,
-        //   medic_indications: this.historyFormData.medic_indications,
-        // });
-
-        //seteamos el historyForm como !dirty
+        this.historyForm.reset(this.historyFormData);
         this.historyForm.markAsPristine();
       },
       reject: () => {
@@ -204,8 +197,8 @@ export class ViewHistoryComponent implements OnInit {
           summary: 'Actualización no Cancelada',
           detail: 'La actualización de la Historia no ha sido cancelada',
         });
-      }
-    })
+      },
+    });
   }
 
   ngOnDestroy() {
