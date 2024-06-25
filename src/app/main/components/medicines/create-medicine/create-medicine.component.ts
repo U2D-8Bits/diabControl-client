@@ -55,7 +55,7 @@ export class CreateMedicineComponent implements OnInit {
       console.log(medicineData);
 
       this.confirmationService.confirm({
-        message: '¿Está seguro que desea crear esta Categoría de Medicamento?',
+        message: '¿Está seguro que desea crear eeste Medicamento?',
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: 'none',
@@ -69,7 +69,7 @@ export class CreateMedicineComponent implements OnInit {
               this.messageService.add({
                 severity: 'success',
                 summary: 'Éxito',
-                detail: 'Medicina creada correctamente',
+                detail: 'Medicamento creado correctamente',
               });
 
               this.medicinePage.ngOnInit();
@@ -82,7 +82,7 @@ export class CreateMedicineComponent implements OnInit {
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
-                detail: erResponse.error.message || 'Error al crear la medicina',
+                detail: erResponse.error.message || 'Error al crear el Medicamento',
               });
             },
           });
@@ -91,7 +91,7 @@ export class CreateMedicineComponent implements OnInit {
           this.messageService.add({
             severity: 'info',
             summary: 'Rechazado',
-            detail: 'Se canceló la creación de la medicina',
+            detail: 'Se canceló la creación del Medicamento',
           });
         },
       });
@@ -101,7 +101,7 @@ export class CreateMedicineComponent implements OnInit {
 
   cancelMedicine(): void {
     this.confirmationService.confirm({
-      message: 'Está seguro que desea cancelar la creación de esta medicina?',
+      message: 'Está seguro que desea cancelar la creación de este Medicamento?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
@@ -113,7 +113,7 @@ export class CreateMedicineComponent implements OnInit {
         this.messageService.add({
           severity: 'info',
           summary: 'Cancelado',
-          detail: 'Se cancelo la creación de la medicina',
+          detail: 'Se cancelo la creación del Medicamento',
         });
 
         this.closeModal();
@@ -122,7 +122,7 @@ export class CreateMedicineComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Éxito',
-          detail: 'Se continuará con la creación de la medicina',
+          detail: 'Se continuará con la creación del Medicamento',
         });
       }
     });

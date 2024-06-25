@@ -115,7 +115,7 @@ export class ViewMedicineComponent implements OnInit {
            this.messageService.add({
              severity: 'success',
              summary: 'Éxito',
-             detail: 'Medicina actualizada correctamente'
+             detail: 'Medicamento actualizado correctamente'
            })
 
            this.medicinePage.ngOnInit();
@@ -136,7 +136,7 @@ export class ViewMedicineComponent implements OnInit {
         this.messageService.add({
           severity: 'info',
           summary: 'Rechazado',
-          detail: 'Se cancelo la actualización de la medicina'
+          detail: 'Se cancelo la actualización del Medicamento'
         })
         this.medicineForm.patchValue(this.defaultForm.value);
       }
@@ -157,7 +157,7 @@ export class ViewMedicineComponent implements OnInit {
         this.messageService.add({
           severity: 'info',
           summary: 'Cancelado',
-          detail: 'Se cancelo la modificación de la medicina'
+          detail: 'Se cancelo la modificación del Medicamento'
         })
         this.medicineForm.patchValue(this.defaultForm.value);
         setTimeout(() => {
@@ -168,7 +168,7 @@ export class ViewMedicineComponent implements OnInit {
         this.messageService.add({
           severity: 'info',
           summary: 'Rechazado',
-          detail: 'Se cancelo la cancelación de la modificación de la medicina'
+          detail: 'Se cancelo la cancelación de la modificación del Medicamento'
         })
       }
     })
@@ -180,6 +180,5 @@ export class ViewMedicineComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    // Aquí puedes agregar código para limpiar si es necesario
   }
 }
