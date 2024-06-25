@@ -22,6 +22,20 @@ export class MedicineService {
     );
   }
 
+
+  //? Servicio para obtener la cantidad de medicinas registradas
+  getMedicinesCount(): Observable<number> {
+    const url = `${this.baseUrl}/medicines/count`;
+
+    return this.http.get<number>(url).pipe(
+      map((count: number) => count),
+      catchError((err: any) => {
+        return of(err);
+      })
+    );
+  }
+
+
   //? Servicio para obtener todas las medicinas paginadas
   getAllMedicinesPaginated(
     page: number,

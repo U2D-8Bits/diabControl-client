@@ -7,13 +7,13 @@
             {{patientData?.user_lastname}}</label> </h1>
 
     <div class="flex flex-wrap items-center justify-center gap-2">
-        <button (click)="showDialog('create', 'Agregar Historia Clinica')"
+        <button [disabled]="totalMedicines === 0" (click)="showDialog('create', 'Agregar Historia Clinica')"
             class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
             type="button">
             <span class="pi pi-plus"></span>
             Agregar historia clínica
         </button>
-        <button [disabled]="historiesPatient.length === 0" (click)="showDialog('control', 'Seguimiento de Historias Clinicas')"
+        <button [disabled]="historiesPatient!.length === 0" (click)="showDialog('control', 'Seguimiento de Historias Clinicas')"
             class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
             type="button">
             <span class="pi pi-stopwatch"></span>
@@ -28,6 +28,13 @@
     </div>
 
 
+</div>
+
+<div *ngIf="totalMedicines === 0" class="flex items-center text-center mx-2">
+    <p-messages class="w-full" 
+        [(value)]="messages"
+        [enableService]="false" 
+        [closable]="false" />
 </div>
 
 <div *ngIf="historiesPatient.length === 0" class="flex items-center mt-6 text-center border rounded-lg h-96 mx-2">
@@ -102,3 +109,22 @@
         </tr>
     </tbody>
 </table>
+
+<div *ngIf="historiesPatient!.length > 0" class="flex items-center justify-center">
+    <div
+        class="max-w-full md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto bg-white p-6 rounded-lg shadow-sm">
+        <div class="flex justify-center">
+            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
+                class="relative inline-flex items-center px-4 py-2 text-sm bg-blue-600 border border-fuchsia-100 hover:border-violet-100 text-white font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">Anterior
+            </button>
+            <span
+                class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-fuchsia-100 hover:bg-fuchsia-200 cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                Página {{ currentPage }}
+            </span>
+            <button (click)="onPageChange(currentPage + 1)" [disabled]="(currentPage * pageSize) >= totalHistories"
+                class="relative inline-flex items-center px-4 py-2 text-sm bg-blue-600 border border-fuchsia-100 hover:border-violet-100 text-white font-semibold cursor-pointer leading-5 rounded-md transition duration-150 ease-in-out focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10">
+                Siguiente
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environments';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, of, } from 'rxjs';
 import { History } from '../interfaces/history.interface';
 
 @Injectable({providedIn: 'root'})
@@ -24,7 +24,7 @@ export class HistoryService {
                 return histories;
             }),
             catchError((err: any) => {
-                return throwError(err);
+                return of(err);
             })
         );
     }
@@ -40,9 +40,30 @@ export class HistoryService {
                 return histories;
             }),
             catchError((err: any) => {
-                return throwError(err);
+                return of(err);
             })
         );
+    }
+
+
+    //? Método para obtener todas las historias médicas de un paciente por ID con paginación
+    getAllHistoriesByPatientIdWithPagination(id: number, page: number, limit: number): Observable<any>{
+        const url = `${this.baseUrl}/histories/paciente/${id}/paginated`;
+
+        let params = new HttpParams()
+        .set('page', page)
+        .set('limit', limit);
+
+        return this.httpClient.get<any>(url, {params})
+        .pipe(
+            map((resp: any) => {
+                return resp;
+            }),
+            catchError((err: any) => {
+                return of(err);
+            })
+        );
+
     }
 
 
@@ -57,7 +78,7 @@ export class HistoryService {
                 return history;
             }),
             catchError((err: any) => {
-                return throwError(err);
+                return of(err);
             })
         );
     }
@@ -74,7 +95,7 @@ export class HistoryService {
                 return history;
             }),
             catchError((err: any) => {
-                return throwError(err);
+                return of(err);
             })
         );
     }
@@ -90,7 +111,7 @@ export class HistoryService {
                 return history;
             }),
             catchError((err: any) => {
-                return throwError(err);
+                return of(err);
             })
         );
     }
@@ -106,7 +127,7 @@ export class HistoryService {
                 return history;
             }),
             catchError((err: any) => {
-                return throwError(err);
+                return of(err);
             })
         );
     }

@@ -48,7 +48,7 @@ export class ViewHistoryComponent implements OnInit {
     temperature_patient: [0],
     consult_reason: ['', [Validators.required]],
     fisic_exam: ['', [Validators.required]],
-    recipe: ['', [Validators.required]],
+    recipe: [[], [Validators.required]], // Change the type from null to string[]
     current_illness: ['', [Validators.required]],
     diagnostic: ['', [Validators.required]],
     medic_indications: ['', [Validators.required]],
@@ -96,7 +96,10 @@ export class ViewHistoryComponent implements OnInit {
     .subscribe({
       next: (data) => {
 
-        this.historyForm.patchValue(data);
+        // this.historyForm.patchValue({
+        //   ...data,
+        //   recipe: data.recipe.join(', '), 
+        // });
         this.historyForm.patchValue({
           medicoId: this.idMedic,
           pacienteId: this.idPatient,
@@ -175,22 +178,22 @@ export class ViewHistoryComponent implements OnInit {
           detail: 'La actualización de la Historia ha sido cancelada',
         });
 
-        this.historyForm.setValue({
-          medicoId: this.idMedic,
-          pacienteId: this.idPatient,
-          weight_patient: this.historyFormData.weight_patient,
-          tall_patient: this.historyFormData.tall_patient,
-          pulse_patient: this.historyFormData.pulse_patient,
-          presure_patient: this.historyFormData.presure_patient,
-          frequency_patient: this.historyFormData.frequency_patient,
-          temperature_patient: this.historyFormData.temperature_patient,
-          consult_reason: this.historyFormData.consult_reason,
-          fisic_exam: this.historyFormData.fisic_exam,
-          recipe: this.historyFormData.recipe,
-          current_illness: this.historyFormData.current_illness,
-          diagnostic: this.historyFormData.diagnostic,
-          medic_indications: this.historyFormData.medic_indications,
-        });
+        // this.historyForm.setValue({
+        //   medicoId: this.idMedic,
+        //   pacienteId: this.idPatient,
+        //   weight_patient: this.historyFormData.weight_patient,
+        //   tall_patient: this.historyFormData.tall_patient,
+        //   pulse_patient: this.historyFormData.pulse_patient,
+        //   presure_patient: this.historyFormData.presure_patient,
+        //   frequency_patient: this.historyFormData.frequency_patient,
+        //   temperature_patient: this.historyFormData.temperature_patient,
+        //   consult_reason: this.historyFormData.consult_reason,
+        //   fisic_exam: this.historyFormData.fisic_exam,
+        //   recipe: this.historyFormData.recipe.join(', '),
+        //   current_illness: this.historyFormData.current_illness,
+        //   diagnostic: this.historyFormData.diagnostic,
+        //   medic_indications: this.historyFormData.medic_indications,
+        // });
 
         //seteamos el historyForm como !dirty
         this.historyForm.markAsPristine();

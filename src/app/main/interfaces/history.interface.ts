@@ -10,7 +10,7 @@ export interface History{
     temperature_patient: number
     consult_reason: string
     fisic_exam: string
-    recipe: string
+    recipe: string[]
     current_illness: string
     diagnostic: string
     medic_indications: string

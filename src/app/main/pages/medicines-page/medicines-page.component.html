@@ -25,6 +25,13 @@
         placeholder="Buscar una Medicina por el nombre o por su categoría" required>
 </div>
 
+<div *ngIf="totalCategories === 0" class="flex items-center text-center mx-2">
+    <p-messages class="w-full" 
+        [(value)]="messages"
+        [enableService]="false" 
+        [closable]="false" />
+</div>
+
 <div *ngIf="medicines.length === 0" class="flex items-center mt-6 text-center border rounded-lg h-96 mx-2">
     <div class="flex flex-col w-full max-w-sm px-4 mx-auto">
         <div class="p-3 mx-auto text-blue-500 bg-blue-100 rounded-full ">
@@ -112,7 +119,7 @@
 </table>
 
 
-<div class="flex items-center justify-center">
+<div *ngIf="medicines.length > 0" class="flex items-center justify-center">
     <div
         class="max-w-full md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto bg-white p-6 rounded-lg shadow-sm">
         <div class="flex justify-center">
