@@ -38,6 +38,18 @@ export class CategoryService {
     );
   }
 
+  //? Servicio para obtener la cantidad de categoria de medicinas registradas
+  getCategoriesCount(): Observable<number> {
+    const url = `${this.baseUrl}/categories/count`;
+
+    return this.http.get<number>(url).pipe(
+      map((count: number) => count),
+      catchError((err: any) => {
+        return of(err);
+      })
+    );
+  }
+
   //? Servicio para obtener todas las categorias paginadas
   getAllCategoriesPaginated(
     page: number,
