@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MedicineService } from '../../services/meds/medicines.service';
 import { Medicine } from '../../interfaces/Medicines/medicines.interface';
@@ -25,7 +25,8 @@ export class MedicinesPageComponent implements OnInit {
   public medicines: Medicine[] = [];
   idMedicine: number | undefined;
   existCategories: boolean = false;
-  existMedicines: boolean = false;
+  public totalCategories: number = 0;
+  messages!: Message[];
 
   public totalMedicines: number = 0;
   public currentPage: number = 1;
@@ -34,7 +35,10 @@ export class MedicinesPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllCategories();
-    // this.getAllMedicines();
+    this.countCategories();
+    if(this.totalCategories === 0){
+      this.messages = [{ severity: 'info', detail: 'No se pueden crear medicamentos debido a que no existen categorías.' }];
+    }
     this.loadMedicines();
   }
 
@@ -52,22 +56,17 @@ export class MedicinesPageComponent implements OnInit {
     });
   }
 
-  //? Método para obtener todas las medicinas
-  getAllMedicines(): void {
-    this.medicineService.getAllMedicines().subscribe({
-      next: (medicines: Medicine[]) => {
-        this.getAllCategories();
-        if (medicines.length > 0) {
-          this.existMedicines = true;
-          this.medicines = medicines;
-        }
-        console.log(medicines);
-        console.log('Tamaño de medicinas: ', medicines.length);
+  //? Método para obtener la cantidad de categorias de medicinas registradas
+  countCategories(){
+    this.categoryService.getCategoriesCount()
+    .subscribe({
+      next: (count: number) => {
+        this.totalCategories = count;
       },
       error: (erResponse: any) => {
-        console.log('Tamaño de medicinas: ', this.medicines.length);
-      },
-    });
+        console.error(erResponse)
+      }
+    })
   }
 
   //? Método para obtener medicinas paginadas

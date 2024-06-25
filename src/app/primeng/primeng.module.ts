@@ -26,6 +26,7 @@ import { BadgeModule } from 'primeng/badge';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [],
@@ -53,7 +54,8 @@ import { DropdownModule } from 'primeng/dropdown';
     BadgeModule,
     ProgressBarModule,
     ScrollPanelModule,
-    DropdownModule
+    DropdownModule,
+    MultiSelectModule
   ],
 })
 export class PrimengModule { }

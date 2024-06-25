@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { HistoryService } from '../../services/history.service';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { History } from '../../interfaces/history.interface';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreateHistoryComponent } from '../../components/histories/create-history/create-history.component';
@@ -10,6 +10,8 @@ import { User } from '../../../auth/interfaces';
 import { ViewHistoryComponent } from '../../components/histories/view-history/view-history.component';
 import Swal from 'sweetalert2';
 import { FollowUpComponent } from '../../components/histories/follow-up/follow-up.component';
+import { MedicineService } from '../../services/meds/medicines.service';
+import { Medicine } from '../../interfaces/Medicines/medicines.interface';
 
 @Component({
   selector: 'app-histories-page',
@@ -23,38 +25,76 @@ export class HistoriesPageComponent implements OnInit {
 
   //? Variables e Inyecciones
   private historyService = inject( HistoryService);
+  private medicineService = inject( MedicineService );
   private userService = inject(UserService);
   private route = inject( ActivatedRoute);
-  public dialigService = inject( DialogService )
+  public dialigService = inject( DialogService );
   idPatient!: string;
   idHistory!: number;
   patientData!: User;
-  historiesPatient: History[] = [];
+  messages!: Message[];
+
+  public historiesPatient: History[] = [];
+  public totalMedicines: number = 0;
+
+  public totalHistories: number = 0;
+  public currentPage: number = 1;
+  public pageSize: number = 10;
 
   ngOnInit(): void {
     console.log(`Componente HistoriesPage creado`)
 
     this.idPatient = this.route.snapshot.params['id'];
-
-    this.getAllHistoriesByPatientId(this.idPatient);
+    this.loadMedicines();
+    if(this.totalMedicines === 0){
+      this.messages = [{ severity: 'info', detail: 'No se pueden crear Historias Clínicas debido a que no existen medicamentos registrados.' }];
+    }
+    this.loadHistories();
     this.getPatientData();
   }
 
 
-  //? Metodo para obtener todas las historias clinicas de un paciente
-  getAllHistoriesByPatientId(id: string){
-
-    this.historyService.getHistoriesByPatientId( Number(id) )
+  //? Metodo para obtener todos los medicamentos
+  loadMedicines(){
+    this.medicineService.getMedicinesCount()
     .subscribe({
-      next: (histories: History[]) => {
-        this.historiesPatient = histories;
+      next: (count: number) => {
+        this.totalMedicines = count;
       },
       error: (err: any) => {
         console.error(err);
-        console.log('Tamaño de historias: ', this.historiesPatient.length)
       }
     })
   }
+
+
+  //? Método para obtener todas las historias médicas de un paciente por ID con paginación
+  loadHistories(){
+    this.historyService
+    .getAllHistoriesByPatientIdWithPagination( Number(this.idPatient), this.currentPage, this.pageSize)
+    .subscribe({
+      next: (resp: any) => {
+        this.historiesPatient = resp.data;
+        if(this.historiesPatient === undefined){
+          this.historiesPatient = [];
+        }
+        this.totalHistories = resp.total;
+      },
+      error: (err: any) => {
+        console.error(err);
+      }
+    
+    })
+  }
+
+
+  //? Metodo para cmabiar de página
+  onPageChange(page: number){
+    this.currentPage = page;
+    this.loadHistories();
+  }
+
+
 
   //? Metodo para obtener el id de la historia clinica
   getHistoryId(id: number){
@@ -108,12 +148,13 @@ export class HistoriesPageComponent implements OnInit {
       })
     }
 
-    //* Mostrar el componente para ver/editar un paciente
-    if (this.ref) {
-      this.ref.onClose.subscribe(() => {
-        this.getAllHistoriesByPatientId(this.idPatient);
-      });
-    }
+    //* Cerrar el dialogo
+    this.ref?.onClose.subscribe((data: any) => {
+      if(data){
+        this.loadHistories();
+      }
+    });
+
   }
 
   //? Metodo para obtener la informacion del paciente
@@ -150,7 +191,7 @@ export class HistoriesPageComponent implements OnInit {
               'La historia clinica ha sido eliminada.',
               'success'
             )
-            this.getAllHistoriesByPatientId(this.idPatient);
+            this.ngOnInit();
           },
           error: (err: any) => {
             Swal.fire(
