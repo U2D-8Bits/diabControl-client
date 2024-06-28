@@ -1,0 +1,52 @@
+/* Estilos generales para el p-dropdown */
+:host ::ng-deep .p-dropdown {
+    border: 1px solid #d1d5db;
+    padding: 0.625rem;
+    border-radius: 0.375rem;
+    background-color: #f9fafb;
+    width: 100% !important;
+  }
+  
+  /* Estilos para manejar el borde rojo cuando es inválido */
+  :host ::ng-deep .p-dropdown.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+  
+  /* Asegurar que los estilos internos del dropdown no sobrescriban los estilos personalizados */
+  :host ::ng-deep .p-dropdown .p-dropdown-label {
+    padding: 0;
+  }
+  
+  
+  p-multiSelect {
+    width: 100% !important;
+    border: 1px solid #ccc;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .p-multiselect:not(.p-disabled):not(.ng-valid) .p-multiselect-label-container {
+    border: 1px solid #f00; /* Red border for invalid state */
+  }
+  
+  .p-multiselect-label-container {
+    display: flex;
+    align-items: center;
+    height: 2.5rem; /* Match the input height */
+    background-color: #f9f9f9;
+    width: 100% !important;
+  }
+  
+  .p-multiselect-panel {
+    border-radius: 0.375rem;
+  }
+  
+  .p-multiselect-token {
+    background-color: #e0e0e0;
+    border-radius: 0.375rem;
+  }
+  
+  #pn_id_73 {
+    width: 100% !important;
+  }

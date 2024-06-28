@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environments';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Medicine } from '../../interfaces/Medicines/medicines.interface';
 import { CreateMedicine } from '../../interfaces/Medicines/create-medicine.interface';
 
@@ -17,7 +17,7 @@ export class MedicineService {
     return this.http.get<Medicine[]>(url).pipe(
       map((medicines: Medicine[]) => medicines),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -30,7 +30,7 @@ export class MedicineService {
     return this.http.get<number>(url).pipe(
       map((count: number) => count),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -54,7 +54,7 @@ export class MedicineService {
         return resp;
       }),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -66,7 +66,7 @@ export class MedicineService {
     return this.http.get<Medicine>(url).pipe(
       map((medicine: Medicine) => medicine),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -78,7 +78,7 @@ export class MedicineService {
     return this.http.post<Medicine>(url, medicine).pipe(
       map((medicine: Medicine) => medicine),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -90,7 +90,7 @@ export class MedicineService {
     return this.http.patch<Medicine>(url, medicine).pipe(
       map((medicine: Medicine) => medicine),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -102,7 +102,7 @@ export class MedicineService {
     return this.http.delete<Medicine>(url).pipe(
       map((medicine: Medicine) => medicine),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }

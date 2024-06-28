@@ -79,6 +79,11 @@ export class CreateMedicineComponent implements OnInit {
               }, 1500);
             },
             error: (erResponse: any) => {
+
+              if(erResponse.error.message === 'Ya existe un medicamento asociado a ese nombre genérico'){
+                this.medicineForm.get('generic_name')?.reset();
+              }
+
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',

@@ -43,7 +43,7 @@ export class ViewActComponent implements OnInit, OnDestroy {
 
     tutor_ced: [
       { value: '', disabled: true },
-      [Validators.minLength(10), Validators.maxLength(10)],
+      [Validators.required, Validators.minLength(10), Validators.maxLength(10)],
     ],
 
     tutor_phone: [
@@ -185,7 +185,6 @@ export class ViewActComponent implements OnInit, OnDestroy {
       actData.tutor_email = null;
       actData.tutor_motive = '';
     }
-    
 
     console.log(`Valores a Actualizar:`, actData);
 
@@ -217,7 +216,8 @@ export class ViewActComponent implements OnInit, OnDestroy {
               severity: 'error',
               summary: 'Error al Actualizar el Consentimiento Informado',
               detail:
-                error.error.message || 'Ha ocurrido un error al actualizar el Consentimiento Informado',
+                error.error.message ||
+                'Ha ocurrido un error al actualizar el Consentimiento Informado',
             });
           },
         });

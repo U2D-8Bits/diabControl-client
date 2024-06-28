@@ -17,15 +17,23 @@ import { MedicineService } from '../../../services/meds/medicines.service';
   providers: [ConfirmationService, MessageService],
 })
 export class ViewHistoryComponent implements OnInit {
-  ref: DynamicDialogRef | undefined;
+  private ref: DynamicDialogRef = inject(DynamicDialogRef);
   private historyComponent = inject(HistoriesPageComponent);
   private idPatient!: number;
   private idMedic!: number;
   private idHistory!: number;
+
   dataMedic!: User;
   medicNames: string = '';
   historyFormData!: History;
   medicines: Medicine[] = [];
+  fenotypes: any[] = [
+    { name_fenotype: 'Picoteador / Emocional' },
+    { name_fenotype: 'Compulsivo' },
+    { name_fenotype: 'Hiperfágico' },
+    { name_fenotype: 'Hedónico' },
+    { name_fenotype: 'Desorganizado' },
+  ];
 
   private dynamicDialogConfig = inject(DynamicDialogConfig);
   private medicineService = inject(MedicineService);
@@ -40,15 +48,16 @@ export class ViewHistoryComponent implements OnInit {
   historyForm: FormGroup = this.fb.group({
     medicoId: [this.idMedic],
     pacienteId: [this.idPatient],
-    weight_patient: [0],
-    tall_patient: [0],
-    pulse_patient: [0],
-    presure_patient: [0],
-    frequency_patient: [0],
-    temperature_patient: [0],
+    weight_patient: [null, [Validators.required, Validators.min(1)]],
+    tall_patient: [null, [Validators.required, Validators.min(1)]],
+    pulse_patient: [null, [Validators.required, Validators.min(1)]],
+    presure_patient: [null, [Validators.required, Validators.min(1)]],
+    frequency_patient: [null, [Validators.required, Validators.min(1)]],
+    temperature_patient: [null, [Validators.required, Validators.min(1)]],
     consult_reason: ['', [Validators.required]],
     fisic_exam: ['', [Validators.required]],
     recipe: [[], [Validators.required]],
+    fenotype: ['', Validators.required],
     current_illness: ['', [Validators.required]],
     diagnostic: ['', [Validators.required]],
     medic_indications: ['', [Validators.required]],
@@ -98,14 +107,15 @@ export class ViewHistoryComponent implements OnInit {
   getHistoryData() {
     this.historyService.getHistoryById(this.idHistory).subscribe({
       next: (data) => {
-        
-        console.log("Valor de Data.recipe =>", data.recipe)
+        console.log('Valor de Data.recipe =>', data.recipe);
         let recipeArray: string[] = [];
 
         //le asignamos a recipeArray el valor de data.recipe separado por comas
-        recipeArray = data.recipe.filter((item: string) => item !== '').join(',').split(',');
-        console.log("Valor de recipeArray =>", recipeArray)
-        
+        recipeArray = data.recipe
+          .filter((item: string) => item !== '')
+          .join(',')
+          .split(',');
+
         this.historyForm.patchValue({
           weight_patient: data.weight_patient,
           tall_patient: data.tall_patient,
@@ -119,6 +129,7 @@ export class ViewHistoryComponent implements OnInit {
           diagnostic: data.diagnostic,
           medic_indications: data.medic_indications,
           recipe: recipeArray,
+          fenotype: data.fenotype
         });
         this.historyForm.patchValue({
           medicoId: this.idMedic,
@@ -154,6 +165,9 @@ export class ViewHistoryComponent implements OnInit {
 
             this.historyComponent.ngOnInit();
             this.historyForm.markAsPristine();
+            setTimeout( () => {
+              this.closeModal();
+            }, 1200)
           },
           error: (error) => {
             console.error(error);
@@ -177,7 +191,8 @@ export class ViewHistoryComponent implements OnInit {
 
   cancelUpdate() {
     this.confirmationService.confirm({
-      message: '¿Esta seguro que desea cancelar la actualización de la Historia?',
+      message:
+        '¿Esta seguro que desea cancelar la actualización de la Historia?',
       header: 'Cancelar Actualización',
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'pi pi-check',
@@ -190,6 +205,9 @@ export class ViewHistoryComponent implements OnInit {
         });
         this.historyForm.reset(this.historyFormData);
         this.historyForm.markAsPristine();
+        setTimeout(() => {
+          this.closeModal();
+        }, 1200);
       },
       reject: () => {
         this.messageService.add({
@@ -199,6 +217,12 @@ export class ViewHistoryComponent implements OnInit {
         });
       },
     });
+  }
+
+  closeModal() {
+    this.ref.close(
+      this.historyComponent.ngOnInit()
+    );
   }
 
   ngOnDestroy() {

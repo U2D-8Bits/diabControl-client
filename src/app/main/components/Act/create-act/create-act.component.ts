@@ -18,7 +18,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
   private ref: DynamicDialogRef = inject(DynamicDialogRef);
   private dynamicDialogConfig = inject(DynamicDialogConfig);
   private actComponent = inject(ActPageComponent);
-  private userSErvice = inject(UserService);
+  private userService = inject(UserService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
   private actService = inject(ActService);
@@ -31,30 +31,13 @@ export class CreateActComponent implements OnInit, OnDestroy {
 
   actForm = this.fb.group({
     minor_age: [false, [Validators.required]],
-
     disability: [false, [Validators.required]],
-
     illiteracy: [false, [Validators.required]],
-
     tutor_names: [{ value: '', disabled: true }, [Validators.required]],
-
-    tutor_ced: [
-      { value: '', disabled: true },
-      [Validators.minLength(10), Validators.maxLength(10)],
-    ],
-
-    tutor_phone: [
-      { value: '', disabled: true },
-      [Validators.required, Validators.minLength(10), Validators.maxLength(10)],
-    ],
-
-    tutor_email: [
-      { value: '', disabled: true },
-      [Validators.required, Validators.email],
-    ],
-
+    tutor_ced: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+    tutor_phone: [{ value: '', disabled: true }, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+    tutor_email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
     tutor_motive: [{ value: '', disabled: true }, [Validators.required]],
-
     id_patient: [Number(this.dynamicDialogConfig.data.idPatient)],
   });
 
@@ -72,11 +55,10 @@ export class CreateActComponent implements OnInit, OnDestroy {
     this.initializeFormListeners();
   }
 
-  //? Metodo para obtener la informacion del paciente
   getPatientData() {
-    this.userSErvice.getUserById(this.idPatient).subscribe({
-      next: (patientRecived: User) => {
-        this.patientData = patientRecived;
+    this.userService.getUserById(this.idPatient).subscribe({
+      next: (patientReceived: User) => {
+        this.patientData = patientReceived;
         this.updateMinorAgeSwitch();
       },
       error: (err) => {
@@ -85,7 +67,6 @@ export class CreateActComponent implements OnInit, OnDestroy {
     });
   }
 
-  //? Metodo para actualizar el estado del switch de minor_age basado en la edad del paciente
   updateMinorAgeSwitch() {
     if (this.patientData.user_age < 18) {
       this.actForm.get('minor_age')!.setValue(true);
@@ -97,20 +78,14 @@ export class CreateActComponent implements OnInit, OnDestroy {
     this.updateTutorFieldsState();
   }
 
-  //? Metodo para inicializar los listeners del formulario
   initializeFormListeners() {
     this.subscriptions.push(
-      this.actForm
-        .get('disability')!
-        .valueChanges.subscribe(() => this.updateTutorFieldsState()),
-      this.actForm
-        .get('illiteracy')!
-        .valueChanges.subscribe(() => this.updateTutorFieldsState())
+      this.actForm.get('disability')!.valueChanges.subscribe(() => this.updateTutorFieldsState()),
+      this.actForm.get('illiteracy')!.valueChanges.subscribe(() => this.updateTutorFieldsState())
     );
     this.updateTutorFieldsState(); // Initial call to set the correct state
   }
 
-  //? Metodo para actualizar el estado de los campos del tutor
   updateTutorFieldsState() {
     const minorAge = this.actForm.get('minor_age')!.value;
     const disability = this.actForm.get('disability')!.value;
@@ -129,7 +104,6 @@ export class CreateActComponent implements OnInit, OnDestroy {
       this.actForm.get('tutor_email')!.disable();
       this.actForm.get('tutor_motive')!.disable();
 
-      // Reset the values
       this.actForm.get('tutor_names')!.reset();
       this.actForm.get('tutor_ced')!.reset();
       this.actForm.get('tutor_phone')!.reset();
@@ -138,7 +112,6 @@ export class CreateActComponent implements OnInit, OnDestroy {
     }
   }
 
-  //? Metodo para crear un nuevo Acta
   createAct() {
     this.actForm.patchValue({
       id_patient: this.idPatient,
@@ -146,14 +119,12 @@ export class CreateActComponent implements OnInit, OnDestroy {
 
     const actData = this.actForm.value;
 
-    //si el paciente es menor de edad asignamos true a la propiedad minor_age
     if (this.patientData.user_age < 18) {
       actData.minor_age = true;
     } else {
       actData.minor_age = false;
     }
 
-    //si el paciente es menor de edad o tiene discapacidad, se debe validar que los campos del tutor esten llenos
     if (actData.minor_age || actData.disability || actData.illiteracy) {
       if (
         !actData.tutor_names ||
@@ -179,8 +150,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass:
-        'p-button-danger, padding: 10px; borer-radius: 5px; border: 1px solid red;',
+      rejectButtonStyleClass: 'p-button-danger, padding: 10px; border-radius: 5px; border: 1px solid red;',
       acceptButtonStyleClass: 'p-button-success',
       accept: () => {
         this.actService.createAct(actData).subscribe({
@@ -216,17 +186,14 @@ export class CreateActComponent implements OnInit, OnDestroy {
     });
   }
 
-  //? Metodo para cancelar un nuevo Acta
   cancelAct() {
     this.confirmationService.confirm({
-      message:
-        'Está seguro que desea cancelar la creación de este Consntimiento Informado?',
+      message: 'Está seguro que desea cancelar la creación de este Consentimiento Informado?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass:
-        'p-button-danger, padding: 10px; borer-radius: 5px; border: 1px solid red;',
+      rejectButtonStyleClass: 'p-button-danger, padding: 10px; border-radius: 5px; border: 1px solid red;',
       acceptButtonStyleClass: 'p-button-success',
       accept: () => {
         this.messageService.add({
@@ -248,7 +215,6 @@ export class CreateActComponent implements OnInit, OnDestroy {
     });
   }
 
-  //? Metodo para cerrar el Dialogo
   closeDialog() {
     this.ref.close();
   }

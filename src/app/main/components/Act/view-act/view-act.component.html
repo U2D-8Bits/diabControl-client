@@ -5,55 +5,34 @@
     <form action="" [formGroup]="actForm" (ngSubmit)="updateAct()">
         <label for="" class="flex mb-3 font-medium text-black text-xl">Datos del paciente</label>
         <table class="border-collapse w-full mb-8">
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    Nombre y Apellido</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
-                    <input disabled type="text" class="text-black"
-                        [value]="patientData?.user_name + ' ' + patientData?.user_lastname ">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombre y Apellido</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_name + ' ' + patientData.user_lastname ">
                 </td>
             </tr>
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    C.I</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
-                    <input disabled type="text" class="text-black" [value]="patientData?.user_ced ">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">C.I</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_ced ">
                 </td>
             </tr>
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    Teléfono</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
-                    <input disabled type="text" class="text-black" [value]="patientData?.user_phone ">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Teléfono</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_phone ">
                 </td>
             </tr>
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    Dirección de Domicilio</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
-                    <input disabled type="text" class="text-black" [value]="patientData?.user_address ">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Dirección de Domicilio</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_address ">
                 </td>
             </tr>
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    Correo Electrónico</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
-                    <input disabled type="text" class="text-black" [value]="patientData?.user_email ">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Correo Electrónico</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+                    <input disabled type="text" class="text-black" [value]="patientData.user_email ">
                 </td>
             </tr>
         </table>
@@ -61,121 +40,115 @@
         <div class="grid gap-3 mb-6 lg:grid-cols-3">
             <div class="grid gap-1 lg:grid-cols-2">
                 <label for="">Menor de Edad</label>
-                <p-inputSwitch formControlName="minor_age" />
+                <p-inputSwitch formControlName="minor_age"></p-inputSwitch>
             </div>
 
             <div class="grid gap-1 lg:grid-cols-2">
                 <label for="">Discapacidad</label>
-                <p-inputSwitch formControlName="disability" />
+                <p-inputSwitch formControlName="disability"></p-inputSwitch>
             </div>
 
             <div class="grid gap-1 lg:grid-cols-2">
                 <label for="">Analfabetismo</label>
-                <p-inputSwitch formControlName="illiteracy" />
+                <p-inputSwitch formControlName="illiteracy"></p-inputSwitch>
             </div>
         </div>
 
         <label for="" class="flex mb-3 font-medium text-black text-xl">Datos del representante legal</label>
         <table class="border-collapse w-full mb-8">
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    Nombre y Apellido</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Nombre y Apellido</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
                     <input type="text" class="text-black" formControlName="tutor_names" placeholder="Nombre y Apellido">
+                    <div *ngIf="actForm.get('tutor_names')?.errors?.['required'] && actForm.get('tutor_names')?.touched" class="text-red-600 text-sm">
+                        El nombre del representante legal es requerido.
+                    </div>
                 </td>
             </tr>
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    C.I</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">C.I</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
                     <input type="text" class="text-black" formControlName="tutor_ced" placeholder="Cédula de Identidad">
+                    <div *ngIf="actForm.get('tutor_ced')?.errors?.['required'] && actForm.get('tutor_ced')?.touched" class="text-red-600 text-sm">
+                        El número de cédula del representante legal es requerido.
+                    </div>
+                    <div *ngIf="actForm.get('tutor_ced')?.errors?.['minlength'] && actForm.get('tutor_ced')?.touched" class="text-red-600 text-sm">
+                        El número de cédula debe tener 10 dígitos.
+                    </div>
+                    <div *ngIf="actForm.get('tutor_ced')?.errors?.['maxlength'] && actForm.get('tutor_ced')?.touched" class="text-red-600 text-sm">
+                        El número de cédula debe tener 10 dígitos.
+                    </div>
                 </td>
             </tr>
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    Teléfono</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Teléfono</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
                     <input type="text" class="text-black" formControlName="tutor_phone" placeholder="Número Celular">
+                    <div *ngIf="actForm.get('tutor_phone')?.errors?.['required'] && actForm.get('tutor_phone')?.touched" class="text-red-600 text-sm">
+                        El teléfono del representante legal es requerido.
+                    </div>
+                    <div *ngIf="actForm.get('tutor_phone')?.errors?.['minlength'] && actForm.get('tutor_phone')?.touched" class="text-red-600 text-sm">
+                        El teléfono debe tener 10 dígitos.
+                    </div>
+                    <div *ngIf="actForm.get('tutor_phone')?.errors?.['maxlength'] && actForm.get('tutor_phone')?.touched" class="text-red-600 text-sm">
+                        El teléfono debe tener 10 dígitos.
+                    </div>
                 </td>
             </tr>
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    Correo Electrónico</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Correo Electrónico</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
                     <input type="text" class="text-black" formControlName="tutor_email" placeholder="Correo Electrónico">
+                    <div *ngIf="actForm.get('tutor_email')?.errors?.['required'] && actForm.get('tutor_email')?.touched" class="text-red-600 text-sm">
+                        El correo electrónico del representante legal es requerido.
+                    </div>
+                    <div *ngIf="actForm.get('tutor_email')?.errors?.['email'] && actForm.get('tutor_email')?.touched" class="text-red-600 text-sm">
+                        El correo electrónico no es válido.
+                    </div>
                 </td>
             </tr>
-            <tr
-                class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-                <td
-                    class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">
-                    Motivo de Representación</td>
-                <td
-                    class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
+            <tr class="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                <td class="p-1 font-medium uppercase bg-gray-200 text-gray-500 border border-gray-300 hidden lg:table-cell">Motivo de Representación</td>
+                <td class="w-full lg:w-auto p-2 text-gray-800 text-left border border-b block lg:table-cell relative lg:static">
                     <input type="text" class="text-black" formControlName="tutor_motive" placeholder="Motivo de Representación">
+                    <div *ngIf="actForm.get('tutor_motive')?.errors?.['required'] && actForm.get('tutor_motive')?.touched" class="text-red-600 text-sm">
+                        El motivo de representación es requerido.
+                    </div>
                 </td>
             </tr>
+            <div *ngIf="actForm.get('tutor_names')?.invalid && actForm.get('tutor_ced')?.invalid && actForm.get('tutor_phone')?.invalid && actForm.get('tutor_email')?.invalid && actForm.get('tutor_motive')?.invalid" class="text-red-600 text-sm">
+                Los Campos de representante legal son requeridos
+            </div>
         </table>
 
-
         <label class="flex mb-3 font-semibold text-black text-lg">
-            El Consultorio Médico Milagro, con domicilio en Santo Domingo, en Urb. Ciudad Verde Mz 104, C5, Calle
-            Refugio el Pambilar, en calidad de Responsable del Tratamiento de acuerdo con el Reglamento General de
-            Protección de Datos Personales y Garantía de los derechos digitales, en relación al tratamiento de sus datos
-            personales, le informa sobre lo siguiente:
+            El Consultorio Médico Milagro, con domicilio en Santo Domingo, en Urb. Ciudad Verde Mz 104, C5, Calle Refugio el Pambilar, en calidad de Responsable del Tratamiento de acuerdo con el Reglamento General de Protección de Datos Personales y Garantía de los derechos digitales, en relación al tratamiento de sus datos personales, le informa sobre lo siguiente:
         </label>
         <ol class="list-decimal pl-6 mb-6">
             <li class="mb-2">
-                Finalidad del tratamiento de datos: Los datos personales que nos facilite serán usados con el fin de
-                conservar su historial clínico y prestarles un servicio adaptado a sus necesidades, así como gestionar
-                la contabilidad y facturación de la clínica. De igual forma, si autoriza, le mantendremos informado
-                sobre promociones, ofertas y temas de salud por los canales facilitados.
+                Finalidad del tratamiento de datos: Los datos personales que nos facilite serán usados con el fin de conservar su historial clínico y prestarles un servicio adaptado a sus necesidades, así como gestionar la contabilidad y facturación de la clínica. De igual forma, si autoriza, le mantendremos informado sobre promociones, ofertas y temas de salud por los canales facilitados.
             </li>
             <li class="mb-2">
-                Plazo de conservación: Los datos de su historial clínico y datos de facturación, serán conservados por
-                los plazos legales establecidos. Los datos de contacto serán conservados mientras no solicite su derecho
-                de supresión o baja.
+                Plazo de conservación: Los datos de su historial clínico y datos de facturación, serán conservados por los plazos legales establecidos. Los datos de contacto serán conservados mientras no solicite su derecho de supresión o baja.
             </li>
             <li class="mb-2">
                 Legitimación: La legitimación es el cumplimiento de obligaciones legales y el consentimiento otorgado.
             </li>
             <li class="mb-2">
-                Destinatarios: Sus datos podrán ser cedidos a Administraciones Públicas cuando resulte obligatorio por
-                ley; así también a bancos y cajas de ahorro si realiza pagos con tarjeta, al laboratorio clínico que el
-                Dispensario tiene convenio. Nos comprometemos a no ceder sus datos a ninguna otra empresa, entidad o
-                persona física o jurídica, a menos que dicha cesión se realice por imperativo legal.
+                Destinatarios: Sus datos podrán ser cedidos a Administraciones Públicas cuando resulte obligatorio por ley; así también a bancos y cajas de ahorro si realiza pagos con tarjeta, al laboratorio clínico que el Dispensario tiene convenio. Nos comprometemos a no ceder sus datos a ninguna otra empresa, entidad o persona física o jurídica, a menos que dicha cesión se realice por imperativo legal.
             </li>
             <li class="mb-2">
-                Confidencialidad: Los datos personales que nos facilite serán tratados de forma confidencial. Nuestro
-                personal se ha comprometido previamente al deber de secreto. Se han implantado medidas técnicas y
-                organizativas para limitar el acceso exclusivamente a las personas autorizadas.
+                Confidencialidad: Los datos personales que nos facilite serán tratados de forma confidencial. Nuestro personal se ha comprometido previamente al deber de secreto. Se han implantado medidas técnicas y organizativas para limitar el acceso exclusivamente a las personas autorizadas.
             </li>
             <li class="mb-2">
-                Menores: Si el paciente fuera menor de 18 años, deberá autorizar su representante legal o titular de la
-                patria potestad o tutela. Tenga en cuenta que podríamos solicitarle el documento de identidad para
-                comprobar su edad, así como documentación para acreditar el motivo de representación cuando proceda.
+                Menores: Si el paciente fuera menor de 18 años, deberá autorizar su representante legal o titular de la patria potestad o tutela. Tenga en cuenta que podríamos solicitarle el documento de identidad para comprobar su edad, así como documentación para acreditar el motivo de representación cuando proceda.
             </li>
             <li class="mb-2">
-                Derechos: Puede ejercitar sus derechos de acceso, rectificación, supresión, limitación, portabilidad y
-                oposición sobre sus datos personales, solicitándolo por escrito al Consultorio Médico Milagro,
-                acompañando copia de su documento de identidad.
+                Derechos: Puede ejercitar sus derechos de acceso, rectificación, supresión, limitación, portabilidad y oposición sobre sus datos personales, solicitándolo por escrito al Consultorio Médico Milagro, acompañando copia de su documento de identidad.
             </li>
         </ol>
         <label class="flex mb-3 font-medium text-black text-lg">
-            Si desea más información sobre nuestra política de protección de datos consúltenos. Autorizo el tratamiento
-            de mis datos personales para los fines indicados:
+            Si desea más información sobre nuestra política de protección de datos consúltenos. Autorizo el tratamiento de mis datos personales para los fines indicados:
         </label>
 
         <label class="flex mb-3 font-medium text-black text-xl">
