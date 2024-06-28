@@ -6,7 +6,10 @@
         <div class="grid gap-6 mb-6 lg:grid-cols-1">
             <div class="flex flex-col">
                 <label for="">Nombre de la Categoría</label>
-                <input type="text" formControlName="name_category" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200 invalid:border-red-600" placeholder="Nombre de Categoría de medicamento" required>
+                <input type="text" formControlName="name_category" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200" placeholder="Nombre de Categoría de medicamento" required>
+                <div *ngIf="categoryForm.get('name_category')?.errors?.['required'] && categoryForm.get('name_category')?.touched" class="text-red-600 text-sm">
+                    El nombre de la categoría es requerido
+                </div>
             </div>
         </div>
         <div class="grid gap-6 mb-6 lg:grid-cols-1">

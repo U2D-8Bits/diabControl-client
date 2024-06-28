@@ -21,6 +21,12 @@
                         class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label>Kilos/Z</label>
                 </div>
+                <div *ngIf="historyForm.get('weight_patient')?.errors?.['required'] && historyForm.get('weight_patient')?.touched" class="text-red-600 text-sm">
+                    El peso es requerido.
+                </div>
+                <div *ngIf="historyForm.get('weight_patient')?.errors?.['min'] && historyForm.get('weight_patient')?.touched" class="text-red-600 text-sm">
+                    El peso debe ser mayor que 0.
+                </div>
             </div>
             <div class="flex flex-col">
                 <label>Talla/ Talla x Edad</label>
@@ -28,6 +34,12 @@
                     <input type="number" formControlName="tall_patient"
                         class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label>c.m/Z</label>
+                </div>
+                <div *ngIf="historyForm.get('tall_patient')?.errors?.['required'] && historyForm.get('tall_patient')?.touched" class="text-red-600 text-sm">
+                    La talla es requerida.
+                </div>
+                <div *ngIf="historyForm.get('tall_patient')?.errors?.['min'] && historyForm.get('tall_patient')?.touched" class="text-red-600 text-sm">
+                    La talla debe ser mayor que 0.
                 </div>
             </div>
             <div class="flex flex-col">
@@ -37,6 +49,12 @@
                         class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label>Pulsaciones X Min.</label>
                 </div>
+                <div *ngIf="historyForm.get('pulse_patient')?.errors?.['required'] && historyForm.get('pulse_patient')?.touched" class="text-red-600 text-sm">
+                    El pulso es requerido.
+                </div>
+                <div *ngIf="historyForm.get('pulse_patient')?.errors?.['min'] && historyForm.get('pulse_patient')?.touched" class="text-red-600 text-sm">
+                    El pulso debe ser mayor que 0.
+                </div>
             </div>
             <div class="flex flex-col">
                 <label>Presión Arterial</label>
@@ -44,6 +62,12 @@
                     <input type="number" formControlName="presure_patient"
                         class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label>mmHg</label>
+                </div>
+                <div *ngIf="historyForm.get('presure_patient')?.errors?.['required'] && historyForm.get('presure_patient')?.touched" class="text-red-600 text-sm">
+                    La presión arterial es requerida.
+                </div>
+                <div *ngIf="historyForm.get('presure_patient')?.errors?.['min'] && historyForm.get('presure_patient')?.touched" class="text-red-600 text-sm">
+                    La presión arterial debe ser mayor que 0.
                 </div>
             </div>
             <div class="flex flex-col">
@@ -53,6 +77,12 @@
                         class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label>X Min.</label>
                 </div>
+                <div *ngIf="historyForm.get('frequency_patient')?.errors?.['required'] && historyForm.get('frequency_patient')?.touched" class="text-red-600 text-sm">
+                    La frecuencia cardiaca es requerida.
+                </div>
+                <div *ngIf="historyForm.get('frequency_patient')?.errors?.['min'] && historyForm.get('frequency_patient')?.touched" class="text-red-600 text-sm">
+                    La frecuencia cardiaca debe ser mayor que 0.
+                </div>
             </div>
             <div class="flex flex-col">
                 <label>Temperatura</label>
@@ -60,6 +90,12 @@
                     <input type="number" formControlName="temperature_patient"
                         class="w-4/5 border border-gray-300 p-2 rounded-md">
                     <label>°C</label>
+                </div>
+                <div *ngIf="historyForm.get('temperature_patient')?.errors?.['required'] && historyForm.get('temperature_patient')?.touched" class="text-red-600 text-sm">
+                    La temperatura es requerida.
+                </div>
+                <div *ngIf="historyForm.get('temperature_patient')?.errors?.['min'] && historyForm.get('temperature_patient')?.touched" class="text-red-600 text-sm">
+                    La temperatura debe ser mayor que 0.
                 </div>
             </div>
         </div>
@@ -70,38 +106,63 @@
                 <textarea formControlName="consult_reason" rows="4"
                     class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="El motivo de consulta" required></textarea>
+                <div *ngIf="historyForm.get('consult_reason')?.invalid && historyForm.get('consult_reason')?.touched" class="text-red-600 text-sm">
+                    El motivo de consulta es requerido.
+                </div>
             </div>
             <div class="flex flex-col">
                 <label>Enfermedad actual</label>
                 <textarea formControlName="current_illness" rows="4"
                     class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                     required></textarea>
+                <div *ngIf="historyForm.get('current_illness')?.invalid && historyForm.get('current_illness')?.touched" class="text-red-600 text-sm">
+                    La enfermedad actual es requerida.
+                </div>
             </div>
             <div class="flex flex-col">
                 <label>Exámen Físico / Complementario</label>
                 <textarea formControlName="fisic_exam" rows="4"
                     class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                     required></textarea>
+                <div *ngIf="historyForm.get('fisic_exam')?.invalid && historyForm.get('fisic_exam')?.touched" class="text-red-600 text-sm">
+                    El examen físico es requerido.
+                </div>
             </div>
             <div class="flex flex-col">
                 <label>Impresión diagnóstico / Prescripción</label>
                 <textarea formControlName="diagnostic" rows="4"
                     class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                     required></textarea>
+                <div *ngIf="historyForm.get('diagnostic')?.invalid && historyForm.get('diagnostic')?.touched" class="text-red-600 text-sm">
+                    La impresión diagnóstica es requerida.
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <label>Fenotipo</label>
+                <p-dropdown [options]="fenotypes" formControlName="fenotype" optionLabel="name_fenotype" optionValue="name_fenotype" [filter]="true"
+                    filterBy="name_category" [showClear]="true" placeholder="Seleccione un fenotipo" [style]="{'border': historyForm.controls['fenotype'].invalid && historyForm.controls['fenotype'].touched ? '1px solid red' : '1px solid #d1d5db', 'padding': '0.625rem', 'border-radius': '0.375rem', 'background-color': '#f9fafb'}">
+                    <ng-template pTemplate="selectedItem" let-selectedOption>
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ selectedOption?.name_fenotype }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-fenotype pTemplate="w">
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ fenotype.name_fenotype }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <div *ngIf="historyForm.controls['fenotype'].invalid && historyForm.controls['fenotype'].touched" class="text-red-600 text-sm">
+                    Seleccione un Fenotipo.
+                </div>
             </div>
             <div class="flex flex-col">
                 <label>Medicamentos</label>
-                <p-multiSelect 
-                    [options]="medicines" 
-                    formControlName="recipe" 
-                    optionLabel="name_medicine"
-                    display="chip"
-                    optionValue="name_medicine"
+                <p-multiSelect [options]="medicines" formControlName="recipe" optionLabel="name_medicine" display="chip" optionValue="name_medicine"
                     placeholder="Seleccione uno o varios Medicamentos"
                     styleClass="{'ng-invalid': !historyForm.controls['recipe'].valid && historyForm.controls['recipe'].touched}"
-                    required
-                ></p-multiSelect>
-                <div *ngIf="historyForm.controls['recipe'].invalid && historyForm.controls['recipe'].touched" class="text-red-600 text-sm">
+                    required></p-multiSelect>
+                <div *ngIf="historyForm.get('recipe')?.invalid && historyForm.get('recipe')?.touched" class="text-red-600 text-sm">
                     Seleccione al menos un medicamento.
                 </div>
             </div>
@@ -110,6 +171,9 @@
                 <textarea formControlName="medic_indications" rows="4"
                     class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                     required></textarea>
+                <div *ngIf="historyForm.get('medic_indications')?.invalid && historyForm.get('medic_indications')?.touched" class="text-red-600 text-sm">
+                    Las indicaciones médicas son requeridas.
+                </div>
             </div>
         </div>
         <div class="grid gap-6 mb-6 lg:grid-cols-2">

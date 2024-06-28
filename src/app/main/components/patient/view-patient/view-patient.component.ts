@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { UserDataService } from '../../../services/user-data.service';
 import { User } from '../../../../auth/interfaces';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PatientsPageComponent } from '../../../pages/patients-page/patients-page.component';
@@ -70,7 +70,7 @@ export class ViewPatientComponent implements OnInit {
       user_phone: ['', Validators.required],
       user_address: ['', Validators.required],
       user_genre: ['', Validators.required],
-      user_birthdate: ['', Validators.required],
+      user_birthdate: ['', [Validators.required, this.futureDateValidator]],
       user_age: [0, Validators.required],
       user_admin: [false],
       user_username: ['', Validators.required],
@@ -211,6 +211,15 @@ export class ViewPatientComponent implements OnInit {
         });
       }
     })
+  }
+
+  futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const selectedDate = new Date(control.value);
+    const today = new Date();
+    if (selectedDate > today) {
+      return { futureDate: true };
+    }
+    return null;
   }
   
 

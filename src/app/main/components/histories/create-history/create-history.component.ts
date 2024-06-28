@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { User } from '../../../../auth/interfaces/user.interface';
 import { UserService } from '../../../services/user.service';
@@ -34,21 +34,30 @@ export class CreateHistoryComponent implements OnInit {
   medicines: Medicine[] = [];
   currentDate: Date = new Date();
 
+  fenotypes: any[] = [
+    { name_fenotype: "Picoteador / Emocional" },
+    { name_fenotype: "Compulsivo" },
+    { name_fenotype: "Hiperfágico" },
+    { name_fenotype: "Hedónico" },
+    { name_fenotype: "Desorganizado" }
+  ];
+
   historyForm: FormGroup = this.fb.group({
     medicoId: [this.idMedic],
     pacienteId: [this.idPatient],
-    weight_patient: [0],
-    tall_patient: [0],
-    pulse_patient: [0],
-    presure_patient: [0],
-    frequency_patient: [0],
-    temperature_patient: [0],
-    consult_reason: ['', [Validators.required]],
-    fisic_exam: ['', [Validators.required]],
-    recipe: [[], [Validators.required]], // Recipe as a FormControl with an array
-    current_illness: ['', [Validators.required]],
-    diagnostic: ['', [Validators.required]],
-    medic_indications: ['', [Validators.required]],
+    weight_patient: [null, [Validators.required, Validators.min(1)]],
+    tall_patient: [null, [Validators.required, Validators.min(1)]],
+    pulse_patient: [null, [Validators.required, Validators.min(1)]],
+    presure_patient: [null, [Validators.required, Validators.min(1)]],
+    frequency_patient: [null, [Validators.required, Validators.min(1)]],
+    temperature_patient: [null, [Validators.required, Validators.min(1)]],
+    consult_reason: ['', Validators.required],
+    fisic_exam: ['', Validators.required],
+    recipe: [[], Validators.required],
+    fenotype: ['', Validators.required],
+    current_illness: ['', Validators.required],
+    diagnostic: ['', Validators.required],
+    medic_indications: ['', Validators.required],
   });
 
   ngOnInit() {
@@ -57,6 +66,7 @@ export class CreateHistoryComponent implements OnInit {
     this.formatDate();
     this.getMedicines();
     this.getMedicData();
+    console.log(this.fenotypes);
   }
 
   formatDate() {
@@ -108,7 +118,7 @@ export class CreateHistoryComponent implements OnInit {
       accept: () => {
         this.historyService.crateHistory(historyData).subscribe({
           next: (data) => {
-            console.log("Valor de Data =>",data)
+            console.log("Valor de Data =>", data);
             this.messageService.add({
               severity: 'success',
               summary: 'Success',
@@ -118,7 +128,7 @@ export class CreateHistoryComponent implements OnInit {
             this.resetForm();
             setTimeout(() => {
               this.closeModal();
-            }, 1500);
+            }, 1200);
           },
           error: (error) => {
             console.error(error);
@@ -153,6 +163,7 @@ export class CreateHistoryComponent implements OnInit {
       consult_reason: '',
       fisic_exam: '',
       recipe: [],
+      fenotype: '',
       current_illness: '',
       diagnostic: '',
       medic_indications: ''
@@ -177,7 +188,7 @@ export class CreateHistoryComponent implements OnInit {
         this.resetForm();
         setTimeout(() => {
           this.closeModal();
-        }, 1500);
+        }, 1200);
       },
       reject: () => {
         this.messageService.add({
@@ -188,6 +199,7 @@ export class CreateHistoryComponent implements OnInit {
       }
     });
   }
+
 
   closeModal() {
     this.ref.close(

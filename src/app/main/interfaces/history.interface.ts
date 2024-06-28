@@ -11,6 +11,7 @@ export interface History{
     consult_reason: string
     fisic_exam: string
     recipe: string[]
+    fenotype: string
     current_illness: string
     diagnostic: string
     medic_indications: string
