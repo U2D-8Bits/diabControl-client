@@ -19,7 +19,7 @@ export class CategoryService {
         return category;
       }),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -33,7 +33,7 @@ export class CategoryService {
         return categories;
       }),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -45,7 +45,7 @@ export class CategoryService {
     return this.http.get<number>(url).pipe(
       map((count: number) => count),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -68,7 +68,7 @@ export class CategoryService {
         return resp;
       }),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -82,7 +82,7 @@ export class CategoryService {
         return category;
       }),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -96,7 +96,7 @@ export class CategoryService {
         return category;
       }),
       catchError((err: any) => {
-        return of(err);
+        return throwError(err);
       })
     );
   }

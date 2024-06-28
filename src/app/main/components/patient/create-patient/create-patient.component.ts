@@ -1,10 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-
+import { FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserService } from '../../../services/user.service';
-import { User } from '../../../../auth/interfaces';
 import { PatientsPageComponent } from '../../../pages/patients-page/patients-page.component';
 
 @Component({
@@ -16,7 +14,6 @@ import { PatientsPageComponent } from '../../../pages/patients-page/patients-pag
 export class CreatePatientComponent implements OnInit {
   constructor() {}
 
-  //?Variables e Injecciones
   private fb = inject(FormBuilder);
   private ref: DynamicDialogRef = inject(DynamicDialogRef);
   private confirmationService = inject(ConfirmationService);
@@ -27,14 +24,10 @@ export class CreatePatientComponent implements OnInit {
   presentYear = new Date().getFullYear();
   ageUser!: number;
 
-
-  //* Declramamos como variable el PatientsPageComponent para poder acceder a sus metodos
   private patientsPageComponent = inject(PatientsPageComponent);
 
-  //* variable para determinar que el formulario es invalido
   cancelAble: boolean = false;
 
-  //? Formulario para crear un nuevo paciente
   myForm = this.fb.group({
     user_username: ['', Validators.required],
     user_status: [true],
@@ -42,29 +35,26 @@ export class CreatePatientComponent implements OnInit {
     user_password: ['', [Validators.required, Validators.minLength(6)]],
     user_name: ['', Validators.required],
     user_lastname: ['', Validators.required],
-    user_genre: ['', [Validators.required]],
-    user_email: ['', [Validators.required]],
-    user_ced: [0, [Validators.required]],
-    user_birthdate: ['', [Validators.required]],
-    user_age: [0, [Validators.required]],
+    user_genre: ['', Validators.required],
+    user_email: ['', [Validators.required, Validators.email]],
+    user_ced: ['', Validators.required],
+    user_birthdate: ['', [Validators.required, this.futureDateValidator]],
+    user_age: [0, Validators.required],
     user_admin: [false],
-    user_address: ['', [Validators.required]],
+    user_address: ['', Validators.required],
     role_id: [2],
   });
 
-  //? Funcion para crear un nuevo paciente
   createPatient() {
-    
     const birthDateYear = this.myForm.get('user_birthdate')?.value?.split('-')[0] || '';
     this.ageUser = this.presentYear - parseInt(birthDateYear);
     this.myForm.patchValue({
       user_age: this.ageUser,
     });
 
-    console.log(`Valores del Formulario a crear =>`,this.myForm.value);
+    console.log(`Valores del Formulario a crear =>`, this.myForm.value);
 
     const patientData = this.myForm.value;
-
 
     this.confirmationService.confirm({
       message: 'Está seguro que desea crear un nuevo paciente?',
@@ -109,7 +99,6 @@ export class CreatePatientComponent implements OnInit {
     });
   }
 
-  //? Funcion para cancelar la creacion de un nuevo paciente
   cancelCreation() {
     this.confirmationService.confirm({
       message: 'Está seguro que desea cancelar la creación de un nuevo paciente?',
@@ -138,11 +127,9 @@ export class CreatePatientComponent implements OnInit {
     });
   }
 
-  //? Metodo para cerrar el dialog
   closeDialog() {
     this.ref.close();
   }
-
 
   ngOnInit(): void {
     console.log(`componente create-patient cargado`);
@@ -150,5 +137,14 @@ export class CreatePatientComponent implements OnInit {
 
   ngOnDestroy(): void {
     console.log(`componente create-patient destruido`);
+  }
+
+  futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const selectedDate = new Date(control.value);
+    const today = new Date();
+    if (selectedDate > today) {
+      return { futureDate: true };
+    }
+    return null;
   }
 }

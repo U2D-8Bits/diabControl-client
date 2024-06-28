@@ -6,28 +6,41 @@
         <div class="grid gap-6 mb-6 lg:grid-cols-1">
             <div class="flex flex-col">
                 <label for="">Nombre del Medicamento</label>
-                <input type="text" formControlName="name_medicine" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200 invalid:border-red-600" placeholder="Nombre de Medicamento" required>
+                <input type="text" formControlName="name_medicine"
+                    class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200"
+                    placeholder="Nombre de Medicamento" required>
+                    <div *ngIf="medicineForm.get('name_medicine')?.errors?.['required'] && medicineForm.get('name_medicine')?.touched" class="text-red-600 text-sm">
+                        El nombre del medicamento es requerido
+                    </div>
             </div>
             <div class="flex flex-col">
                 <label for="">Nombre Genérico del Medicamento</label>
-                <input type="text" formControlName="generic_name" class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200 invalid:border-red-600" placeholder="Nombre de Genérico de Medicamento" required>
+                <input type="text" formControlName="generic_name"
+                    class="border border-gray-300 p-2 rounded-md disabled:bg-gray-200"
+                    placeholder="Nombre de Genérico de Medicamento" required>
+                    <div *ngIf="medicineForm.get('generic_name')?.errors?.['required'] && medicineForm.get('generic_name')?.touched" class="text-red-600 text-sm">
+                        El nombre genérico del medicamento es requerido
+                    </div>
             </div>
 
             <div class="flex flex-col">
-                <label for="">Categoría de Medicamento</label>
+                <label for="">Categoría del Medicamento</label>
                 <p-dropdown [options]="categories" formControlName="idCategory" optionLabel="name_category" optionValue="id" [filter]="true"
-                filterBy="name_category" [showClear]="true" placeholder="Seleccione una categoría" [style]="{'border': medicineForm.controls['idCategory'].invalid && medicineForm.controls['idCategory'].touched ? '1px solid red' : '1px solid #d1d5db', 'padding': '0.625rem', 'border-radius': '0.375rem', 'background-color': '#f9fafb'}">
-                <ng-template pTemplate="selectedItem" let-selectedOption>
-                    <div class="flex align-items-center gap-2">
-                        <div>{{ selectedOption?.name_category }}</div>
-                    </div>
-                </ng-template>
-                <ng-template let-category pTemplate="item">
-                    <div class="flex align-items-center gap-2">
-                        <div>{{ category.name_category }}</div>
-                    </div>
-                </ng-template>
-            </p-dropdown>
+                    filterBy="name_category" [showClear]="true" placeholder="Seleccione una categoría" [style]="{'border': medicineForm.controls['idCategory'].invalid && medicineForm.controls['idCategory'].touched ? '1px solid red' : '1px solid #d1d5db', 'padding': '0.625rem', 'border-radius': '0.375rem', 'background-color': '#f9fafb'}">
+                    <ng-template pTemplate="selectedItem" let-selectedOption>
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ selectedOption?.name_category }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-category pTemplate="item">
+                        <div class="flex align-items-center gap-2">
+                            <div>{{ category.name_category }}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <div *ngIf="medicineForm.get('idCategory')?.errors?.['required'] && medicineForm.get('idCategory')?.touched" class="text-red-600 text-sm">
+                    La categoría del medicamento es requerida
+                </div>
             </div>
         </div>
     </form>

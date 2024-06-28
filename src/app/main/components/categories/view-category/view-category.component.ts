@@ -102,7 +102,7 @@ export class ViewCategoryComponent implements OnInit {
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Ocurrio un error en la actualización de la categoría',
+                detail: err.error.message || 'Error al crear la categoría',
               });
             },
           });

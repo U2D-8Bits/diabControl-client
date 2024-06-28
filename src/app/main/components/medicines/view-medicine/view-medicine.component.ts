@@ -112,6 +112,7 @@ export class ViewMedicineComponent implements OnInit {
         .updateMedicine(this.idMedicine, medicineData)
         .subscribe({
           next: (resp: any) => {
+            console.log('Medicine updated:', resp);
            this.messageService.add({
              severity: 'success',
              summary: 'Éxito',
@@ -119,16 +120,21 @@ export class ViewMedicineComponent implements OnInit {
            })
 
            this.medicinePage.ngOnInit();
+
            setTimeout(() => {
             this.closeModal();
            }, 1500)
         },
         error: (erResponse: any) => {
+          if(erResponse.error.message === 'Ya existe un medicamento asociado a ese nombre genérico'){
+            this.medicineForm.get('generic_name')?.reset();
+          }
+
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: erResponse.error.message
-          })
+            detail: erResponse.error.message || 'Error al crear el Medicamento',
+          });
         }
       })
       },
