@@ -68,7 +68,7 @@ export class CreateCategoryComponent implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: 'Ocurrio un error en la creación de la categoría',
+              detail: err.error.message || 'Error al crear la categoría',
             });
           },
         });
