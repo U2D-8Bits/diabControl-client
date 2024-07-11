@@ -86,7 +86,6 @@ export class MainLayoutComponent implements OnInit {
     this.roleService.getRoleByID(Number(roleId))
       .subscribe((role) => {
         this.roleUser = role.role_name;
-        console.log(`Role: ${this.roleUser}`);
         this.setupPhoneMenu();
       });
 
@@ -123,6 +122,11 @@ export class MainLayoutComponent implements OnInit {
         icon: 'pi pi-box',
         routerLink: ['/main/medicines'],
         visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
+      },
+      {
+        label: 'Chats',
+        icon: 'pi pi-comments',
+        routerLink: ['/main/chats'],
       },
       {
         label: 'Mi Perfil',

@@ -1,11 +1,46 @@
-<div class="bg-gray-100 flex justify-center items-center h-screen">
-    <!-- Left: Image -->
-    <div class="w-1/2 h-screen hidden lg:block">
-        <img src="../../../../assets/svg/background_login.png" alt="Placeholder Image"
-            class="object-cover w-full h-full">
-    </div>
-    <!-- Right: Login Form -->
-    <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
-        <router-outlet/>
+<div class="w-screen h-2/4 sm:h-screen flex-column items-center justify-between">
+
+    <!-- Header -->
+    <div id="div" class="flex sm:flex-column items-center justify-between bg-blue-700 px-2 py-2">
+
+        <!-- Logo del Website -->
+        <div class="container-img mt-2">
+          <img class="img-logo" src="../../../../assets/svg/DiabControl_Banner_white_200x50.svg" alt="logo_diabControl">
+        </div>
+    
+        <!-- Contenedor del Menu para PC -->
+        <div id="menu-container" class="flex items-center justify-between">
+    
+          <!-- Menu -->
+          <div id="menu" class="flex items-center space-x-4 text-white gap-4">
+            <a routerLink="/auth/home" routerLinkActive="active" class="flex items-center text-white px-3 gap-3">
+              <span class="pi pi-home"></span>
+              Inicio
+            </a>
+    
+            <a routerLink="/auth/login" routerLinkActive="active" class="flex items-center text-white px-3 gap-3">
+              <span class="pi pi-sign-in"></span>
+              Iniciar Sesión
+            </a>
+          </div>
+    
+        </div>
+    
+        <!-- Contenedor del Menu para Mobiles -->
+        <div class="px-3" id="menu-mobile">
+          <div class="flex flex-shrink-0 items-center space-x-4 text-white">
+            <p-menu #menuPhone [model]="phoneMenu" [popup]="true" />
+            <button (click)="menuPhone.toggle($event)" class="">
+                <span class="pi pi-bars"></span>
+            </button>
+          </div>
+        </div>
+    
+      </div>
+
+    <!-- Contenido del main -->
+    <div id="main" class="w-full">
+        <router-outlet></router-outlet>
     </div>
 </div>
+

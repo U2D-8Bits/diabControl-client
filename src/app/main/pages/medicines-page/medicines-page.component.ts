@@ -34,12 +34,27 @@ export class MedicinesPageComponent implements OnInit {
   public search: string = '';
 
   ngOnInit(): void {
-    this.getAllCategories();
-    this.countCategories();
-    if(this.totalCategories === 0){
-      this.messages = [{ severity: 'info', detail: 'No se pueden crear medicamentos debido a que no existen categorías.' }];
-    }
-    this.loadMedicines();
+    Swal.fire({
+      title: 'Cargando medicamentos',
+      html: 'Por favor espere un momento',
+      timer: 2500,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading()
+        this.getAllCategories();
+        this.countCategories();
+        if(this.totalCategories === 0){
+          this.messages = [{ severity: 'info', detail: 'No se pueden crear medicamentos debido a que no existen categorías.' }];
+        }
+        this.loadMedicines();
+      }
+    }).then((result) => {
+      if(result.dismiss === Swal.DismissReason.timer){
+      }
+    })
+
   }
 
   //? Método para obtener todas las categorías
