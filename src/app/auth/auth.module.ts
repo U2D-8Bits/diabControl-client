@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrimengModule } from '../primeng/primeng.module';
 import { HttpClientModule } from '@angular/common/http';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 
 
@@ -15,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     LoginPageComponent,
     AuthLayoutComponent,
+    HomePageComponent,
     
   ],
   imports: [

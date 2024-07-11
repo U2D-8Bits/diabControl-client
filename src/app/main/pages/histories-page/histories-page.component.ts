@@ -42,15 +42,29 @@ export class HistoriesPageComponent implements OnInit {
   public pageSize: number = 10;
 
   ngOnInit(): void {
-    console.log(`Componente HistoriesPage creado`)
 
-    this.idPatient = this.route.snapshot.params['id'];
-    this.loadMedicines();
-    if(this.totalMedicines === 0){
-      this.messages = [{ severity: 'info', detail: 'No se pueden crear Historias Clínicas debido a que no existen medicamentos registrados.' }];
-    }
-    this.loadHistories();
-    this.getPatientData();
+    Swal.fire({
+      title: 'Cargando Historias Clínicas',
+      html: 'Por favor espere un momento',
+      timer: 2500,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading()
+        this.idPatient = this.route.snapshot.params['id'];
+        this.loadMedicines();
+        if(this.totalMedicines === 0){
+          this.messages = [{ severity: 'info', detail: 'No se pueden crear Historias Clínicas debido a que no existen medicamentos registrados.' }];
+        }
+        this.loadHistories();
+        this.getPatientData();
+      }
+    }).then((result) => {
+      if(result.dismiss === Swal.DismissReason.timer){
+      }
+    })
+
   }
 
 

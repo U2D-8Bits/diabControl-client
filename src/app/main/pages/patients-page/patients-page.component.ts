@@ -27,6 +27,8 @@ export class PatientsPageComponent implements OnInit{
 
   
 
+  
+
   public patients: User[] = []
   public totalPatients: number = 0
   public currentPage: number = 1
@@ -88,7 +90,11 @@ export class PatientsPageComponent implements OnInit{
       next: (resp: any) => {
         this.patients = resp.data
         this.totalPatients = resp.total
-      }
+      },
+      error: (err: any) => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Ha ocurrido un error al cargar los pacientes'})
+
+      },
     })
   }
 
@@ -167,11 +173,23 @@ export class PatientsPageComponent implements OnInit{
 
 
   ngOnInit(): void {
-    console.log('Componente de PatientsPageComponent creado')
-    // this.getAllPatients()
-    this.loadPatients()
+    Swal.fire({
+      title: 'Cargando pacientes',
+      html: 'Por favor espere un momento',
+      timer: 2500,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading()
+        this.loadPatients()
+      }
+    }).then((result) => {
+      if(result.dismiss === Swal.DismissReason.timer){
+      }
+    })
+    
   }
 
-
-
+  
 }

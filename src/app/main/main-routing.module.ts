@@ -7,6 +7,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
 import { HistoriesPageComponent } from './pages/histories-page/histories-page.component';
 import { ActPageComponent } from './pages/act-page/act-page.component';
 import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/show-medicine-page.component';
+import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,11 @@ const routes: Routes = [
         path: 'medicines',
         title: 'Medicamentos',
         component: ShowMedicinePageComponent
+      },
+      {
+        path: 'chats',
+        title: 'Chats',
+        component: ChatPageComponent
       },
       {
         path: 'profile',
