@@ -18,8 +18,6 @@ import { ViewMedicComponent } from '../../components/medic/view-medic/view-medic
   providers: [DialogService],
 })
 export class ProfilePageComponent implements OnInit {
-
-
   //? Variables e Inyecciones
   ref: DynamicDialogRef | undefined;
   private userService = inject(UserService);
@@ -28,7 +26,7 @@ export class ProfilePageComponent implements OnInit {
 
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  
+
   public roleUser = localStorage.getItem('role');
   private idUser!: number;
   private idMedic!: number;
@@ -42,61 +40,59 @@ export class ProfilePageComponent implements OnInit {
   dateBirthYear = this.userData?.user_birthdate?.split('-')[0];
   ageUser: number = this.presentYear - Number(this.dateBirthYear);
 
-
-
-
-
+  
   ngOnInit(): void {
-    console.log(`Profile Page Component initialized!`);
+    Swal.fire({
+      title: 'Cargando perfil',
+      html: 'Por favor espere un momento',
+      timer: 2500,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading();
+        //? Formulario de Usuario
+        this.myForm = this.fb.group({
+          user_name: ['', Validators.required],
+          user_lastname: ['', Validators.required],
+          user_email: ['', Validators.required],
+          user_phone: ['', Validators.required],
+          user_username: ['', Validators.required],
+          user_password: ['', [Validators.required, Validators.minLength(6)]],
+          user_ced: [0, Validators.required],
+          user_address: ['', Validators.required],
+          user_birthdate: ['', Validators.required],
+          user_age: [0, Validators.required],
+          user_admin: [false, Validators.required],
+          user_genre: ['', Validators.required],
+          role_id: [0, Validators.required],
+          user_status: [true, Validators.required],
+        });
 
+        //? Obtenemos el ID del usuario
+        this.idUser = Number(localStorage.getItem('ID'));
 
+        //? Obtenemos los datos del usuario
+        this.userService.getUserById(this.idUser).subscribe({
+          next: (user) => {
+            this.userData = user;
 
-
-    //? Formulario de Usuario
-    this.myForm = this.fb.group({
-      user_name: ['', Validators.required],
-      user_lastname: ['', Validators.required],
-      user_email: ['', Validators.required],
-      user_phone: ['', Validators.required],
-      user_username: ['', Validators.required],
-      user_password: ['', [Validators.required, Validators.minLength(6)]],
-      user_ced: [0, Validators.required],
-      user_address: ['', Validators.required],
-      user_birthdate: ['', Validators.required],
-      user_age: [0, Validators.required],
-      user_admin: [false, Validators.required],
-      user_genre: ['', Validators.required],
-      role_id: [0, Validators.required],
-      user_status: [true, Validators.required],
-    });
-
-
-
-    //? Obtenemos el ID del usuario
-    this.idUser = Number(localStorage.getItem('ID'));
-
-
-
-
-    //? Obtenemos los datos del usuario
-    this.userService.getUserById(this.idUser).subscribe({
-      next: (user) => {
-        this.userData = user;
-
-        this.dateBirthYear = this.userData.user_birthdate.split('-')[0];
-        this.ageUser = this.presentYear - Number(this.dateBirthYear);
-        this.getRoleData(user.role_id);
-        this.chargeForm(user);
-        this.getAllMedics();
+            this.dateBirthYear = this.userData.user_birthdate.split('-')[0];
+            this.ageUser = this.presentYear - Number(this.dateBirthYear);
+            this.getRoleData(user.role_id);
+            this.chargeForm(user);
+            this.getAllMedics();
+          },
+          error: (error) => {
+            console.error(`Error:`, error);
+          },
+        });
       },
-      error: (error) => {
-        console.error(`Error:`, error);
-      },
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+      }
     });
   }
-
-
-
 
   //? Metodo para obtener todos los medicos registrados en la base de datos
   getAllMedics() {
@@ -113,15 +109,12 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-
-  getIdMedicToView(id: number){
+  getIdMedicToView(id: number) {
     this.idMedic = id;
   }
 
-
   //? Metodo para agregar un medico nuevo
   showDialog(componentName: string, headerText: string) {
-
     if (componentName === 'create') {
       this.ref = this.dialigService.open(CreateMedicComponent, {
         header: headerText,
@@ -132,7 +125,7 @@ export class ProfilePageComponent implements OnInit {
       });
     }
 
-    if (componentName === 'view'){
+    if (componentName === 'view') {
       this.ref = this.dialigService.open(ViewMedicComponent, {
         header: headerText,
         breakpoints: { '960px': '500px', '640px': '100vw' },
@@ -141,13 +134,10 @@ export class ProfilePageComponent implements OnInit {
         contentStyle: { overflow: 'auto' },
         data: {
           idMedic: this.idMedic,
-        }
+        },
       });
     }
   }
-
-
-
 
   //? Funcion para actualizar los datos del usuario
   updateUserInfo() {
@@ -181,9 +171,6 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-
-
-
   //? Funcion para cargar los datos del usuario en el formulario
   chargeForm(userData: User) {
     //* Se crea el formulario
@@ -216,10 +203,6 @@ export class ProfilePageComponent implements OnInit {
     this.currentUserData = this.myForm.value;
   }
 
-
-
-
-
   //? Funcion para obtener los datos del rol
   getRoleData(role_id: number) {
     this.roleService.getRoleByID(role_id).subscribe({
@@ -231,10 +214,6 @@ export class ProfilePageComponent implements OnInit {
       },
     });
   }
-
-
-
-
 
   //? Funcuncion para eliminar un medico
   deleteMedic(medicId: number) {
@@ -269,12 +248,6 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-
-
-
-
   //? Funcion para destruir el componente
-  ngOnDestroy(): void {
-    console.log(`Profile Page Component destroyed!`);
-  }
+  ngOnDestroy(): void {}
 }

@@ -32,8 +32,22 @@ export class CategoriesPageComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.getCategories();
-    this.loadCategories()
+    Swal.fire({
+      title: 'Cargando Categoría de Medicamentos',
+      html: 'Por favor espere un momento',
+      timer: 2500,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading()
+        this.loadCategories()
+      }
+    }).then((result) => {
+      if(result.dismiss === Swal.DismissReason.timer){
+      }
+    })
+    
   }
 
   //? Metodo para obtener todas las categorias existentes
