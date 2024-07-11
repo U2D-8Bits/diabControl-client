@@ -124,6 +124,11 @@ export class MainLayoutComponent implements OnInit {
         visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
       },
       {
+        label: 'Chats',
+        icon: 'pi pi-comments',
+        routerLink: ['/main/chats'],
+      },
+      {
         label: 'Mi Perfil',
         icon: 'pi pi-user',
         routerLink: ['/main/profile'],
