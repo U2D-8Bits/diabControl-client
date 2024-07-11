@@ -86,7 +86,6 @@ export class MainLayoutComponent implements OnInit {
     this.roleService.getRoleByID(Number(roleId))
       .subscribe((role) => {
         this.roleUser = role.role_name;
-        console.log(`Role: ${this.roleUser}`);
         this.setupPhoneMenu();
       });
 
