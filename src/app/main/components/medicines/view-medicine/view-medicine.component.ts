@@ -112,7 +112,6 @@ export class ViewMedicineComponent implements OnInit {
         .updateMedicine(this.idMedicine, medicineData)
         .subscribe({
           next: (resp: any) => {
-            console.log('Medicine updated:', resp);
            this.messageService.add({
              severity: 'success',
              summary: 'Éxito',

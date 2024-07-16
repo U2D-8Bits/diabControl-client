@@ -40,7 +40,6 @@ export class MainLayoutComponent implements OnInit {
 
   //? Metodo para Cerrar sesion 
   logOut(){
-    console.log("Cerrar Sesión")
     this.authService.logOut();
   }
 
@@ -149,7 +148,6 @@ export class MainLayoutComponent implements OnInit {
 
   //? Destroy del componente
   ngOnDestroy(): void {
-    console.log(`Main Layout Component destroyed!`);
   }
 
 }
