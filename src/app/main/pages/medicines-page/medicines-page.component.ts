@@ -79,7 +79,6 @@ export class MedicinesPageComponent implements OnInit {
         this.totalCategories = count;
       },
       error: (erResponse: any) => {
-        console.error(erResponse)
       }
     })
   }
@@ -126,7 +125,7 @@ export class MedicinesPageComponent implements OnInit {
           next: (response: any) => {
             Swal.fire(
               '¡Eliminado!',
-              'La medicina ha sido eliminada.',
+              'El medicamento ha sido eliminada.',
               'success'
             );
             this.ngOnInit();
@@ -134,7 +133,7 @@ export class MedicinesPageComponent implements OnInit {
           error: (erResponse: any) => {
             Swal.fire(
               'Error',
-              'Hubo un error al eliminar la medicina',
+              'Hubo un error al eliminar el medicamento',
               'error'
             );
           },

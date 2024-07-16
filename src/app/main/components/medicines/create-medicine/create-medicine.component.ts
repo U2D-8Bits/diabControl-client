@@ -52,10 +52,9 @@ export class CreateMedicineComponent implements OnInit {
 
       // Asegúrate de que idCategory sea un número
       medicineData.idCategory = Number(medicineData.idCategory);
-      console.log(medicineData);
 
       this.confirmationService.confirm({
-        message: '¿Está seguro que desea crear eeste Medicamento?',
+        message: '¿Está seguro que desea crear este Medicamento?',
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: 'none',
@@ -65,7 +64,6 @@ export class CreateMedicineComponent implements OnInit {
         accept: () => {
           this.medicineService.createMedicine(medicineData).subscribe({
             next: (resp: any) => {
-              console.log(resp);
               this.messageService.add({
                 severity: 'success',
                 summary: 'Éxito',

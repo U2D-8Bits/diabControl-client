@@ -39,12 +39,6 @@ export class ViewPatientComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //* Mensaje que se muestra en consola cuando el componente se inicia
-    console.log('El componente ViewPatientComponent se inició');
-
-
-
-
 
     //* Se obtiene el ID del usuario
     this.userDataService.currentUserId
@@ -89,7 +83,6 @@ export class ViewPatientComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.patientData = data;
-          // Se asignan los valores al formulario
           this.myForm.patchValue({
             user_name: this.patientData.user_name,
             user_lastname: this.patientData.user_lastname,
@@ -105,7 +98,6 @@ export class ViewPatientComponent implements OnInit {
             user_ced: this.patientData.user_ced,
           })
 
-          // Se guarda la información del paciente
           this.patienFormData = this.myForm.value;
         },
         error: (error) => {
@@ -121,7 +113,6 @@ export class ViewPatientComponent implements OnInit {
 
   //? Metodo para acutalizar paciente
   updatePatient(){
-    console.log("Valor del formulario:", this.myForm.value);
 
     const birthDateYear = this.myForm.get('user_birthdate')?.value?.split('-')[0] || '';
     this.userAge = this.presentYear - parseInt(birthDateYear);
@@ -133,7 +124,7 @@ export class ViewPatientComponent implements OnInit {
     const {id_user, ...patientData} = this.myForm.value;
 
     this.confirmationService.confirm({
-      message: 'Esta seguro que desea actualizar los datos del paciente?',
+      message: 'Está seguro que desea actualizar los datos del paciente?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'pi pi-check',
@@ -144,7 +135,6 @@ export class ViewPatientComponent implements OnInit {
         this.userService.updateUser(this.userID,patientData)
           .subscribe({
             next: (data) => {
-              console.log(data);
               this.messageService.add({
                 severity: 'success',
                 summary: 'Success',
@@ -157,7 +147,6 @@ export class ViewPatientComponent implements OnInit {
               }, 1200)
             },
             error: (error) => {
-              console.error(error);
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
@@ -170,9 +159,8 @@ export class ViewPatientComponent implements OnInit {
         this.messageService.add({
           severity: 'info',
           summary: 'Info',
-          detail: 'Actualizacion de paciente cancelada',
+          detail: 'Actualización de paciente cancelada',
         });
-        // Reiniciamos el formulario con los valores originales
         this.myForm.reset(this.patienFormData);
       }
     });
@@ -207,7 +195,7 @@ export class ViewPatientComponent implements OnInit {
         this.messageService.add({
           severity: 'info',
           summary: 'Info',
-          detail: 'Edición de paciente cancelada',
+          detail: 'Edición de paciente no cancelada',
         });
       }
     })
@@ -232,8 +220,6 @@ export class ViewPatientComponent implements OnInit {
 
   //? Destructor for the component
   ngOnDestroy(): void {
-    //* Mensaje que se muestra en consola cuando el componente se destruye
-    console.log('El componente ViewPatientComponent se destruyó');
   }
 
 }
