@@ -6,7 +6,7 @@
         <h1 class="text-2xl text-gray-700">Mis pacientes</h1>
     
         <!-- Boton para agregar paciente -->
-        <button (click)="showDialog('create', 'Agregar Usuario')"
+        <button (click)="showDialog('create', 'Agregar Paciente')"
             class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
             type="button">
             <span class="pi pi-plus"></span>
@@ -42,7 +42,7 @@
             <p class="mt-2 text-gray-500 ">Actualmente no se encuentra registrado ningun paciente dentro de la aplicación.
             </p>
             <div class="flex items-center mt-4 sm:mx-auto gap-x-3">
-                <button (click)="showDialog('create', 'Agregar Usuario')"
+                <button (click)="showDialog('create', 'Agregar Paciente')"
                     class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5">
@@ -114,7 +114,7 @@
                 <td
                     class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
                     <button pTooltip="Ver paciente" (click)="sendUserID(patient.id_user)"
-                        (click)="showDialog('view', 'Ver Usuario')"
+                        (click)="showDialog('view', 'Ver Paciente')"
                         class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button" data-ripple-light="true">
                         <span class="pi pi-eye"></span>
