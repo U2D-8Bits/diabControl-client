@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Role, User } from '../../../auth/interfaces';
 import { RoleService } from '../../../auth/services/role.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -14,7 +14,7 @@ import { ViewMedicComponent } from '../../components/medic/view-medic/view-medic
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
-  styleUrl: './profile-page.component.css',
+  styleUrls: ['./profile-page.component.css'],
   providers: [DialogService],
 })
 export class ProfilePageComponent implements OnInit {
@@ -22,7 +22,7 @@ export class ProfilePageComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   private userService = inject(UserService);
   private roleService = inject(RoleService);
-  public dialigService = inject(DialogService);
+  public dialogService = inject(DialogService);
 
   private router = inject(Router);
   private fb = inject(FormBuilder);
@@ -40,7 +40,6 @@ export class ProfilePageComponent implements OnInit {
   dateBirthYear = this.userData?.user_birthdate?.split('-')[0];
   ageUser: number = this.presentYear - Number(this.dateBirthYear);
 
-  
   ngOnInit(): void {
     Swal.fire({
       title: 'Cargando perfil',
@@ -55,14 +54,14 @@ export class ProfilePageComponent implements OnInit {
         this.myForm = this.fb.group({
           user_name: ['', Validators.required],
           user_lastname: ['', Validators.required],
-          user_email: ['', Validators.required],
-          user_phone: ['', Validators.required],
+          user_email: ['', [Validators.required, Validators.email]],
+          user_phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]], // Patrones corregidos
           user_username: ['', Validators.required],
           user_password: ['', [Validators.required, Validators.minLength(6)]],
-          user_ced: [0, Validators.required],
+          user_ced: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // Patrones corregidos
           user_address: ['', Validators.required],
-          user_birthdate: ['', Validators.required],
-          user_age: [0, Validators.required],
+          user_birthdate: ['', [Validators.required, this.futureDateValidator]],
+          user_age: [{ value: '', disabled: true }, Validators.required],
           user_admin: [false, Validators.required],
           user_genre: ['', Validators.required],
           role_id: [0, Validators.required],
@@ -76,7 +75,6 @@ export class ProfilePageComponent implements OnInit {
         this.userService.getUserById(this.idUser).subscribe({
           next: (user) => {
             this.userData = user;
-
             this.dateBirthYear = this.userData.user_birthdate.split('-')[0];
             this.ageUser = this.presentYear - Number(this.dateBirthYear);
             this.getRoleData(user.role_id);
@@ -84,12 +82,13 @@ export class ProfilePageComponent implements OnInit {
             this.getAllMedics();
           },
           error: (error) => {
-            console.error(`Error:`, error);
+            console.error('Error al obtener el usuario:', error);
           },
         });
       },
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('Perfil cargado');
       }
     });
   }
@@ -101,10 +100,9 @@ export class ProfilePageComponent implements OnInit {
         this.registeredMedics = medics.filter(
           (medic) => medic.id_user !== this.idUser
         );
-        console.log('Medicos Registrados =>', this.registeredMedics);
       },
       error: (error) => {
-        console.error(`Error:`, error);
+        console.error('Error al obtener medicos:', error);
       },
     });
   }
@@ -113,10 +111,19 @@ export class ProfilePageComponent implements OnInit {
     this.idMedic = id;
   }
 
+  futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const today = new Date();
+    const birthDate = new Date(control.value);
+    if (birthDate.toString() === 'Invalid Date') {
+      return null; // No validar si la fecha es inválida
+    }
+    return birthDate > today ? { futureDate: true } : null;
+  }
+
   //? Metodo para agregar un medico nuevo
   showDialog(componentName: string, headerText: string) {
     if (componentName === 'create') {
-      this.ref = this.dialigService.open(CreateMedicComponent, {
+      this.ref = this.dialogService.open(CreateMedicComponent, {
         header: headerText,
         breakpoints: { '960px': '500px', '640px': '100vw' },
         style: { 'max-width': '100vw', width: '80vw' },
@@ -126,11 +133,11 @@ export class ProfilePageComponent implements OnInit {
     }
 
     if (componentName === 'view') {
-      this.ref = this.dialigService.open(ViewMedicComponent, {
+      this.ref = this.dialogService.open(ViewMedicComponent, {
         header: headerText,
         breakpoints: { '960px': '500px', '640px': '100vw' },
-        style: { 'max-width': '100vw', width: '80vw' },
         height: '80%',
+        style: { 'max-width': '100vw', width: '80vw' },
         contentStyle: { overflow: 'auto' },
         data: {
           idMedic: this.idMedic,
@@ -141,16 +148,18 @@ export class ProfilePageComponent implements OnInit {
 
   //? Funcion para actualizar los datos del usuario
   updateUserInfo() {
+    console.log(this.myForm.value);
+
     Swal.fire({
       title: '¿Estás seguro de actualizar tus datos?',
       showDenyButton: true,
       confirmButtonText: `Si`,
+      confirmButtonColor: '#3085d6',
       denyButtonText: `No`,
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log('Formulario de Usuario =>', this.myForm.value);
         const dataUser = this.myForm.value;
-        this.userService.updateUser(this.idUser, dataUser).subscribe({
+        this.userService.updateProfile(this.idUser, dataUser).subscribe({
           next: (data) => {
             Swal.fire('¡Tus datos se han actualizado!', '', 'success');
             setTimeout(() => {
@@ -159,7 +168,6 @@ export class ProfilePageComponent implements OnInit {
             }, 1500);
           },
           error: (error) => {
-            console.error(`Error:`, error);
             Swal.fire('¡Tus datos no se han actualizado!', '', 'error');
           },
         });
@@ -173,8 +181,7 @@ export class ProfilePageComponent implements OnInit {
 
   //? Funcion para cargar los datos del usuario en el formulario
   chargeForm(userData: User) {
-    //* Se crea el formulario
-
+    //* Se crea el formulario con los mismos validadores
     this.myForm = this.fb.group({
       user_name: [userData.user_name, Validators.required],
       user_lastname: [userData.user_lastname, Validators.required],
@@ -182,23 +189,30 @@ export class ProfilePageComponent implements OnInit {
         userData.user_email,
         [Validators.required, Validators.email],
       ],
-      user_phone: [userData.user_phone, Validators.required],
+      user_phone: [
+        userData.user_phone,
+        [Validators.required, Validators.pattern('^[0-9]{10}$')],
+      ],
       user_username: [userData.user_username, Validators.required],
       user_password: [
         userData.user_password,
         [Validators.required, Validators.minLength(6)],
       ],
-      user_age: [this.ageUser, Validators.required],
+      user_age: [{ value: this.ageUser, disabled: true }, Validators.required],
       user_admin: [userData.user_admin, Validators.required],
-      user_ced: [userData.user_ced, Validators.required],
+      user_ced: [
+        userData.user_ced,
+        [Validators.required, Validators.pattern('^[0-9]{10}$')],
+      ],
       user_address: [userData.user_address, Validators.required],
-      user_birthdate: [userData.user_birthdate, Validators.required],
+      user_birthdate: [
+        userData.user_birthdate,
+        [Validators.required, this.futureDateValidator],
+      ],
       user_genre: [userData.user_genre, Validators.required],
       role_id: [userData.role_id, Validators.required],
       user_status: [userData.user_status, Validators.required],
     });
-
-    console.log('Formulario de Usuario =>', this.myForm.value);
 
     this.currentUserData = this.myForm.value;
   }
@@ -210,12 +224,12 @@ export class ProfilePageComponent implements OnInit {
         this.roleData = role;
       },
       error: (error) => {
-        console.error(`Error:`, error);
+        console.error('Error al obtener rol:', error);
       },
     });
   }
 
-  //? Funcuncion para eliminar un medico
+  //? Funcion para eliminar un medico
   deleteMedic(medicId: number) {
     Swal.fire({
       title: '¿Estas seguro?',
@@ -234,7 +248,6 @@ export class ProfilePageComponent implements OnInit {
             this.ngOnInit();
           },
           error: (error) => {
-            console.error(`Error:`, error);
             Swal.fire('¡El médico no ha sido eliminado!', '', 'error');
           },
         });
@@ -249,5 +262,9 @@ export class ProfilePageComponent implements OnInit {
   }
 
   //? Funcion para destruir el componente
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
 }
