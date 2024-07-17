@@ -169,6 +169,23 @@ export class UserService {
 
 
 
+  //? Actualizar perfil de usuario
+  updateProfile(id: number, profileData: any): Observable<User>{
+    const url = `${this.baseUrl}/users/${id}/profile`;
+
+    return this.http.patch<User>(url, profileData)
+    .pipe(
+      map((user: User) => {
+        return user
+      }),
+      catchError((err: any) => {
+        return throwError(err);
+      })
+    );
+  }
+
+
+
 
 
   //? Cambiar el estado del usuario

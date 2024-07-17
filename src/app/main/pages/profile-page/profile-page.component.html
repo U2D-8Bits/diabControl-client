@@ -1,202 +1,190 @@
-<section class=" py-1 bg-blueGray-50">
+<section class="py-1 bg-blueGray-50">
     <div class="w-full lg:w-11/12 px-4 mx-auto mt-6">
         <div
             class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-2">
             <div class="rounded-t bg-white mb-0 px-6 py-6">
                 <div class="text-center flex flex-wrap justify-between">
-                    <h6 class="text-blueGray-700 text-xl font-medium">
-                        Mi Perfil
-                    </h6>
-
+                    <h6 class="text-blueGray-700 text-xl font-medium">Mi Perfil</h6>
                     <div class="text-center flex flex-wrap justify-between">
-
-                        <button *ngIf="userData?.user_admin === true" (click)="showDialog('create', 'Agregar Medico')"
-                            class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
-                            type="button">
-                            <span class="pi pi-plus"></span>
-                            Agregar Médico
-                        </button>
-
                         <button [disabled]="!myForm.dirty || myForm.invalid" (click)="updateUserInfo()"
-                            class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
+                            class="flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
                             type="button">
-                            <span class="pi pi-cog"></span>
-                            Actualizar Información.
+                            <span class="pi pi-cog"></span> Actualizar Información.
                         </button>
-
                     </div>
-
-
-
                 </div>
             </div>
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <form [formGroup]="myForm" (ngSubmit)="updateUserInfo()">
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-medium uppercase">
-                        Información de Usuario
-                    </h6>
+                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-medium uppercase">Información de Usuario</h6>
                     <div class="flex flex-wrap">
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Nombre
-                                </label>
+                                    for="user_name">Nombre</label>
                                 <input type="text"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_name" formControlName="user_name" required>
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2">
-                                    Apellido
-                                </label>
-                                <input type="text"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_lastname" formControlName="user_lastname" required>
+                                    formControlName="user_name" required>
+                                <div *ngIf="myForm.get('user_name')?.invalid && myForm.get('user_name')?.touched"
+                                    class="text-red-600 text-sm">Nombre es requerido.</div>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Número de Cédula
-                                </label>
-                                <input type="number"
+                                    for="user_lastname">Apellido</label>
+                                <input type="text"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_ced" formGroupName="user_ced" required>
+                                    formControlName="user_lastname" required>
+                                <div *ngIf="myForm.get('user_lastname')?.invalid && myForm.get('user_lastname')?.touched"
+                                    class="text-red-600 text-sm">Apellido es requerido.</div>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
+                              <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2" for="user_ced">Número de
+                                Cédula</label>
+                              <input type="text"
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                formControlName="user_ced" required>
+                              <div *ngIf="myForm.get('user_ced')?.errors?.['required'] && myForm.get('user_ced')?.touched"
+                                class="text-red-600 text-sm">Número de Cédula es requerido.</div>
+                              <div *ngIf="myForm.get('user_ced')?.errors?.['pattern'] && myForm.get('user_ced')?.touched"
+                                class="text-red-600 text-sm">Número de Cédula debe tener exactamente 10 dígitos.</div>
+                            </div>
+                          </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Fecha de Nacimiento
-                                </label>
+                                    for="user_birthdate">Fecha de
+                                    Nacimiento</label>
                                 <input type="date"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_birthdate" formControlName="user_birthdate" required>
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-6/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                htmlfor="grid-password">
-                                Edad
-                                </label>
-                                <input type="number" disabled
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 disabled:bg-gray-200"
-                                [value]="ageUser" formGroupName="user_age" required>
+                                    formControlName="user_birthdate" required>
+                                <div *ngIf="myForm.get('user_birthdate')?.errors?.['required'] && myForm.get('user_birthdate')?.touched"
+                                    class="text-red-600 text-sm">Fecha de Nacimiento es requerida.</div>
+                                    <div *ngIf="myForm.get('user_birthdate')?.errors?.['futureDate'] && myForm.get('user_birthdate')?.touched" class="text-red-600 text-sm">
+                                        Fecha de Nacimiento no puede ser en el futuro.
+                                    </div>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
                                     htmlfor="grid-password">
-                                    Genero
+                                    Edad
                                 </label>
-
+                                <input type="number" disabled
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 disabled:bg-gray-200"
+                                    [value]="ageUser" formGroupName="user_age" required>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
+                                    for="user_genre">Género</label>
                                 <select
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    formControlName="user_genre" [value]="userData?.user_genre" required>
+                                    formControlName="user_genre" required>
                                     <option value="Masculino">Masculino</option>
                                     <option value="Femenino">Femenino</option>
                                     <option value="Otros">Otros</option>
                                 </select>
+                                <div *ngIf="myForm.get('user_genre')?.invalid && myForm.get('user_genre')?.touched"
+                                    class="text-red-600 text-sm">Género es requerido.</div>
                             </div>
                         </div>
                         <div class="w-full px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Direccion de Residencia
-                                </label>
+                                    for="user_address">Dirección de
+                                    Residencia</label>
                                 <input type="text"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_address" formControlName="user_address" required>
+                                    formControlName="user_address" required>
+                                <div *ngIf="myForm.get('user_address')?.invalid && myForm.get('user_address')?.touched"
+                                    class="text-red-600 text-sm">Dirección es requerida.</div>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Nombre de Usuario
-                                </label>
+                                    for="user_username">Nombre de
+                                    Usuario</label>
                                 <input type="text"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_username" formControlName="user_username" required>
+                                    formControlName="user_username" required>
+                                <div *ngIf="myForm.get('user_username')?.invalid && myForm.get('user_username')?.touched"
+                                    class="text-red-600 text-sm">Nombre de Usuario es requerido.</div>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Contraseña
-                                </label>
+                                    for="user_password">Contraseña</label>
                                 <input type="password"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_password" formControlName="user_password" required>
+                                    formControlName="user_password" required>
+                                <div *ngIf="myForm.get('user_password')?.errors?.['required'] && myForm.get('user_password')?.touched"
+                                    class="text-red-600 text-sm">Contraseña es requerida.</div>
+                                <div *ngIf="myForm.get('user_password')?.errors?.['minlength'] && myForm.get('user_password')?.touched"
+                                    class="text-red-600 text-sm">Contraseña debe tener al menos 6 caracteres.</div>
                             </div>
                         </div>
                     </div>
 
                     <hr class="mt-6 border-b-1 border-blueGray-300">
 
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-medium uppercase">
-                        Información de Contacto
-                    </h6>
+                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-medium uppercase">Información de Contacto</h6>
                     <div class="flex flex-wrap">
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Correo Electrónico
-                                </label>
+                                    for="user_email">Correo Electrónico</label>
                                 <input type="email"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_email" formControlName="user_email" required>
+                                    formControlName="user_email" required>
+                                <div *ngIf="myForm.get('user_email')?.errors?.['required'] && myForm.get('user_email')?.touched"
+                                    class="text-red-600 text-sm">Correo Electrónico es requerido.</div>
+                                <div *ngIf="myForm.get('user_email')?.errors?.['email'] && myForm.get('user_email')?.touched"
+                                    class="text-red-600 text-sm">Correo Electrónico no es válido.</div>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Número de Teléfono
-                                </label>
-                                <input type="text"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    [value]="userData?.user_phone" formControlName="user_phone" required>
+                              <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2" for="user_phone">Número de
+                                Teléfono</label>
+                              <input type="text"
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                formControlName="user_phone" required>
+                              <div *ngIf="myForm.get('user_phone')?.errors?.['required'] && myForm.get('user_phone')?.touched"
+                                class="text-red-600 text-sm">Número de Teléfono es requerido.</div>
+                              <div *ngIf="myForm.get('user_phone')?.errors?.['pattern'] && myForm.get('user_phone')?.touched"
+                                class="text-red-600 text-sm">Número de Teléfono debe tener exactamente 10 dígitos.</div>
                             </div>
-                        </div>
+                          </div>
                     </div>
 
                     <hr class="mt-6 border-b-1 border-blueGray-300">
 
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-medium uppercase">
-                        Información Adicional
-                    </h6>
+                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-medium uppercase">Información Adicional</h6>
                     <div class="flex flex-wrap">
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Estado del Usuario
-                                </label>
-                                <input type="text" *ngIf="userData?.user_status === true "
+                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2">Estado del
+                                    Usuario</label>
+                                <input type="text" *ngIf="userData?.user_status === true"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 disabled:bg-gray-200"
-                                    value="ACTIVO" disabled>
-                                <input type="text" *ngIf="userData?.user_status === false "
+                                    value="ACTIVO" disabled required>
+                                <input type="text" *ngIf="userData?.user_status === false"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 disabled:bg-gray-200"
                                     value="INACTIVO" disabled required>
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Rol de Usuario
-                                </label>
+                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2">Rol de
+                                    Usuario</label>
                                 <input type="text"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 disabled:bg-gray-200"
                                     [value]="roleData?.role_name | uppercase" disabled required>
@@ -204,14 +192,12 @@
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2"
-                                    htmlfor="grid-password">
-                                    Permisos de Administrador
-                                </label>
-                                <input type="text" *ngIf="userData?.user_admin === true "
+                                <label class="block uppercase text-blueGray-600 text-xs font-medium mb-2">Permisos de
+                                    Administrador</label>
+                                <input type="text" *ngIf="userData?.user_admin === true"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 disabled:bg-gray-200"
                                     value="SI" disabled required>
-                                <input type="text" *ngIf="userData?.user_admin === false "
+                                <input type="text" *ngIf="userData?.user_admin === false"
                                     class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 disabled:bg-gray-200"
                                     value="NO" disabled required>
                             </div>
@@ -220,13 +206,12 @@
                 </form>
             </div>
         </div>
-
     </div>
 </section>
 
 
 
-<div class="w-full lg:w-11/12 px-4 mx-auto mt-6"  *ngIf="userData?.user_admin === true">
+<!-- <div class="w-full lg:w-11/12 px-4 mx-auto mt-6"  *ngIf="userData?.user_admin === true">
     <p-accordion [activeIndex]="0" class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-2">
         <p-accordionTab header="Médicos Registrados">
             <table class="border-collapse w-full px-2">
@@ -285,4 +270,4 @@
             </table>
         </p-accordionTab>
     </p-accordion>
-</div>
+</div> -->
