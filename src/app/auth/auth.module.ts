@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PrimengModule } from '../primeng/primeng.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { RestorePasswordPageComponent } from './pages/restore-password-page/restore-password-page.component';
 
 
 
@@ -17,6 +18,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     LoginPageComponent,
     AuthLayoutComponent,
     HomePageComponent,
+    RestorePasswordPageComponent,
     
   ],
   imports: [

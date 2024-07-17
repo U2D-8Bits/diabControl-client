@@ -117,6 +117,16 @@ export class AuthService {
       )
   }
 
+  //* Metodo para restablecer la contraseña
+  resetPassword(user_email: string): Observable<boolean> {
+    const url = `${this.baseUrl}/users/reset-password`;
+
+    return this.http.post(url, { user_email }).pipe(
+      map(() => true),
+      catchError((err) => throwError(() => err.error.message))
+    );
+  }
+
 
   showLoadingScreen(): void {
     document.getElementById('loadingScreen')!.style.display = 'flex';
