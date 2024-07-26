@@ -4,6 +4,8 @@ import { UserDataService } from '../../services/user-data.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { User } from '../../../auth/interfaces';
+import { CreateMedicComponent } from '../../components/medic/create-medic/create-medic.component';
+import { ViewMedicComponent } from '../../components/medic/view-medic/view-medic.component';
 
 @Component({
   selector: 'app-medics-page',
@@ -25,6 +27,7 @@ export class MedicsPageComponent implements OnInit{
   public currentPage: number = 1
   public pageSize: number = 10
   public search: string = ''
+  id_user: number | undefined;
 
 
 
@@ -58,12 +61,58 @@ export class MedicsPageComponent implements OnInit{
   }
 
 
+  //? Funcion para obtener el id de un medico
+  getMedicId(id: number){
+    this.id_user = id
+  }
 
+
+  //? Funcion para abrir el dialogo
+  showDialog(component: string, headerTitle: string){
+    if(component === 'create'){
+      this.dialogService.open(CreateMedicComponent, {
+        header: headerTitle,
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '90vw', width: '80vw' },
+        height: '80%',
+        contentStyle: { overflow: 'auto' },
+      })
+    }
+
+    if(component === 'view'){
+      this.dialogService.open(ViewMedicComponent, {
+        header: headerTitle,
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '100vw', width: '80vw' },
+        height: '80%',
+        contentStyle: { overflow: 'auto' },
+        data: {
+          id_user: this.id_user
+        }
+      })
+    }
+  }
+
+
+  //? Funcion para cambiar el estado de un médico
+  changeStateMedic(id_user: number){
+    this.userService.changeUserState(id_user)
+    .subscribe({
+      next: (resp: any) => {
+        this.loadMedics()
+        this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.msg})
+      },
+      error: (err: any) => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: err.error.msg})
+      }
+    })
+  }
 
 
 
   ngOnInit(): void {
-    console.log('Medics Page =>', this.loadMedics())
+    this.loadMedics()
+    console.log(this.medics)
   }
 
 

@@ -57,6 +57,14 @@ export class MedicinesPageComponent implements OnInit {
 
   }
 
+
+  //Método para obtener el id de un medico
+  getMedicId(id: number) {
+    
+  }
+
+
+
   //? Método para obtener todas las categorías
   getAllCategories() {
     this.categoryService.getAllCategories().subscribe({
@@ -82,6 +90,9 @@ export class MedicinesPageComponent implements OnInit {
       }
     })
   }
+
+
+
 
   //? Método para obtener medicinas paginadas
   loadMedicines() {

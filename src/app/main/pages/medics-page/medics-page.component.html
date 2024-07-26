@@ -3,7 +3,7 @@
     <p-confirmDialog />
     <div class="flex justify-between items-center p-2">
     
-        <h1 class="text-2xl text-gray-700">Mis pacientes</h1>
+        <h1 class="text-2xl text-gray-700">Médicos Registrados</h1>
     
         <!-- Boton para agregar paciente -->
         <button (click)="showDialog('create', 'Agregar Paciente')"
@@ -113,13 +113,13 @@
                 </td>
                 <td
                     class="flex w-full lg:w-auto p-3 text-gray-800 text-center border border-b lg:flex justify-center relative gap-2 lg:static">
-                    <button pTooltip="Ver paciente"
+                    <button pTooltip="Ver paciente" (click)="getMedicId(medic.id_user)"
                         (click)="showDialog('view', 'Ver Médico')"
                         class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button" data-ripple-light="true">
                         <span class="pi pi-eye"></span>
                     </button>
-                    <button pTooltip="Cambiar estado" (click)="changeStatePatient(patient.id_user)"
+                    <button pTooltip="Cambiar estado" (click)="changeStateMedic(medic.id_user)"
                         class="middle none relative h-10 max-h-[40px] w-10 max-w-[40px] rounded-lg bg-blue-500 text-center font-sans text-xs font-medium uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button" data-ripple-light="true">
                         <span class="pi pi-sync"></span>
