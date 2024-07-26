@@ -32,6 +32,7 @@ import { CategoriesPageComponent } from './pages/categories-page/categories-page
 import { MedicinesPageComponent } from './pages/medicines-page/medicines-page.component';
 import { FollowUpComponent } from './components/histories/follow-up/follow-up.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
+import { MedicsPageComponent } from './pages/medics-page/medics-page.component';
 @NgModule({
   declarations: [
     ActPageComponent,
@@ -59,6 +60,7 @@ import { ChatPageComponent } from './pages/chat-page/chat-page.component';
     MedicinesPageComponent,
     FollowUpComponent,
     ChatPageComponent,
+    MedicsPageComponent,
   ],
   imports: [
     CommonModule,
