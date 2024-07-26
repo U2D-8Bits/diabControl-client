@@ -37,7 +37,7 @@ export class CreatePatientComponent implements OnInit {
     user_lastname: ['', Validators.required],
     user_genre: ['', Validators.required],
     user_email: ['', [Validators.required, Validators.email]],
-    user_ced: ['', Validators.required],
+    user_ced: ['', [Validators.required, this.ecuadorianCedulaValidator]],
     user_birthdate: ['', [Validators.required, this.futureDateValidator]],
     user_age: [0, Validators.required],
     user_admin: [false],
@@ -145,6 +145,31 @@ export class CreatePatientComponent implements OnInit {
     if (selectedDate > today) {
       return { futureDate: true };
     }
+    return null;
+  }
+
+  ecuadorianCedulaValidator(control: AbstractControl): ValidationErrors | null {
+    const cedula = control.value;
+    if (!cedula || cedula.length !== 10) {
+      return { invalidLength: true };
+    }
+
+    const provinceCode = parseInt(cedula.substring(0, 2), 10);
+    if (provinceCode < 1 || (provinceCode > 24 && provinceCode !== 30)) {
+      return { invalidProvinceCode: true };
+    }
+
+    const digits = cedula.split('').map(Number);
+    const verifier = digits.pop();
+    const evenSum = digits.filter((_: any, index: number) => index % 2 === 1).reduce((a: any, b: any) => a + b, 0);
+    const oddSum = digits.filter((_: any, index: number) => index % 2 === 0).map((d: number) => d * 2 > 9 ? d * 2 - 9 : d * 2).reduce((a: any, b: any) => a + b, 0);
+    const totalSum = evenSum + oddSum;
+    const verifierCalc = (10 - (totalSum % 10)) % 10;
+
+    if (verifier !== verifierCalc) {
+      return { invalidVerifier: true };
+    }
+
     return null;
   }
 }
