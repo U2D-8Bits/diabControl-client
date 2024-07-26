@@ -8,6 +8,7 @@ import { HistoriesPageComponent } from './pages/histories-page/histories-page.co
 import { ActPageComponent } from './pages/act-page/act-page.component';
 import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/show-medicine-page.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
+import { MedicsPageComponent } from './pages/medics-page/medics-page.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
         path: 'patients/:id/consentimiento',
         title: 'Consentimiento Informado',
         component: ActPageComponent
+      },
+      {
+        path: 'medics',
+        title: 'Medicos',
+        component: MedicsPageComponent
       },
       {
         path: 'medicines',

@@ -73,17 +73,7 @@ export class PatientsPageComponent implements OnInit{
 
 
 
-
-
-  //? Funcion para obtener los pacientes
-  getAllPatients(){
-    //? Lógica para obtener todos los pacientes
-    this.userService.getAllPatients()
-      .subscribe((resp: User[]) => {
-        this.patients = resp
-      })
-  }
-
+  //? Funcion para cargar los pacientes paginados
   loadPatients(){
     this.userService.getAllPatientsPaginated(this.currentPage, this.pageSize, this.search)
     .subscribe({
