@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { UserDataService } from '../../services/user-data.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { User } from '../../../auth/interfaces';
 import { CreateMedicComponent } from '../../components/medic/create-medic/create-medic.component';
 import { ViewMedicComponent } from '../../components/medic/view-medic/view-medic.component';
@@ -17,10 +17,10 @@ export class MedicsPageComponent implements OnInit{
 
 
   //? Variables e inyecciones
+  ref: DynamicDialogRef | undefined;
   private userService = inject( UserService)
-  private userDataService = inject( UserDataService )
   private messageService = inject( MessageService )
-  private dialogService = inject( DialogService)
+  private dialogService = inject(DialogService);
 
   public medics: User[] = []
   public totalMedics: number = 0
@@ -28,6 +28,7 @@ export class MedicsPageComponent implements OnInit{
   public pageSize: number = 10
   public search: string = ''
   id_user: number | undefined;
+  idAccount: number = parseInt(localStorage.getItem('ID')!)
 
 
 
@@ -36,7 +37,7 @@ export class MedicsPageComponent implements OnInit{
     this.userService.getAllMedicsPaginated(this.currentPage, this.pageSize, this.search)
     .subscribe({
       next: (resp: any) => {
-        this.medics = resp.medics
+        this.medics = resp.data
         this.totalMedics = resp.total
       },
       error: (err: any) => {
@@ -70,7 +71,7 @@ export class MedicsPageComponent implements OnInit{
   //? Funcion para abrir el dialogo
   showDialog(component: string, headerTitle: string){
     if(component === 'create'){
-      this.dialogService.open(CreateMedicComponent, {
+      this.ref = this.dialogService.open(CreateMedicComponent, {
         header: headerTitle,
         breakpoints: { '960px': '500px', '640px': '100vw' },
         style: { 'max-width': '90vw', width: '80vw' },
@@ -112,7 +113,6 @@ export class MedicsPageComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadMedics()
-    console.log(this.medics)
   }
 
 

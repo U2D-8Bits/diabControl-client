@@ -4,8 +4,6 @@ import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MedicineService } from '../../services/meds/medicines.service';
 import { Medicine } from '../../interfaces/Medicines/medicines.interface';
 import Swal from 'sweetalert2';
-import { CreateMedicComponent } from '../../components/medic/create-medic/create-medic.component';
-import { ViewMedicComponent } from '../../components/medic/view-medic/view-medic.component';
 import { CategoryService } from '../../services/meds/categories.service';
 import { Category } from '../../interfaces/categories/category.interface';
 import { ViewMedicineComponent } from '../../components/medicines/view-medicine/view-medicine.component';
