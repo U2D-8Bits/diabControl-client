@@ -22,7 +22,7 @@
           <span class="pi pi-users"></span>
           Pacientes
         </a>
-        <a *ngIf="roleUser.toLocaleLowerCase() === 'medico' || roleUser.toLocaleLowerCase() === 'médico' " routerLink="/main/medics" routerLinkActive="active" class="text-white">
+        <a *ngIf="(roleUser.toLocaleLowerCase() === 'medico' || roleUser.toLocaleLowerCase() === 'médico') && isAdmin" routerLink="/main/medics" routerLinkActive="active" class="text-white">
           <span class="pi pi-briefcase"></span>
           Médicos
         </a>
