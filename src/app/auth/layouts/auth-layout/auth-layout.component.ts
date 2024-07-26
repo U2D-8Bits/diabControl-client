@@ -26,6 +26,11 @@ export class AuthLayoutComponent implements OnInit {
           routerLink: ['/auth/home'],
         },
         {
+          label: 'Sobre Nosotros',
+          icon: 'pi pi-info-circle',
+          routerLink: ['/auth/about-us'],
+        },
+        {
           label: 'Iniciar Sesion',
           icon: 'pi pi-sign-in',
           routerLink: ['/auth/login'],
