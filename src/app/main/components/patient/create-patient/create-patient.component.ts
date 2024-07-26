@@ -52,8 +52,6 @@ export class CreatePatientComponent implements OnInit {
       user_age: this.ageUser,
     });
 
-    console.log(`Valores del Formulario a crear =>`, this.myForm.value);
-
     const patientData = this.myForm.value;
 
     this.confirmationService.confirm({
@@ -132,11 +130,9 @@ export class CreatePatientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(`componente create-patient cargado`);
   }
 
   ngOnDestroy(): void {
-    console.log(`componente create-patient destruido`);
   }
 
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
