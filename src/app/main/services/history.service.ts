@@ -68,6 +68,25 @@ export class HistoryService {
 
 
 
+    //? Metodo para obtener todos los signos vitales de las historias clinicas de un paciente
+    getPatientSignals(patientId: number): Observable<any> {
+        
+        const url = `${this.baseUrl}/histories/${patientId}/signals`;
+
+        return this.httpClient.get<any>(url)
+        .pipe(
+            map((signals: any) => {
+                return signals;
+            }),
+            catchError((err: any) => {
+                return of(err);
+            }
+        ));
+
+    }
+
+
+
     //? Metodo para obtener una historia medica por id
     getHistoryById(id: number): Observable<History>{
         const url = `${this.baseUrl}/histories/${id}`;
