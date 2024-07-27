@@ -85,6 +85,30 @@ export class UserService {
     );
   }
 
+  //? Obtener todos los usuarios de rol medico paginados
+  getAllMedicsPaginated(page: number, limit: number, search: string): Observable<any>{
+    const url = `${this.baseUrl}/users/medics/paginated`;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    let params = new HttpParams()
+      .set('page', page)
+      .set('limit', limit)
+      if(search){
+        params = params.set('search', search)
+      }
+
+    return this.http.get<any>(url, {headers, params})
+    .pipe(
+      map((resp: any) => {
+        return resp
+      }),
+      catchError((err: any) => {
+        return of(err);
+      })
+    );
+  }
+
 
 
 

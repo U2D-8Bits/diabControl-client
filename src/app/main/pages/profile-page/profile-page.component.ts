@@ -8,8 +8,6 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { CreateMedicComponent } from '../../components/medic/create-medic/create-medic.component';
-import { ViewMedicComponent } from '../../components/medic/view-medic/view-medic.component';
 
 @Component({
   selector: 'app-profile-page',
@@ -118,32 +116,6 @@ export class ProfilePageComponent implements OnInit {
       return null; // No validar si la fecha es inválida
     }
     return birthDate > today ? { futureDate: true } : null;
-  }
-
-  //? Metodo para agregar un medico nuevo
-  showDialog(componentName: string, headerText: string) {
-    if (componentName === 'create') {
-      this.ref = this.dialogService.open(CreateMedicComponent, {
-        header: headerText,
-        breakpoints: { '960px': '500px', '640px': '100vw' },
-        style: { 'max-width': '100vw', width: '80vw' },
-        height: '80%',
-        contentStyle: { overflow: 'auto' },
-      });
-    }
-
-    if (componentName === 'view') {
-      this.ref = this.dialogService.open(ViewMedicComponent, {
-        header: headerText,
-        breakpoints: { '960px': '500px', '640px': '100vw' },
-        height: '80%',
-        style: { 'max-width': '100vw', width: '80vw' },
-        contentStyle: { overflow: 'auto' },
-        data: {
-          idMedic: this.idMedic,
-        },
-      });
-    }
   }
 
   //? Funcion para actualizar los datos del usuario

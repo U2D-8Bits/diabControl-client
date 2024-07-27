@@ -1,31 +1,34 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ProfilePageComponent } from '../../../pages/profile-page/profile-page.component';
+import { MedicsPageComponent } from '../../../pages/medics-page/medics-page.component';
 import { UserService } from '../../../services/user.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { User } from '../../../../auth/interfaces';
 
 @Component({
-  selector: 'main-view-medic',
+  selector: 'app-view-medic',
   templateUrl: './view-medic.component.html',
   styleUrl: './view-medic.component.css',
   providers: [ConfirmationService, MessageService],
 })
 export class ViewMedicComponent implements OnInit {
-
-  private ref: DynamicDialogRef = inject(DynamicDialogRef);
-  private profileComponent = inject( ProfilePageComponent)
-  private dynamicDialogConfig = inject(DynamicDialogConfig);
+  private medicPage = inject(MedicsPageComponent);
   private userService = inject(UserService);
-  private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
+  private ref: DynamicDialogRef = inject(DynamicDialogRef);
+  private confirmationService = inject(ConfirmationService);
+  private dynamicDialogConfig = inject(DynamicDialogConfig);
   private fb = inject(FormBuilder);
 
-  idMedic!: number;
-  medicDefaultData!: User;
+  idMedic: number = 0;
   presentYear = new Date().getFullYear();
-  ageUser!: number;
+  userAge!: number;
 
   medicForm = this.fb.group({
     user_username: ['', Validators.required],
@@ -34,112 +37,182 @@ export class ViewMedicComponent implements OnInit {
     user_password: ['', [Validators.required, Validators.minLength(6)]],
     user_name: ['', Validators.required],
     user_lastname: ['', Validators.required],
-    user_genre: ['', [Validators.required]],
-    user_email: ['', [Validators.required]],
-    user_ced: ['', [Validators.required]],
-    user_birthdate: ['', [Validators.required]],
-    user_age: [0, [Validators.required]],
+    user_genre: ['', Validators.required],
+    user_email: ['', [Validators.required, Validators.email]],
+    user_ced: ['', [Validators.required, this.ecuadorianCedulaValidator]],
+    user_birthdate: ['', [Validators.required, this.futureDateValidator]],
+    user_age: [0, Validators.required],
     user_admin: [false],
-    user_address: ['', [Validators.required]],
+    user_address: ['', Validators.required],
     role_id: [1],
-  })
+  });
 
-  ngOnInit(): void {
-    console.log(`Componente ViewMedic creado`);
+  defaultMedicForm = this.fb.group({
+    user_username: ['', Validators.required],
+    user_status: [true],
+    user_phone: ['', Validators.required],
+    user_password: ['', [Validators.required, Validators.minLength(6)]],
+    user_name: ['', Validators.required],
+    user_lastname: ['', Validators.required],
+    user_genre: ['', Validators.required],
+    user_email: ['', [Validators.required, Validators.email]],
+    user_ced: ['', [Validators.required, this.ecuadorianCedulaValidator]],
+    user_birthdate: ['', [Validators.required, this.futureDateValidator]],
+    user_age: [0, Validators.required],
+    user_admin: [false],
+    user_address: ['', Validators.required],
+    role_id: [1],
+  });
 
-    this.idMedic = Number(this.dynamicDialogConfig.data.idMedic);
-
-    this.getMedicData();
+  getMedicData() {
+    this.userService.getUserById(this.idMedic).subscribe({
+      next: (medicData: User) => {
+        this.medicForm.patchValue(medicData);
+        this.defaultMedicForm.patchValue(medicData);
+        this.userAge =
+          new Date().getFullYear() -
+          new Date(medicData.user_birthdate).getFullYear();
+      },
+      error: (error: any) => {
+        console.error('Error fetching medic data:', error);
+      },
+    });
   }
 
+  updateMedic() {
+    const birthDateYear =
+      this.medicForm.get('user_birthdate')?.value?.split('-')[0] || '';
+    this.userAge = this.presentYear - parseInt(birthDateYear);
 
-  //? Metodo para obtener la informacion del medico
-  getMedicData(){
-    this.userService.getUserById(this.idMedic)
-      .subscribe({
-        next: (data) => {
-          this.medicForm.patchValue(data);
-          this.ageUser = this.presentYear - new Date(data.user_birthdate).getFullYear();
-          this.medicDefaultData = data;
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      })
-  }
-
-  //? Metodo para actualizar la informacion del medico
-  updateMedic(){
-    const idMedico = this.idMedic;
-    
-
-    const birthDateYear = this.medicForm.get('user_birthdate')?.value?.split('-')[0] || '';
-    this.ageUser = this.presentYear - parseInt(birthDateYear);
     this.medicForm.patchValue({
-      user_age: this.ageUser,
+      user_age: this.userAge,
     });
 
-    const medicData = this.medicForm.value;
-
     this.confirmationService.confirm({
-      message: `¿Está seguro que desea actualizar la información del medico?`,
-      accept: () => {
-        this.userService.updateUser(idMedico, medicData)
-          .subscribe({
-            next: (data) => {
-              this.messageService.add({ severity: 'success', summary: '¡Éxito!', detail: 'Medico actualizado correctamente' });
-              this.profileComponent.ngOnInit();
-              this.medicForm.markAsPristine();
-              this.ref?.close(data);
-            },
-            error: (err) => {
-              this.messageService.add({ severity: 'error', summary: '¡Error!', detail: 'No se pudo actualizar la información del medico' });
-              console.error(err);
-            }
-          })
-      },
-      reject: () => {
-        this.messageService.add({ severity: 'info', summary: 'Operación cancelada', detail: 'No se ha actualizado la información del medico' });
-      }
-    })
-  }
-
-
-  //? Metodo para cancelar la actualizacion del medico
-  cancelUpdate(){
-    this.confirmationService.confirm({
-      message: '¿Esta seguro que desea cancelar la actualización de la Historia?',
-      header: 'Cancelar Actualización',
+      message: 'Está seguro que desea actualizar los datos del médico?',
+      header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'pi pi-check',
       rejectIcon: 'pi pi-times',
+      acceptButtonStyleClass: 'p-button-success',
+      rejectButtonStyleClass: 'p-button-danger',
       accept: () => {
-        this.medicForm.patchValue(this.medicDefaultData);
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Actualización Cancelada',
-          detail: 'La actualización de la Historia ha sido cancelada',
-        });
-        this.medicForm.markAsPristine();
-        this.closeDialog();
+        this.userService
+          .updateUser(this.idMedic, this.medicForm.value)
+          .subscribe({
+            next: () => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Médico actualizado',
+              });
+              setTimeout(() => {
+                this.ref.close();
+                this.medicPage.ngOnInit();
+              }, 1500);
+            },
+            error: (error: any) => {
+              console.error('Error updating medic:', error);
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Error al actualizar médico',
+              });
+            },
+          });
       },
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Operación Cancelada',
-          detail: 'La operación ha sido cancelada',
+          summary: 'Rejected',
+          detail: 'La solicitud ha sido rechazado',
         });
+      },
+    });
+  }
+
+
+  cancelUpdate(){
+    this.confirmationService.confirm({
+      message: 'Está seguro que desea cancelar la actualización del Médico?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass:
+        'p-button-danger, padding: 10px; borer-radius: 5px; border: 1px solid red;',
+      acceptButtonStyleClass: 'p-button-success',
+      accept: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Cancelado',
+          detail: 'Se cancelo la actualización del Médico'
+        })
+        this.medicForm.patchValue(this.defaultMedicForm.value);
+        setTimeout(() => {
+          this.closeModal();
+          this.medicPage.ngOnInit();
+        }, 1500)
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Rechazado',
+          detail: 'Se cancelo la cancelación de la actualización del Médico'
+        })
       }
     })
   }
 
-  //? Metodo para cerrar el dialogo
-  closeDialog(){
-    this.ref?.close();
+
+
+  futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const selectedDate = new Date(control.value);
+    const today = new Date();
+    if (selectedDate > today) {
+      return { futureDate: true };
+    }
+    return null;
   }
 
-  ngOnDestroy(){
-    console.log(`Componente ViewMedic destruido`);
+  ecuadorianCedulaValidator(control: AbstractControl): ValidationErrors | null {
+    const cedula = control.value;
+    if (!cedula || cedula.length !== 10) {
+      return { invalidLength: true };
+    }
+
+    const provinceCode = parseInt(cedula.substring(0, 2), 10);
+    if (provinceCode < 1 || (provinceCode > 24 && provinceCode !== 30)) {
+      return { invalidProvinceCode: true };
+    }
+
+    const digits = cedula.split('').map(Number);
+    const verifier = digits.pop();
+    const evenSum = digits
+      .filter((_: any, index: number) => index % 2 === 1)
+      .reduce((a: any, b: any) => a + b, 0);
+    const oddSum = digits
+      .filter((_: any, index: number) => index % 2 === 0)
+      .map((d: number) => (d * 2 > 9 ? d * 2 - 9 : d * 2))
+      .reduce((a: any, b: any) => a + b, 0);
+    const totalSum = evenSum + oddSum;
+    const verifierCalc = (10 - (totalSum % 10)) % 10;
+
+    if (verifier !== verifierCalc) {
+      return { invalidVerifier: true };
+    }
+
+    return null;
   }
 
+  closeModal() {
+    this.ref.close();
+  }
+
+  ngOnInit(): void {
+    this.idMedic = this.dynamicDialogConfig.data.id_user;
+    this.getMedicData();
+  }
+
+  ngOnDestroy(): void {}
 }
