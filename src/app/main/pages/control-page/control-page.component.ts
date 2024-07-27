@@ -5,6 +5,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { UserService } from '../../services/user.service';
 import { User } from '../../../auth/interfaces';
 import { HistoryService } from '../../services/history.service';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-control-page',
@@ -20,6 +21,21 @@ export class ControlPageComponent implements OnInit {
   public patientData!: User;
   patientSignals: any[] = [];
   vitalSignsData: any[] = [];
+
+  colorScheme = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
+
+  legend: boolean = true;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Fecha';
+  yAxisLabel: string = 'Signos vitales';
+  timeline: boolean = true;
 
   getUserData() {
     this.userService.getUserById(this.idPatient).subscribe({
@@ -80,6 +96,18 @@ export class ControlPageComponent implements OnInit {
     ];
 
     console.log("VitalSignsData =>",this.vitalSignsData);
+  }
+
+  onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data: any): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data: any): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   ngOnInit(): void {
