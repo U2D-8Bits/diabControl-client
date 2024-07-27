@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environments';
-import { catchError, map, Observable, of, } from 'rxjs';
+import { catchError, map, Observable, of, throwError, } from 'rxjs';
 import { History } from '../interfaces/history.interface';
 
 @Injectable({providedIn: 'root'})
@@ -137,18 +137,19 @@ export class HistoryService {
 
 
     //? Metodo para eliminar una historia medica
-    deleteHistory(id: number): Observable<History>{
+    deleteHistory(id: number): Observable<boolean>{ 
         const url = `${this.baseUrl}/histories/${id}`;
-
+    
         return this.httpClient.delete<History>(url)
         .pipe(
-            map((history: History) => {
-                return history;
+            map((resp: any) => {
+              return true
             }),
             catchError((err: any) => {
-                return of(err);
+              return throwError(err);
             })
-        );
+          );
+
     }
 
 }

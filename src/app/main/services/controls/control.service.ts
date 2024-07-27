@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environments';
-import { catchError, map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Control } from '../../interfaces/controls/control.interface';
 import { CreateControl } from '../../interfaces/controls/control-create.interface';
 import { UpdateControl } from '../../interfaces/controls/control-update.interface';
@@ -116,6 +116,21 @@ export class ControlService {
                 return err;
             })
         ) as Observable<Control>;
+    }
+
+    //Método para verificar si una historia clinica tiene asociado un control
+    checkControlExistence(historyId: number): Observable<boolean>{
+        const url = `${this.baseUrl}/control/asociated/${historyId}`;
+
+        return this.httpClient.get<boolean>(url)
+        .pipe(
+            map((resp: any) => {
+                return resp
+              }),
+              catchError((err: any) => {
+                return throwError(err);
+              })
+        )
     }
 
 

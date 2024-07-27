@@ -151,7 +151,9 @@ export class PatientsPageComponent implements OnInit{
               }, 700)
             },
             error: (err: any) => {
-              this.messageService.add({severity: 'error', summary: 'Error', detail: 'Ha ocurrido un error al eliminar el paciente'})
+              if(err.error.statusCode === 500 ){
+                this.messageService.add({severity: 'info', summary: 'Información', detail: 'No se puede eliminar un paciente con archivos o documentos asociadas'})
+              }
             }
           
           })

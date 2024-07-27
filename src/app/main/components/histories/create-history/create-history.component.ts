@@ -105,7 +105,6 @@ export class CreateHistoryComponent implements OnInit {
       pacienteId: Number(this.idPatient)
     });
     const historyData = this.historyForm.value;
-    console.log(historyData);
 
     this.confirmationService.confirm({
       message: '¿Está seguro que desea crear esta Historia Clínica?',

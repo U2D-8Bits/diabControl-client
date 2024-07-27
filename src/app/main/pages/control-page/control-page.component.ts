@@ -18,6 +18,7 @@ export class ControlPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
   private controlService = inject(ControlService);
+  private historyService = inject(HistoryService);
   public idPatient: number = 0;
   public patientData!: User;
   patientSignals: any[] = [];
@@ -50,7 +51,9 @@ export class ControlPageComponent implements OnInit {
   }
 
   getPatientSignals() {
-    this.controlService.getPatientSignals(this.idPatient).subscribe({
+
+    this.historyService.getPatientSignals(this.idPatient)
+    .subscribe({
       next: (signals) => {
         this.patientSignals = signals;
         this.prepareChartData();
