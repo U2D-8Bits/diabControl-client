@@ -6,6 +6,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { User } from '../../../auth/interfaces';
 import { CreateMedicComponent } from '../../components/medic/create-medic/create-medic.component';
 import { ViewMedicComponent } from '../../components/medic/view-medic/view-medic.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-medics-page',
@@ -97,14 +98,25 @@ export class MedicsPageComponent implements OnInit{
 
   //? Funcion para cambiar el estado de un médico
   changeStateMedic(id_user: number){
-    this.userService.changeUserState(id_user)
-    .subscribe({
-      next: (resp: any) => {
-        this.loadMedics()
-        this.messageService.add({severity: 'success', summary: 'Éxito', detail: resp.msg})
-      },
-      error: (err: any) => {
-        this.messageService.add({severity: 'error', summary: 'Error', detail: err.error.msg})
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Estás a punto de cambiar el estado de un Médico',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, cambiar estado'
+    }).then((result) => {
+      if(result.isConfirmed){
+        //? Lógica para cambiar el estado de un paciente
+        this.userService.changeUserState(id_user)
+          .subscribe((resp: any) => {
+            this.messageService.add({severity: 'success', summary: 'Estado cambiado', detail: "El estado del paciente ha sido cambiado"})
+            // Recargar la lista de pacientes despues de 1.5 segundos
+            setTimeout(() => {
+              this.ngOnInit()
+            }, 700)
+          })
       }
     })
   }
@@ -112,7 +124,21 @@ export class MedicsPageComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.loadMedics()
+    Swal.fire({
+      title: 'Cargando Médicos',
+      html: 'Por favor espere un momento',
+      timer: 2500,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading()
+        this.loadMedics()
+      }
+    }).then((result) => {
+      if(result.dismiss === Swal.DismissReason.timer){
+      }
+    })
   }
 
 
