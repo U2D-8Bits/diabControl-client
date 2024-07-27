@@ -7,6 +7,7 @@ import { User } from '../../../auth/interfaces';
 import { HistoryService } from '../../services/history.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ControlService } from '../../services/controls/control.service';
+import { Control } from '../../interfaces/controls/control.interface';
 
 @Component({
   selector: 'app-control-page',
@@ -23,6 +24,11 @@ export class ControlPageComponent implements OnInit {
   public patientData!: User;
   patientSignals: any[] = [];
   vitalSignsData: any[] = [];
+
+  public controlPatient: Control[] = [];
+  public totalControls: number = 0;
+  public currentPage: number = 1;
+  public pageSize: number = 10;
 
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
@@ -113,10 +119,35 @@ export class ControlPageComponent implements OnInit {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
+
+  //? Funcion para obtener todos los controles de un paciente con paginación
+  loadControls(){
+    this.controlService.getControlsByPatientId(this.idPatient, this.currentPage, this.pageSize)
+    .subscribe({
+      next: (resp: any) => {
+        this.controlPatient = resp.data;
+        if (this.controlPatient === undefined) {
+          this.controlPatient = [];
+        }
+        this.totalControls = resp.total;
+      },
+      error: (err: any) => {
+        console.error(err);
+      } 
+    })
+  }
+
+  //? Metodo para cambiar de página
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.loadControls();
+  }
+
   ngOnInit(): void {
     this.idPatient = this.route.snapshot.params['id'];
     this.getUserData();
     this.getPatientSignals();
+    this.loadControls();
   }
 
   ngOnDestroy(): void {}
