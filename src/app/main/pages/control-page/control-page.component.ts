@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../../auth/interfaces';
 import { HistoryService } from '../../services/history.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ControlService } from '../../services/controls/control.service';
 
 @Component({
   selector: 'app-control-page',
@@ -16,14 +17,14 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 export class ControlPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private userService = inject(UserService);
-  private historiesService = inject(HistoryService);
+  private controlService = inject(ControlService);
   public idPatient: number = 0;
   public patientData!: User;
   patientSignals: any[] = [];
   vitalSignsData: any[] = [];
 
   colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
   };
 
   legend: boolean = true;
@@ -49,10 +50,9 @@ export class ControlPageComponent implements OnInit {
   }
 
   getPatientSignals() {
-    this.historiesService.getPatientSignals(this.idPatient).subscribe({
+    this.controlService.getPatientSignals(this.idPatient).subscribe({
       next: (signals) => {
         this.patientSignals = signals;
-        console.log("PatientSignals =>",this.patientSignals);
         this.prepareChartData();
       },
       error: (error) => {
@@ -62,29 +62,29 @@ export class ControlPageComponent implements OnInit {
   }
 
   prepareChartData(): void {
-    const weightSeries = this.patientSignals.map(entry => ({
+    const weightSeries = this.patientSignals.map((entry) => ({
       name: entry.date,
-      value: entry.weight
+      value: entry.weight,
     }));
 
-    const pulseSeries = this.patientSignals.map(entry => ({
+    const pulseSeries = this.patientSignals.map((entry) => ({
       name: entry.date,
-      value: entry.pulse
+      value: entry.pulse,
     }));
 
-    const pressureSeries = this.patientSignals.map(entry => ({
+    const pressureSeries = this.patientSignals.map((entry) => ({
       name: entry.date,
-      value: entry.pressure
+      value: entry.pressure,
     }));
 
-    const frequencySeries = this.patientSignals.map(entry => ({
+    const frequencySeries = this.patientSignals.map((entry) => ({
       name: entry.date,
-      value: entry.frequency
+      value: entry.frequency,
     }));
 
-    const temperatureSeries = this.patientSignals.map(entry => ({
+    const temperatureSeries = this.patientSignals.map((entry) => ({
       name: entry.date,
-      value: entry.temperature
+      value: entry.temperature,
     }));
 
     this.vitalSignsData = [
@@ -92,10 +92,10 @@ export class ControlPageComponent implements OnInit {
       { name: 'Pulso', series: pulseSeries },
       { name: 'Presión', series: pressureSeries },
       { name: 'Frecuencia', series: frequencySeries },
-      { name: 'Temperatura', series: temperatureSeries }
+      { name: 'Temperatura', series: temperatureSeries },
     ];
 
-    console.log("VitalSignsData =>",this.vitalSignsData);
+    console.log('VitalSignsData =>', this.vitalSignsData);
   }
 
   onSelect(data: any): void {

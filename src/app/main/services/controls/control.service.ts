@@ -54,6 +54,22 @@ export class ControlService {
     }
 
 
+    //? Método para obtener los signos vitales de las historias de un paciente
+    getPatientSignals(patientId: number): Observable<any>{
+        const url = `${this.baseUrl}/control/reports/${patientId}`;
+
+        return this.httpClient.get<any>(url)
+        .pipe(
+            map((resp: any) => {
+                return resp;
+            }),
+            catchError((err: any) => {
+                return err;
+            }
+        ));
+    }
+
+
 
     //? Método para crear un control
     createControl(controlDto: CreateControl): Observable<Control>{
