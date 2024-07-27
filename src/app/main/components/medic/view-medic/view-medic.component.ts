@@ -106,10 +106,10 @@ export class ViewMedicComponent implements OnInit {
                 summary: 'Success',
                 detail: 'Médico actualizado',
               });
-              this.ref.close();
               setTimeout(() => {
+                this.ref.close();
                 this.medicPage.ngOnInit();
-              }, 1000);
+              }, 1500);
             },
             error: (error: any) => {
               console.error('Error updating medic:', error);
