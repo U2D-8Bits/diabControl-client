@@ -33,6 +33,7 @@ import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { MedicsPageComponent } from './pages/medics-page/medics-page.component';
 import { CreateMedicComponent } from './components/medic/create-medic/create-medic.component';
 import { ViewMedicComponent } from './components/medic/view-medic/view-medic.component';
+import { ControlPageComponent } from './pages/control-page/control-page.component';
 @NgModule({
   declarations: [
     ActPageComponent,
@@ -61,6 +62,7 @@ import { ViewMedicComponent } from './components/medic/view-medic/view-medic.com
     MedicsPageComponent,
     CreateMedicComponent,
     ViewMedicComponent,
+    ControlPageComponent,
   ],
   imports: [
     CommonModule,
