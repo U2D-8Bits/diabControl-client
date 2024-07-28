@@ -1,1 +1,53 @@
-<p>update-control works!</p>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<div class="max-w-full mx-auto bg-white p-8">
+    <form [formGroup]="controlForm" (ngSubmit)="updateControl()">
+        <div class="grid gap-6 mb-6 lg:grid-cols-2">
+            <div class="form-group">
+                <label for="observation">Observación</label>
+                <textarea id="message" rows="4"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="Escriba su recomendación" formControlName="observation"></textarea>
+                <div *ngIf="controlForm.get('observation')?.invalid && controlForm.get('observation')?.touched"
+                class="text-red-600 text-sm">
+                    La observación es obligatoria.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="date_control">Fecha para próximo control</label>
+                <input formControlName="date_control" type="date"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required>
+                <div *ngIf="controlForm.get('date_control')?.errors?.['invalidDate']" class="text-red-600 text-sm">
+                    Fecha no válida.
+                </div>
+                <div *ngIf="controlForm.get('date_control')?.errors?.['dateInPast']" class="text-red-600 text-sm">
+                    La fecha no puede ser anterior o igual a la fecha actual.
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="recommendations">Recomendaciones</label>
+                <textarea id="message" rows="4"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                    placeholder="Escriba su recomendación" formControlName="recommendations"></textarea>
+                <div *ngIf="controlForm.get('recommendations')?.invalid && controlForm.get('recommendations')?.touched"
+                    class="text-red-600 text-sm">
+                    Las recomendaciones son obligatorias.
+                </div>
+            </div>
+        </div>
+
+
+        <div class="grid gap-6 mb-6 lg:grid-cols-2">
+            <button [disabled]="controlForm.invalid" type="submit"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">Actualizar
+                Valoración</button>
+            <button (click)="cancelUpdate()"
+                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Cancelar
+                Actualización</button>
+        </div>
+    </form>
+
+</div>

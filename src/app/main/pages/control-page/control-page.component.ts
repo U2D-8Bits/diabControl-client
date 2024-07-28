@@ -8,6 +8,8 @@ import { HistoryService } from '../../services/history.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ControlService } from '../../services/controls/control.service';
 import { Control } from '../../interfaces/controls/control.interface';
+import { UpdateControlComponent } from '../../components/control/update-control/update-control.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-control-page',
@@ -20,7 +22,9 @@ export class ControlPageComponent implements OnInit {
   private userService = inject(UserService);
   private controlService = inject(ControlService);
   private historyService = inject(HistoryService);
+  private dialogService = inject(DialogService);
   public idPatient: number = 0;
+  public idControl: number = 0;
   public patientData!: User;
   patientSignals: any[] = [];
   vitalSignsData: any[] = [];
@@ -103,8 +107,6 @@ export class ControlPageComponent implements OnInit {
       { name: 'Frecuencia', series: frequencySeries },
       { name: 'Temperatura', series: temperatureSeries },
     ];
-
-    console.log('VitalSignsData =>', this.vitalSignsData);
   }
 
   onSelect(data: any): void {
@@ -143,11 +145,80 @@ export class ControlPageComponent implements OnInit {
     this.loadControls();
   }
 
+  showDialog(component: string, headerTitle: string){
+    if( component === 'view'){
+      this.dialogService.open(UpdateControlComponent, {
+        header: headerTitle,
+        maximizable: true,
+        breakpoints: { '960px': '500px', '640px': '100vw' },
+        style: { 'max-width': '100vw', width: '80vw' },
+        height: '60%',
+        contentStyle: { overflow: 'auto' },
+        data: {
+          idControl: this.idControl
+        }
+      })
+    }
+  }
+
+  getIdControl(id: number){
+    this.idControl = id;
+  }
+
+  deleteControl(id: number){
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Una vez eliminado, no podrás recuperar este control',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.controlService.deleteControl(id)
+        .subscribe({
+          next: (resp: any) => {
+            Swal.fire(
+              'Eliminado!',
+              'El control ha sido eliminado.',
+              'success'
+            )
+            this.loadControls();
+          },
+          error: (err: any) => {
+            console.error(err);
+            Swal.fire(
+              'Error!',
+              'El control no ha podido ser eliminado.',
+              'error'
+            )
+          }
+        })
+      }
+    })
+  }
+
   ngOnInit(): void {
-    this.idPatient = this.route.snapshot.params['id'];
-    this.getUserData();
-    this.getPatientSignals();
-    this.loadControls();
+    Swal.fire({
+      title: 'Cargando Historias Clínicas',
+      html: 'Por favor espere un momento',
+      timer: 2500,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      didOpen: () => {
+        Swal.showLoading()
+        this.idPatient = this.route.snapshot.params['id'];
+        this.getUserData();
+        this.getPatientSignals();
+        this.loadControls();
+      }
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+      }
+    })
   }
 
   ngOnDestroy(): void {}

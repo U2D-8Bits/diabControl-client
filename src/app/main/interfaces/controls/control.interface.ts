@@ -5,7 +5,7 @@ export interface Control {
     id_medic_control: number;
     id_control:       string;
     created_at:       Date;
-    date_control:     Date;
+    date_control:     string;
     observation:      string;
     recommendations:  string;
     medico:           User;

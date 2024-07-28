@@ -1,10 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ValidatorFn, AbstractControl, ValidationErrors, FormBuilder } from '@angular/forms';
+import { ValidatorFn, AbstractControl, ValidationErrors, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { HistoriesPageComponent } from '../../../pages/histories-page/histories-page.component';
 import { ControlService } from '../../../services/controls/control.service';
 import { HistoryService } from '../../../services/history.service';
+import { Control } from '../../../interfaces/controls/control.interface';
+import { UpdateControl } from '../../../interfaces/controls/control-update.interface';
+import { ControlPageComponent } from '../../../pages/control-page/control-page.component';
 
 // Función de validador de fecha
 export function dateValidator(): ValidatorFn {
@@ -50,10 +52,11 @@ function isValidDate(year: number, month: number, day: number): boolean {
 
   return month > 0 && month <= 12 && day > 0 && day <= maxDaysInMonth[month - 1];
 }
+
 @Component({
   selector: 'app-update-control',
   templateUrl: './update-control.component.html',
-  styleUrl: './update-control.component.css',
+  styleUrls: ['./update-control.component.css'],
   providers: [ConfirmationService, MessageService],
 })
 export class UpdateControlComponent implements OnInit {
@@ -63,13 +66,101 @@ export class UpdateControlComponent implements OnInit {
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
   private controlService = inject(ControlService);
-  private historyService = inject(HistoryService);
+  private controlPage = inject(ControlPageComponent)
   private fb = inject(FormBuilder);
 
+  public idControl: number = 0;
+
+  controlForm = this.fb.group({
+    observation: ['', [Validators.required]],
+    date_control: ['', [Validators.required, dateValidator()]],  // Agrega el validador aquí
+    recommendations: ['', [Validators.required]],
+  });
+
+  defaultControlForm = this.fb.group({
+    observation: ['', [Validators.required]],
+    date_control: ['', [Validators.required, dateValidator()]],  // Agrega el validador aquí
+    recommendations: ['', [Validators.required]],
+  });
+
   ngOnInit(): void {
+    this.idControl = this.dynamicDialogConfig.data.idControl;
+    this.getDataControl();
+  }
+
+  getDataControl() {
+    this.controlService.getControlById(this.idControl)
+      .subscribe({
+        next: (controlData: Control) => {
+          this.controlForm.patchValue(controlData);
+          this.defaultControlForm.patchValue(controlData);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+  }
+
+  updateControl(): void {
+
+
+    const controlUpdateData: UpdateControl = this.controlForm.value as UpdateControl;
+
+    this.confirmationService.confirm({
+      message: '¿Está seguro que desea actualizar esta valoración de la Historia clínica?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-danger',
+      acceptButtonStyleClass: 'p-button-success',
+      accept: () => {
+        this.controlService.updateControl(this.idControl, controlUpdateData)
+        .subscribe({
+          next: (response) => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Control actualizado correctamente' });
+            
+            setTimeout( () => {
+              this.closeDialog();
+              this.controlPage.ngOnInit();
+            }, 1500)
+          }
+        })
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Operación cancelada' });
+        this.controlForm.patchValue(this.defaultControlForm.value);
+      }
+    })
+  }
+
+  cancelUpdate(): void {
+    this.confirmationService.confirm({
+      message: '¿Está seguro que desea cancelar la actualización de la valoración?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-danger',
+      acceptButtonStyleClass: 'p-button-success',
+      accept: () => {
+        this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Operación cancelada' });
+        setTimeout( () => {
+          this.closeDialog();
+          this.controlForm.patchValue(this.defaultControlForm.value);
+          this.controlPage.ngOnInit();
+        }, 1500)
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Operación cancelada' });
+      }
+    })
+  }
+
+  closeDialog(): void {
+    this.ref.close();
   }
 
   ngOnDestroy(): void {
   }
-
 }

@@ -91,7 +91,7 @@ export class ControlService {
     updateControl(id: number, controlUpdateDto: UpdateControl, ): Observable<Control>{
         const url = `${this.baseUrl}/control/${id}`;
 
-        return this.httpClient.put<Control>(url, controlUpdateDto)
+        return this.httpClient.patch<Control>(url, controlUpdateDto)
         .pipe(
             map((control: Control) => {
                 return control;

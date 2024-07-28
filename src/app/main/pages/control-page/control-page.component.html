@@ -57,11 +57,11 @@
                     <td>{{ control.created_at | date: 'dd/MM/yyyy' }}</td>
                     <td>{{ control.date_control | date: 'dd/MM/yyyy' }}</td>
                     <td class="actions">
-                        <button type="button" pTooltip="Ver Control de paciente" pTooltipPosition="right"
+                        <button (click)="getIdControl(control.id_medic_control)" (click)="showDialog('view', 'Ver Control del paciente')" type="button" pTooltip="Ver Control de paciente" pTooltipPosition="right"
                             pTooltipStyleClass="rounded-lg shadow-lg">
                             <span class="pi pi-eye"></span>
                         </button>
-                        <button type="button" pTooltip="Eliminar Control de paciente" pTooltipPosition="right"
+                        <button (click)="deleteControl(control.id_medic_control)" type="button" pTooltip="Eliminar Control de paciente" pTooltipPosition="right"
                             pTooltipStyleClass="rounded-lg shadow-lg">
                             <span class="pi pi-trash"></span>
                         </button>
