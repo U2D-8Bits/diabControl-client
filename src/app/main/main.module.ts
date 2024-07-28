@@ -28,11 +28,15 @@ import { ViewPatientComponent } from './components/patient/view-patient/view-pat
 import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/show-medicine-page.component';
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 import { MedicinesPageComponent } from './pages/medicines-page/medicines-page.component';
-import { FollowUpComponent } from './components/histories/follow-up/follow-up.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { MedicsPageComponent } from './pages/medics-page/medics-page.component';
 import { CreateMedicComponent } from './components/medic/create-medic/create-medic.component';
 import { ViewMedicComponent } from './components/medic/view-medic/view-medic.component';
+import { ControlPageComponent } from './pages/control-page/control-page.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CreateControlComponent } from './components/control/create-control/create-control.component';
+import { UpdateControlComponent } from './components/control/update-control/update-control.component';
+
 @NgModule({
   declarations: [
     ActPageComponent,
@@ -56,11 +60,13 @@ import { ViewMedicComponent } from './components/medic/view-medic/view-medic.com
     ShowMedicinePageComponent,
     CategoriesPageComponent,
     MedicinesPageComponent,
-    FollowUpComponent,
     ChatPageComponent,
     MedicsPageComponent,
     CreateMedicComponent,
     ViewMedicComponent,
+    ControlPageComponent,
+    CreateControlComponent,
+    UpdateControlComponent,
   ],
   imports: [
     CommonModule,
@@ -72,6 +78,7 @@ import { ViewMedicComponent } from './components/medic/view-medic/view-medic.com
     MaterialuiModule,
     SharedModule,
     FormsModule,
+    NgxChartsModule,
   ],
   exports: [
     MainLayoutComponent,

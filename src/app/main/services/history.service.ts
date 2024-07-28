@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environments';
-import { catchError, map, Observable, of, } from 'rxjs';
+import { catchError, map, Observable, of, throwError, } from 'rxjs';
 import { History } from '../interfaces/history.interface';
 
 @Injectable({providedIn: 'root'})
@@ -68,6 +68,25 @@ export class HistoryService {
 
 
 
+    //? Metodo para obtener todos los signos vitales de las historias clinicas de un paciente
+    getPatientSignals(patientId: number): Observable<any> {
+        
+        const url = `${this.baseUrl}/histories/${patientId}/signals`;
+
+        return this.httpClient.get<any>(url)
+        .pipe(
+            map((signals: any) => {
+                return signals;
+            }),
+            catchError((err: any) => {
+                return of(err);
+            }
+        ));
+
+    }
+
+
+
     //? Metodo para obtener una historia medica por id
     getHistoryById(id: number): Observable<History>{
         const url = `${this.baseUrl}/histories/${id}`;
@@ -118,18 +137,19 @@ export class HistoryService {
 
 
     //? Metodo para eliminar una historia medica
-    deleteHistory(id: number): Observable<History>{
+    deleteHistory(id: number): Observable<boolean>{ 
         const url = `${this.baseUrl}/histories/${id}`;
-
+    
         return this.httpClient.delete<History>(url)
         .pipe(
-            map((history: History) => {
-                return history;
+            map((resp: any) => {
+              return true
             }),
             catchError((err: any) => {
-                return of(err);
+              return throwError(err);
             })
-        );
+          );
+
     }
 
 }

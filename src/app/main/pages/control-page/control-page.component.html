@@ -1,0 +1,83 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+
+
+<div class="flex justify-between items-center p-2">
+    <h1 class="text-2xl text-gray-700">Seguimiento y Control del paciente <label>{{ patientData?.user_name }} {{
+            patientData?.user_lastname }}</label></h1>
+    <button
+        class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
+        type="button" [routerLink]="['/main/patients', patientData.id_user]" type="button">
+        <span class="pi pi-angle-left"></span>
+        Regresar
+    </button>
+</div>
+
+<div class="content">
+    <div class="chart-container">
+        <ngx-charts-line-chart [view]="[600, 300]" [legend]="legend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel" [timeline]="timeline" [results]="vitalSignsData" (select)="onSelect($event)"
+            (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-line-chart>
+    </div>
+
+    <div class="table-container">
+        <!-- Mensaje de no existir ningún control -->
+        <div *ngIf="controlPatient.length === 0" class="no-control-message">
+            <div>
+                <div class="icon-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                </div>
+                <h1>No existen Controles asociados a este paciente</h1>
+                <p>Actualmente no se encuentra registrado ningún control para este paciente dentro de la aplicación.</p>
+            </div>
+        </div>
+
+        <!-- Tabla -->
+        <table *ngIf="controlPatient.length > 0">
+            <thead>
+                <tr>
+                    <th>Código Control</th>
+                    <th>Historia Clínica</th>
+                    <th>Fecha de creación</th>
+                    <th>Fecha próximo control</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let control of controlPatient">
+                    <td>{{ control.id_control }}</td>
+                    <td>{{ control.history.id_medic_history }}</td>
+                    <td>{{ control.created_at | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ control.date_control | date: 'dd/MM/yyyy' }}</td>
+                    <td class="actions">
+                        <button (click)="getIdControl(control.id_medic_control)" (click)="showDialog('view', 'Ver Control del paciente')" type="button" pTooltip="Ver Control de paciente" pTooltipPosition="right"
+                            pTooltipStyleClass="rounded-lg shadow-lg">
+                            <span class="pi pi-eye"></span>
+                        </button>
+                        <button (click)="deleteControl(control.id_medic_control)" type="button" pTooltip="Eliminar Control de paciente" pTooltipPosition="right"
+                            pTooltipStyleClass="rounded-lg shadow-lg">
+                            <span class="pi pi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div *ngIf="controlPatient.length > 0" class="pagination">
+            <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                Anterior
+            </button>
+            <span>Página {{ currentPage }}</span>
+            <button (click)="onPageChange(currentPage + 1)" [disabled]="(currentPage * pageSize) >= totalControls">
+                Siguiente
+            </button>
+        </div>
+    </div>
+</div>

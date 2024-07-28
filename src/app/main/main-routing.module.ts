@@ -9,6 +9,7 @@ import { ActPageComponent } from './pages/act-page/act-page.component';
 import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/show-medicine-page.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { MedicsPageComponent } from './pages/medics-page/medics-page.component';
+import { ControlPageComponent } from './pages/control-page/control-page.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,11 @@ const routes: Routes = [
         path: 'patients/:id/consentimiento',
         title: 'Consentimiento Informado',
         component: ActPageComponent
+      },
+      {
+        path: 'patients/:id/control',
+        title: 'Seguimiento y Control',
+        component: ControlPageComponent
       },
       {
         path: 'medics',
