@@ -1,0 +1,54 @@
+/* src/app/meeting-page/meeting-page.component.css */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.zoom-container {
+  flex: 70%;
+  background-color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forms-container {
+  flex: 30%;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  color: red;
+  font-size: 0.875em;
+}

@@ -36,6 +36,8 @@ import { ControlPageComponent } from './pages/control-page/control-page.componen
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { CreateControlComponent } from './components/control/create-control/create-control.component';
 import { UpdateControlComponent } from './components/control/update-control/update-control.component';
+import { MeetingPageComponent } from './pages/meeting-page/meeting-page.component';
+import { SafeUrlMeetingPipe } from './pipes/meeting-url.pipe';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { UpdateControlComponent } from './components/control/update-control/upda
     ControlPageComponent,
     CreateControlComponent,
     UpdateControlComponent,
+    MeetingPageComponent,
+    SafeUrlMeetingPipe
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,58 @@
+<!-- src/app/meeting-page/meeting-page.component.html -->
+<div class="container">
+    <div class="zoom-container">
+      <iframe *ngIf="patientJoinUrl || medicJoinUrl" [src]="currentUserRoleId === 1 ? safeMedicJoinUrl : safePatientJoinUrl" width="100%" height="600" allow="camera; microphone; fullscreen"></iframe>
+    </div>
+    <div class="forms-container">
+      <!-- Formulario para crear reunión, visible solo para médicos -->
+      <div *ngIf="currentUserRoleId === 1">
+        <h3>Crear Reunión</h3>
+        <form [formGroup]="createMeetingForm" (ngSubmit)="createMeeting()">
+          <label for="topic">Tema:</label>
+          <input id="topic" formControlName="topic" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <div *ngIf="createMeetingForm.controls['topic'].invalid && createMeetingForm.controls['topic'].touched">
+            <small class="error" *ngIf="createMeetingForm.controls['topic'].errors?.['required']">El tema es requerido.</small>
+          </div>
+  
+          <label for="startTime">Hora de Inicio:</label>
+          <input id="startTime" formControlName="startTime" type="datetime-local" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <div *ngIf="createMeetingForm.controls['startTime'].invalid && createMeetingForm.controls['startTime'].touched">
+            <small class="error" *ngIf="createMeetingForm.controls['startTime'].errors?.['required']">La hora de inicio es requerida.</small>
+            <small class="error" *ngIf="createMeetingForm.controls['startTime'].errors?.['invalidDate']">Fecha inválida.</small>
+            <small class="error" *ngIf="createMeetingForm.controls['startTime'].errors?.['dateInPast']">La fecha no puede ser en el pasado.</small>
+          </div>
+  
+          <label for="duration">Duración (minutos):</label>
+          <input id="duration" formControlName="duration" type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <div *ngIf="createMeetingForm.controls['duration'].invalid && createMeetingForm.controls['duration'].touched">
+            <small class="error" *ngIf="createMeetingForm.controls['duration'].errors?.['required']">La duración es requerida.</small>
+          </div>
+  
+          <button type="submit" [disabled]="createMeetingForm.invalid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">Crear Reunión</button>
+        </form>
+      </div>
+  
+      <!-- Formulario para unirse a reunión, visible para todos -->
+      <div>
+        <h3>Unirse a Reunión</h3>
+        <form [formGroup]="joinMeetingForm" (ngSubmit)="joinMeeting()">
+          <label for="meetingUrl">URL de la Reunión:</label>
+          <input id="meetingUrl" formControlName="meetingUrl" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <div *ngIf="joinMeetingForm.controls['meetingUrl'].invalid && joinMeetingForm.controls['meetingUrl'].touched">
+            <small class="error" *ngIf="joinMeetingForm.controls['meetingUrl'].errors?.['required']">El URL es requerido.</small>
+          </div>
+  
+          <button type="submit" [disabled]="joinMeetingForm.invalid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">Unirse a Reunión</button>
+        </form>
+      </div>
+  
+      <!-- URLs generados, visible solo para médicos -->
+      <div *ngIf="currentUserRoleId === 1">
+        <h3>URLs Generados</h3>
+        <p><strong>URL para el paciente:</strong> {{ patientJoinUrl }}</p>
+        <p><strong>URL para el médico:</strong> {{ medicJoinUrl }}</p>
+        <button (click)="clearUrls()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">Limpiar URLs</button>
+      </div>
+    </div>
+  </div>
+  
