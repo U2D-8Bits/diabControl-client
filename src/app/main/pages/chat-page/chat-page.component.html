@@ -16,7 +16,8 @@
             <div
                 class="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
                 <div class="h-16 w-16 rounded-full border overflow-hidden">
-                        <p-avatar class="text-blue-700 h-full w-full" label="{{ userNames | firstCharacter }}"  styleClass="mr-2" size="xlarge" shape="circle" />
+                    <p-avatar class="text-blue-700 h-full w-full" label="{{ userNames | firstCharacter }}"
+                        styleClass="mr-2" size="xlarge" shape="circle" />
                 </div>
                 <div class="text-xs text-gray-500">{{ userNames }}</div>
             </div>
@@ -25,16 +26,32 @@
                     <span class="font-bold">Conversaciones</span>
                 </div>
                 <div id="chats-Container" class="flex flex-col space-y-1 mt-4 -mx-2 overflow-y-auto">
-                    <button class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
-                        <div class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
-                            H
+                    <div class="relative w-9/12 mb-3 ml-3">
+                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
+                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                         </div>
-                        <div class="ml-2 text-sm font-semibold">Henry Boyd</div>
+                        <input type="text" id="voice-search" [(ngModel)]="search"
+                            (ngModelChange)="onSearchChange($event)"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                            placeholder="Buscar" required>
+                    </div>
+
+                    <button *ngFor="let user of users"
+                        class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2">
+                        <div class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full">
+                            {{ user.user_name | firstCharacter }}
+                        </div>
+                        <div class="ml-2 text-sm font-semibold">{{ user.user_name }} {{ user.user_lastname }}</div>
                     </button>
                 </div>
             </div>
         </div>
-        <div id="message-Container"  class="flex flex-col flex-auto p-6">
+        <div id="message-Container" class="flex flex-col flex-auto p-6">
             <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
                 <div class="flex flex-col h-full overflow-x-auto mb-4">
                     <div class="flex flex-col h-full">

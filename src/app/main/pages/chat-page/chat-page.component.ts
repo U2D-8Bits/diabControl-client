@@ -17,6 +17,7 @@ export class ChatPageComponent implements OnInit {
   userID: number = Number( localStorage.getItem('ID') );
   userNames: string = '';
   users: User[] = [];
+  search: string = '';
 
 
   ngOnInit(): void {
@@ -27,6 +28,7 @@ export class ChatPageComponent implements OnInit {
       next: (data: User) => {
         this.userNames = data.user_name + ' ' + data.user_lastname;
         this.roleID = data.role_id;
+        this.getAllUsers();
       },
       error: (error) => {
         console.error(error);
@@ -37,8 +39,35 @@ export class ChatPageComponent implements OnInit {
   }
 
 
-  getAllUsers() {
-    
+  getAllUsers(): void {
+    if(this.roleID === 1){
+      this.userService.getPatientsWithSearch(this.search)
+      .subscribe({
+        next: (data: User[]) => {
+          this.users = data;
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      })
+    }
+
+    if(this.roleID === 2){
+      this.userService.getMedicsWithSearch(this.search)
+      .subscribe({
+        next: (data: User[]) => {
+          this.users = data;
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      })
+    }
+  }
+
+  onSearchChange(search: string): void{
+    this.search = search;
+    this.getAllUsers();
   }
 
   ngOnDestroy() : void {
