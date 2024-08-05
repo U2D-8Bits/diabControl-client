@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { RoleService } from '../../../auth/services/role.service';
-import { User } from '../../../auth/interfaces/user.interface'; // Importa el MessageService
+import { User } from '../../../auth/interfaces/user.interface';
+import { SocketWebService } from '../../services/socket/socket.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -21,6 +22,7 @@ export class ChatPageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private roleService: RoleService,
+    private socketService: SocketWebService // Inyecta el servicio de sockets
   ) {}
 
   ngOnInit(): void {
@@ -29,12 +31,12 @@ export class ChatPageComponent implements OnInit {
         this.userNames = data.user_name + ' ' + data.user_lastname;
         this.roleID = data.role_id;
         this.getAllUsers();
+        this.setupSocketListeners(); // Configura los listeners de los sockets
       },
       error: (error) => {
         console.error(error);
       }
     });
-
   }
 
   getAllUsers(): void {
@@ -66,5 +68,15 @@ export class ChatPageComponent implements OnInit {
     this.getAllUsers();
   }
 
+  setupSocketListeners() {
+    this.socketService.onUserConnected().subscribe((user: User) => {
+      console.log('User connected:', user);
+      // Manejar la conexión del usuario
+    });
 
+    this.socketService.onUserDisconnected().subscribe((user: User) => {
+      console.log('User disconnected:', user);
+      // Manejar la desconexión del usuario
+    });
+  }
 }

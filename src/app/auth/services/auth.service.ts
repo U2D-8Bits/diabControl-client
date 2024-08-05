@@ -8,6 +8,7 @@ import { catchError, map, Observable, of, throwError} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RoleService } from './role.service';
 import { Router } from '@angular/router';
+import { SocketWebService } from '../../main/services/socket/socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,9 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   //? Constructor
-  constructor() {
+  constructor(
+    private socketService: SocketWebService,
+  ) {
     this.checkAuthStatus().subscribe();
   }
 
@@ -66,6 +69,7 @@ export class AuthService {
       map(({ user, token }) => {
         this.saveData(user, token);
         this.showLoadingScreen();
+        this.socketService.connect(token); // Conecta al WebSocket
         setTimeout(() => {
           this.router.navigate(['/main']);
           this.hideLoadingScreen();

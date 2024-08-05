@@ -1,9 +1,25 @@
 import { Injectable } from '@angular/core';
-import { io, Socket } from 'socket.io-client';
+import { Socket } from 'ngx-socket-io';
+import { User } from '../../../auth/interfaces';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
+export class SocketWebService {
+  constructor(private socket: Socket) {}
 
-export class SocketWebService{
+  connect(token: string) {
+    this.socket.ioSocket.io.opts.query = { token };
+    this.socket.connect();
+  }
 
-    
+  onUserConnected() {
+    return this.socket.fromEvent<User>('userConnected');
+  }
+
+  onUserDisconnected() {
+    return this.socket.fromEvent<User>('userDisconnected');
+  }
+
+  disconnect() {
+    this.socket.disconnect();
+  }
 }
