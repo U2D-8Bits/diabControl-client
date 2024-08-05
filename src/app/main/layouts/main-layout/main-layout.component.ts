@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserDataService } from '../../services/user-data.service';
 import { RoleService } from '../../../auth/services/role.service';
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-main-layout',
@@ -39,6 +40,7 @@ export class MainLayoutComponent implements OnInit {
   //? NgOnInit
   ngOnInit() {
     this.loadUserData();
+
 
     //? Menú de opciones del icono de usuario
     this.items = [
@@ -138,6 +140,7 @@ export class MainLayoutComponent implements OnInit {
       },
     ];
   }
+
 
   //? Destroy del componente
   ngOnDestroy(): void {}

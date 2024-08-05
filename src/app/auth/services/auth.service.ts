@@ -85,6 +85,11 @@ export class AuthService {
     localStorage.removeItem('user_name');
     localStorage.removeItem('nameUser');
     localStorage.removeItem('role');
+    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('ID');
+    localStorage.removeItem('roleID');
+    localStorage.removeItem('roleName');
+    localStorage.removeItem('name');
     this._currentUser.set(null);
     this._authStatus.set(AuthStatus.notAuthenticated);
   }
