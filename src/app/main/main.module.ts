@@ -38,6 +38,7 @@ import { CreateControlComponent } from './components/control/create-control/crea
 import { UpdateControlComponent } from './components/control/update-control/update-control.component';
 import { MeetingPageComponent } from './pages/meeting-page/meeting-page.component';
 import { SafeUrlMeetingPipe } from './pipes/meeting-url.pipe';
+import { ChatMessageComponent } from './components/chat/chat-message/chat-message.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { SafeUrlMeetingPipe } from './pipes/meeting-url.pipe';
     CreateControlComponent,
     UpdateControlComponent,
     MeetingPageComponent,
-    SafeUrlMeetingPipe
+    SafeUrlMeetingPipe,
+    ChatMessageComponent
   ],
   imports: [
     CommonModule,

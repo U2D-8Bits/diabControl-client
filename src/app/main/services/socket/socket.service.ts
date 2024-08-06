@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { User } from '../../../auth/interfaces';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class SocketWebService {
   constructor(private socket: Socket) {}
 
@@ -17,6 +19,14 @@ export class SocketWebService {
 
   onUserDisconnected() {
     return this.socket.fromEvent<User>('userDisconnected');
+  }
+
+  onMessage() {
+    return this.socket.fromEvent<any>('message');
+  }
+
+  sendMessage(message: any) {
+    this.socket.emit('message', message);
   }
 
   disconnect() {
