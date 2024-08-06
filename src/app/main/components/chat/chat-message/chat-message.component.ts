@@ -1,19 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../../../../auth/interfaces';
 import { SocketWebService } from '../../../services/socket/socket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'component-chat-message',
   templateUrl: './chat-message.component.html',
-  styleUrl: './chat-message.component.css'
+  styleUrls: ['./chat-message.component.css']
 })
-export class ChatMessageComponent implements OnInit {
+export class ChatMessageComponent implements OnInit, OnDestroy {
 
   @Input() currentUser!: User;
   @Input() selectedUser!: User;
 
   messages: any[] = [];
   newMessage: string = '';
+  private messageSubscription!: Subscription;
 
   get userID(): number {
     return this.currentUser.id_user;
@@ -21,17 +23,17 @@ export class ChatMessageComponent implements OnInit {
 
   constructor(
     private socketService: SocketWebService
-  ){}
+  ) {}
 
   ngOnInit(): void {
-    this.socketService.onMessage()
-    .subscribe((message: any) =>{
-      this.messages.push(message)
-    })
+    this.messageSubscription = this.socketService.onMessage()
+      .subscribe((message: any) => {
+        this.messages.push(message); // Asegurarse de que los mensajes recibidos se añadan al arreglo
+      });
   }
 
   sendMessage(): void {
-    if( this.newMessage.trim().length === 0){
+    if (this.newMessage.trim().length === 0) {
       return;
     }
 
@@ -42,9 +44,14 @@ export class ChatMessageComponent implements OnInit {
       timestamp: new Date()
     };
 
-    this.messages.push(message);
-    this.socketService.sendMessage(message);
+    this.messages.push(message); // Agregar el mensaje al arreglo local
+    this.socketService.sendMessage(message); // Enviar el mensaje al servidor
     this.newMessage = '';
   }
 
+  ngOnDestroy(): void {
+    if (this.messageSubscription) {
+      this.messageSubscription.unsubscribe();
+    }
+  }
 }

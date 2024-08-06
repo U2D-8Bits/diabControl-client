@@ -1,7 +1,8 @@
+// src/app/components/chat-page/chat-page.component.ts
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { RoleService } from '../../../auth/services/role.service';
-import { User } from '../../../auth/interfaces/user.interface';// Importa el servicio de sockets
+import { User } from '../../../auth/interfaces/user.interface';
 import { SocketWebService } from '../../services/socket/socket.service';
 
 @Component({
@@ -15,15 +16,13 @@ export class ChatPageComponent implements OnInit {
   userNames: string = '';
   users: User[] = [];
   search: string = '';
-  messages: any[] = [];
-  newMessage: string = '';
   selectedUser: User | null = null;
   currentUser!: User;
 
   constructor(
     private userService: UserService,
     private roleService: RoleService,
-    private socketService: SocketWebService // Inyecta el servicio de sockets
+    private socketService: SocketWebService
   ) {}
 
   ngOnInit(): void {
@@ -31,9 +30,9 @@ export class ChatPageComponent implements OnInit {
       next: (data: User) => {
         this.userNames = data.user_name + ' ' + data.user_lastname;
         this.roleID = data.role_id;
-        this.currentUser = data; // Asigna el usuario actual
+        this.currentUser = data;
         this.getAllUsers();
-        this.setupSocketListeners(); // Configura los listeners de los sockets
+        this.setupSocketListeners();
       },
       error: (error) => {
         console.error(error);
@@ -73,16 +72,15 @@ export class ChatPageComponent implements OnInit {
   setupSocketListeners() {
     this.socketService.onUserConnected().subscribe((user: User) => {
       console.log('User connected:', user);
-      // Manejar la conexión del usuario
     });
 
     this.socketService.onUserDisconnected().subscribe((user: User) => {
       console.log('User disconnected:', user);
-      // Manejar la desconexión del usuario
     });
   }
 
   selectUser(user: User): void {
     this.selectedUser = user;
+    this.socketService.changeChat(user.id_user.toString());
   }
 }

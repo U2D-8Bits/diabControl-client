@@ -32,4 +32,8 @@ export class SocketWebService {
   disconnect() {
     this.socket.disconnect();
   }
+
+  changeChat(newChatId: string) {
+    this.socket.emit('changeChat', newChatId);
+  }
 }
