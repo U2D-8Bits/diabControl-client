@@ -160,7 +160,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
             console.log(data);
             this.messageService.add({
               severity: 'success',
-              summary: 'Success',
+              summary: 'Éxito',
               detail: 'Consentimiento Informado creado correctamente',
             });
             this.actComponent.ngOnInit();
@@ -181,7 +181,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Operación cancelada',
         });
       },
@@ -202,7 +202,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
       accept: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Operación cancelada',
         });
         setTimeout(() => {
@@ -212,7 +212,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
       reject: () => {
         this.messageService.add({
           severity: 'success',
-          summary: 'Success',
+          summary: 'Éxito',
           detail: 'Operación no cancelada',
         });
       },
