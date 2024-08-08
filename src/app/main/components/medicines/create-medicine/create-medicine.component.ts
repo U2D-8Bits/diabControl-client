@@ -59,8 +59,10 @@ export class CreateMedicineComponent implements OnInit {
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: 'none',
         rejectIcon: 'none',
-        rejectButtonStyleClass: 'p-button-danger',
-        acceptButtonStyleClass: 'p-button-success',
+        acceptLabel: 'Si',
+        rejectLabel: 'No',
+        acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+        rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
         accept: () => {
           this.medicineService.createMedicine(medicineData).subscribe({
             next: (resp: any) => {
@@ -109,9 +111,10 @@ export class CreateMedicineComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass:
-        'p-button-danger, padding: 10px; borer-radius: 5px; border: 1px solid red;',
-      acceptButtonStyleClass: 'p-button-success',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.messageService.add({
           severity: 'info',
