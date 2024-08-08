@@ -60,8 +60,10 @@ export class CreatePatientComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass: 'p-button-text',
-      acceptButtonStyleClass: 'p-button-text',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'bg-blue-500 text-white rounded-md px-4 py-2',
+      rejectButtonStyleClass: 'bg-blue-500 text-white rounded-md px-4 py-2 mr-2', 
       accept: () => {
         this.userService.createUser(patientData)
           .subscribe({
@@ -104,8 +106,10 @@ export class CreatePatientComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass: 'p-button-text',
-      acceptButtonStyleClass: 'p-button-text',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'bg-blue-500 text-white rounded-md px-4 py-2',
+      rejectButtonStyleClass: 'bg-blue-500 text-white rounded-md px-4 py-2 mr-2', 
       accept: () => {
         this.messageService.add({
           severity: 'error',
