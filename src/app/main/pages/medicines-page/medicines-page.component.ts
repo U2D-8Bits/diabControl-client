@@ -128,6 +128,7 @@ export class MedicinesPageComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: '¡Sí, bórralo!',
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.medicineService.deleteMedicine(id).subscribe({
