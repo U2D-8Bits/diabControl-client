@@ -105,7 +105,7 @@ export class ViewMedicComponent implements OnInit {
             next: () => {
               this.messageService.add({
                 severity: 'success',
-                summary: 'Success',
+                summary: 'Éxito',
                 detail: 'Médico actualizado',
               });
               setTimeout(() => {
@@ -126,8 +126,8 @@ export class ViewMedicComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Rejected',
-          detail: 'La solicitud ha sido rechazado',
+          summary: 'Cancelado',
+          detail: 'La solicitud ha sido cancelada',
         });
       },
     });
@@ -160,7 +160,7 @@ export class ViewMedicComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Rechazado',
+          summary: 'Cancelado',
           detail: 'Se cancelo la cancelación de la actualización del Médico'
         })
       }

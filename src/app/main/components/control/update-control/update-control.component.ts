@@ -112,13 +112,15 @@ export class UpdateControlComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass: 'p-button-danger',
-      acceptButtonStyleClass: 'p-button-success',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.controlService.updateControl(this.idControl, controlUpdateData)
         .subscribe({
           next: (response) => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Control actualizado correctamente' });
+            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Control actualizado correctamente' });
             
             setTimeout( () => {
               this.closeDialog();
@@ -128,7 +130,7 @@ export class UpdateControlComponent implements OnInit {
         })
       },
       reject: () => {
-        this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Operación cancelada' });
+        this.messageService.add({ severity: 'info', summary: 'Información', detail: 'Operación cancelada' });
         this.controlForm.patchValue(this.defaultControlForm.value);
       }
     })
@@ -141,10 +143,12 @@ export class UpdateControlComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass: 'p-button-danger',
-      acceptButtonStyleClass: 'p-button-success',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Operación cancelada' });
+        this.messageService.add({ severity: 'info', summary: 'Información', detail: 'Operación cancelada' });
         setTimeout( () => {
           this.closeDialog();
           this.controlForm.patchValue(this.defaultControlForm.value);
@@ -152,7 +156,7 @@ export class UpdateControlComponent implements OnInit {
         }, 1500)
       },
       reject: () => {
-        this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Operación cancelada' });
+        this.messageService.add({ severity: 'info', summary: 'Información', detail: 'Operación cancelada' });
       }
     })
   }

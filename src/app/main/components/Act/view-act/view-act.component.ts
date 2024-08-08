@@ -186,7 +186,6 @@ export class ViewActComponent implements OnInit, OnDestroy {
       actData.tutor_motive = '';
     }
 
-    console.log(`Valores a Actualizar:`, actData);
 
     this.confirmationService.confirm({
       message: '¿Está seguro que desea actualizar el Consentimiento Informado?',
@@ -203,7 +202,7 @@ export class ViewActComponent implements OnInit, OnDestroy {
           next: (data) => {
             this.messageService.add({
               severity: 'success',
-              summary: 'Consentimiento Informado Actualizado',
+              summary: 'Éxito',
               detail:
                 'El Consentimiento Informado ha sido actualizado con éxito',
             });
@@ -218,7 +217,7 @@ export class ViewActComponent implements OnInit, OnDestroy {
             console.error(error);
             this.messageService.add({
               severity: 'error',
-              summary: 'Error al Actualizar el Consentimiento Informado',
+              summary: 'Error',
               detail:
                 error.error.message ||
                 'Ha ocurrido un error al actualizar el Consentimiento Informado',
@@ -229,7 +228,7 @@ export class ViewActComponent implements OnInit, OnDestroy {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Actualización Cancelada',
+          summary: 'Cancelada',
           detail:
             'La actualización del Consentimiento Informado ha sido cancelada',
         });
@@ -253,7 +252,7 @@ export class ViewActComponent implements OnInit, OnDestroy {
       accept: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Actualización Cancelada',
+          summary: 'Cancelada',
           detail:
             'La actualización del Consentimiento Informado ha sido cancelada',
         });
@@ -266,7 +265,7 @@ export class ViewActComponent implements OnInit, OnDestroy {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Actualización no Cancelada',
+          summary: 'Cancelada',
           detail:
             'La actualización del Consentimiento Informado no ha sido cancelada',
         });

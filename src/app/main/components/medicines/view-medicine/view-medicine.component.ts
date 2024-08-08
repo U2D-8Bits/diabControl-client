@@ -141,7 +141,7 @@ export class ViewMedicineComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Rechazado',
+          summary: 'Cancelado',
           detail: 'Se cancelo la actualización del Medicamento'
         })
         this.medicineForm.patchValue(this.defaultForm.value);
@@ -174,8 +174,8 @@ export class ViewMedicineComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Rechazado',
-          detail: 'Se cancelo la cancelación de la modificación del Medicamento'
+          summary: 'Inofrmación',
+          detail: 'No se cancelo la modificación del Medicamento'
         })
       }
     })

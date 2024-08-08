@@ -139,7 +139,7 @@ export class ViewPatientComponent implements OnInit {
             next: (data) => {
               this.messageService.add({
                 severity: 'success',
-                summary: 'Success',
+                summary: 'Éxito',
                 detail: 'Paciente actualizado correctamente',
               });
               this.patientsPageComponent.ngOnInit();
@@ -160,7 +160,7 @@ export class ViewPatientComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Actualización de paciente cancelada',
         });
         this.myForm.reset(this.patienFormData);
@@ -188,7 +188,7 @@ export class ViewPatientComponent implements OnInit {
         this.myForm.reset(this.patienFormData);
         this.messageService.add({
           severity: 'error',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Edición de paciente cancelada',
         });
         setTimeout(() => {
@@ -198,7 +198,7 @@ export class ViewPatientComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Edición de paciente no cancelada',
         });
       }

@@ -126,7 +126,7 @@ export class CreateMedicComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Creación de médico cancelada',
         });
       }
@@ -147,7 +147,7 @@ export class CreateMedicComponent implements OnInit {
       accept: () => {
         this.messageService.add({
           severity: 'error',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'creación de paciente cancelada',
         });
         this.closeDialog();
@@ -156,7 +156,7 @@ export class CreateMedicComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'creación de paciente no cancelada',
         });
       }

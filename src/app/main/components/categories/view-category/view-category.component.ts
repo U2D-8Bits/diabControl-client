@@ -111,7 +111,7 @@ export class ViewCategoryComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Actualización cancelada',
         });
       },
@@ -145,7 +145,7 @@ export class ViewCategoryComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Actualización no cancelada',
         });
       },

@@ -95,7 +95,7 @@ export class CreateMedicineComponent implements OnInit {
         reject: () => {
           this.messageService.add({
             severity: 'info',
-            summary: 'Rechazado',
+            summary: 'Cancelado',
             detail: 'Se canceló la creación del Medicamento',
           });
         },

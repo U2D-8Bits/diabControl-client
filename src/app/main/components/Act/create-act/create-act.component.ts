@@ -142,7 +142,7 @@ export class CreateActComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log(`Valores de ActData =>`, actData);
+    
 
     this.confirmationService.confirm({
       message: 'Está seguro que desea crear este Consentimiento Informado?',
@@ -157,7 +157,6 @@ export class CreateActComponent implements OnInit, OnDestroy {
       accept: () => {
         this.actService.createAct(actData).subscribe({
           next: (data) => {
-            console.log(data);
             this.messageService.add({
               severity: 'success',
               summary: 'Éxito',
