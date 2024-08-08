@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { RoleService } from '../../../auth/services/role.service';
 import { User } from '../../../auth/interfaces/user.interface';
 import { SocketWebService } from '../../services/socket/socket.service';
+import { ChatService } from '../../services/chat/chat.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -22,13 +23,14 @@ export class ChatPageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private roleService: RoleService,
-    private socketService: SocketWebService
+    private socketService: SocketWebService,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
     this.userService.getUserById(this.userID).subscribe({
       next: (data: User) => {
-        this.userNames = data.user_name + ' ' + data.user_lastname;
+        this.userNames = `${data.user_name} ${data.user_lastname}`;
         this.roleID = data.role_id;
         this.currentUser = data;
         this.getAllUsers();
@@ -71,16 +73,23 @@ export class ChatPageComponent implements OnInit {
 
   setupSocketListeners() {
     this.socketService.onUserConnected().subscribe((user: User) => {
-      console.log('User connected:', user);
+      // console.log('User connected:', user);
     });
 
     this.socketService.onUserDisconnected().subscribe((user: User) => {
-      console.log('User disconnected:', user);
+      // console.log('User disconnected:', user);
     });
   }
 
   selectUser(user: User): void {
     this.selectedUser = user;
-    this.socketService.changeChat(user.id_user.toString());
+    this.chatService.findOrCreateChatRoom(this.currentUser, this.selectedUser).subscribe({
+      next: (room) => {
+        this.socketService.changeChat(room.id);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 }

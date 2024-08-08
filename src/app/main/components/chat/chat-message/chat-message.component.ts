@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./chat-message.component.css']
 })
 export class ChatMessageComponent implements OnInit, OnDestroy {
-
   @Input() currentUser!: User;
   @Input() selectedUser!: User;
 
@@ -26,10 +25,9 @@ export class ChatMessageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.messageSubscription = this.socketService.onMessage()
-      .subscribe((message: any) => {
-        this.messages.push(message); // Asegurarse de que los mensajes recibidos se añadan al arreglo
-      });
+    this.messageSubscription = this.socketService.onMessage().subscribe((message: any) => {
+      this.messages.push(message);
+    });
   }
 
   sendMessage(): void {
@@ -38,14 +36,14 @@ export class ChatMessageComponent implements OnInit, OnDestroy {
     }
 
     const message = {
+      chatRoomId: this.socketService.currentChatRoomId,
       sender: this.currentUser,
-      receiver: this.selectedUser,
       content: this.newMessage,
       timestamp: new Date()
     };
 
-    this.messages.push(message); // Agregar el mensaje al arreglo local
-    this.socketService.sendMessage(message); // Enviar el mensaje al servidor
+    this.messages.push(message);
+    this.socketService.sendMessage(message);
     this.newMessage = '';
   }
 

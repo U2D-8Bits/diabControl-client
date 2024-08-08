@@ -6,6 +6,8 @@ import { User } from '../../../auth/interfaces';
   providedIn: 'root'
 })
 export class SocketWebService {
+  currentChatRoomId: string | null = null;
+
   constructor(private socket: Socket) {}
 
   connect(token: string) {
@@ -34,6 +36,7 @@ export class SocketWebService {
   }
 
   changeChat(newChatId: string) {
+    this.currentChatRoomId = newChatId;
     this.socket.emit('changeChat', newChatId);
   }
 }
