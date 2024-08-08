@@ -3,6 +3,8 @@ import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../../auth/services/auth.service';
 import { UserDataService } from '../../services/user-data.service';
 import { RoleService } from '../../../auth/services/role.service';
+import { io } from 'socket.io-client';
+import { SocketWebService } from '../../services/socket/socket.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -10,7 +12,6 @@ import { RoleService } from '../../../auth/services/role.service';
   styleUrls: ['./main-layout.component.css'],
 })
 export class MainLayoutComponent implements OnInit {
-
   //? Menu de opciones del icono de usuario
   items: MenuItem[] | undefined;
 
@@ -21,6 +22,7 @@ export class MainLayoutComponent implements OnInit {
   private authService = inject(AuthService);
   private roleService = inject(RoleService);
   private cdr = inject(ChangeDetectorRef);
+  private socketService = inject(SocketWebService);
 
   //? Variables de usuario
   isAdmin: boolean = false;
@@ -29,16 +31,23 @@ export class MainLayoutComponent implements OnInit {
   nameUser: string = '';
 
   //? Constructor
-  constructor() { }
+  constructor() {}
 
-  //? Método para cerrar sesión 
-  logOut(){
+  //? Método para cerrar sesión
+  logOut() {
     this.authService.logOut();
+    this.socketService.disconnect();
   }
 
   //? NgOnInit
   ngOnInit() {
     this.loadUserData();
+
+    // Conecta al WebSocket al cargar el MainLayout
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.socketService.connect(token);
+    }
 
     //? Menú de opciones del icono de usuario
     this.items = [
@@ -67,12 +76,11 @@ export class MainLayoutComponent implements OnInit {
   loadUserData() {
     const roleId = localStorage.getItem('roleID')?.toString() || '';
 
-    this.roleService.getRoleByID(Number(roleId))
-      .subscribe((role) => {
-        this.roleUser = role.role_name;
-        this.setupPhoneMenu();
-        this.cdr.detectChanges(); // Forzar la detección de cambios
-      });
+    this.roleService.getRoleByID(Number(roleId)).subscribe((role) => {
+      this.roleUser = role.role_name;
+      this.setupPhoneMenu();
+      this.cdr.detectChanges(); // Forzar la detección de cambios
+    });
 
     this.isAdmin = localStorage.getItem('isAdmin') === 'true';
     this.userInfo = localStorage.getItem('user_name')?.toString() || '';
@@ -100,19 +108,31 @@ export class MainLayoutComponent implements OnInit {
         label: 'Pacientes',
         icon: 'pi pi-users',
         routerLink: ['/main/patients'],
-        visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
+        visible:
+          this.roleUser.toLowerCase() === 'medico' ||
+          this.roleUser.toLowerCase() === 'médico',
       },
       {
         label: 'Medicos',
         icon: 'pi pi-briefcase',
         routerLink: ['/main/medics'],
-        visible: (this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico') && this.isAdmin
+        visible:
+          (this.roleUser.toLowerCase() === 'medico' ||
+            this.roleUser.toLowerCase() === 'médico') &&
+          this.isAdmin,
       },
       {
         label: 'Medicamentos',
         icon: 'pi pi-box',
         routerLink: ['/main/medicines'],
-        visible: this.roleUser.toLowerCase() === 'medico' || this.roleUser.toLowerCase() === 'médico'
+        visible:
+          this.roleUser.toLowerCase() === 'medico' ||
+          this.roleUser.toLowerCase() === 'médico',
+      },
+      {
+        label: 'Teleconsultas',
+        icon: 'pi pi-video',
+        routerLink: ['/main/meetings'],
       },
       {
         label: 'Chats',

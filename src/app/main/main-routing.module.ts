@@ -10,6 +10,7 @@ import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 import { MedicsPageComponent } from './pages/medics-page/medics-page.component';
 import { ControlPageComponent } from './pages/control-page/control-page.component';
+import { MeetingPageComponent } from './pages/meeting-page/meeting-page.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,11 @@ const routes: Routes = [
         path: 'medicines',
         title: 'Medicamentos',
         component: ShowMedicinePageComponent
+      },
+      {
+        path: 'meetings',
+        title: 'Telemetria',
+        component: MeetingPageComponent
       },
       {
         path: 'chats',
