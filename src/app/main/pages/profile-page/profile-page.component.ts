@@ -124,10 +124,13 @@ export class ProfilePageComponent implements OnInit {
 
     Swal.fire({
       title: '¿Estás seguro de actualizar tus datos?',
-      showDenyButton: true,
-      confirmButtonText: `Si`,
+      text: 'Estás a punto de modificar su información personal',
+      icon: 'warning',
+      showCancelButton: true,
       confirmButtonColor: '#3085d6',
-      denyButtonText: `No`,
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, actualizar información',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
         const dataUser = this.myForm.value;

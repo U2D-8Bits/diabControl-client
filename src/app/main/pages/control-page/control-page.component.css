@@ -43,7 +43,7 @@
 .content {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: flex-start;
   padding: 1rem;
 }
@@ -57,14 +57,14 @@
   order: 1;
 }
 
-.table-container {
+/* .table-container {
   order: 2;
-}
+} */
 
 @media (min-width: 1024px) {
   .chart-container,
   .table-container {
-    width: 50%;
+    width: 100%;
   }
 
   .chart-container {

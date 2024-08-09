@@ -107,7 +107,6 @@ export class ViewHistoryComponent implements OnInit {
   getHistoryData() {
     this.historyService.getHistoryById(this.idHistory).subscribe({
       next: (data) => {
-        console.log('Valor de Data.recipe =>', data.recipe);
         let recipeArray: string[] = [];
 
         //le asignamos a recipeArray el valor de data.recipe separado por comas
@@ -152,14 +151,18 @@ export class ViewHistoryComponent implements OnInit {
       message: '¿Esta seguro que desea actualizar la Historia?',
       header: 'Actualizar Historia',
       icon: 'pi pi-exclamation-triangle',
-      acceptIcon: 'pi pi-check',
-      rejectIcon: 'pi pi-times',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.historyService.updateHistory(idHistory, historyData).subscribe({
           next: (data) => {
             this.messageService.add({
               severity: 'success',
-              summary: 'Historia Actualizada',
+              summary: 'Éxito',
               detail: 'La Historia ha sido actualizada con exito',
             });
 
@@ -173,7 +176,7 @@ export class ViewHistoryComponent implements OnInit {
             console.error(error);
             this.messageService.add({
               severity: 'error',
-              summary: 'Error al Actualizar',
+              summary: 'Error',
               detail: 'Ha ocurrido un error al actualizar la Historia',
             });
           },
@@ -182,7 +185,7 @@ export class ViewHistoryComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Actualización Cancelada',
+          summary: 'Cancelado',
           detail: 'La actualización de la Historia ha sido cancelada',
         });
       },
@@ -195,12 +198,16 @@ export class ViewHistoryComponent implements OnInit {
         '¿Esta seguro que desea cancelar la actualización de la Historia?',
       header: 'Cancelar Actualización',
       icon: 'pi pi-exclamation-triangle',
-      acceptIcon: 'pi pi-check',
-      rejectIcon: 'pi pi-times',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Actualización Cancelada',
+          summary: 'Cancelado',
           detail: 'La actualización de la Historia ha sido cancelada',
         });
         this.historyForm.reset(this.historyFormData);
@@ -212,7 +219,7 @@ export class ViewHistoryComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Actualización no Cancelada',
+          summary: 'Información',
           detail: 'La actualización de la Historia no ha sido cancelada',
         });
       },
@@ -226,6 +233,5 @@ export class ViewHistoryComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log(`Componente ViewHistory destruido`);
   }
 }

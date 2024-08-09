@@ -127,17 +127,19 @@ export class ViewPatientComponent implements OnInit {
       message: 'Está seguro que desea actualizar los datos del paciente?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
-      acceptIcon: 'pi pi-check',
-      rejectIcon: 'pi pi-times',
-      acceptButtonStyleClass: 'p-button-success',
-      rejectButtonStyleClass: 'p-button-danger',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.userService.updateUser(this.userID,patientData)
           .subscribe({
             next: (data) => {
               this.messageService.add({
                 severity: 'success',
-                summary: 'Success',
+                summary: 'Éxito',
                 detail: 'Paciente actualizado correctamente',
               });
               this.patientsPageComponent.ngOnInit();
@@ -158,7 +160,7 @@ export class ViewPatientComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Actualización de paciente cancelada',
         });
         this.myForm.reset(this.patienFormData);
@@ -176,15 +178,17 @@ export class ViewPatientComponent implements OnInit {
       message: 'Esta seguro que desea cancelar la edición del paciente?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
-      acceptIcon: 'pi pi-check',
-      rejectIcon: 'pi pi-times',
-      acceptButtonStyleClass: 'p-button-success',
-      rejectButtonStyleClass: 'p-button-danger',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.myForm.reset(this.patienFormData);
         this.messageService.add({
           severity: 'error',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Edición de paciente cancelada',
         });
         setTimeout(() => {
@@ -194,7 +198,7 @@ export class ViewPatientComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Edición de paciente no cancelada',
         });
       }

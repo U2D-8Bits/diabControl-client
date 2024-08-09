@@ -118,7 +118,6 @@ export class CreateControlComponent implements OnInit {
     })
 
     const controlData: CreateControl = this.controlForm.value as CreateControl;
-    console.log(controlData);
 
     this.confirmationService.confirm({
       message: '¿Está seguro que desea crear esta valoración de la Historia clínica?',

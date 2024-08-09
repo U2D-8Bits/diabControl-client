@@ -12,6 +12,7 @@ import { ViewHistoryComponent } from '../../components/histories/view-history/vi
 import Swal from 'sweetalert2';
 import { MedicineService } from '../../services/meds/medicines.service';
 import { CreateControlComponent } from '../../components/control/create-control/create-control.component';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-histories-page',
@@ -33,7 +34,25 @@ export class HistoriesPageComponent implements OnInit {
   public dialogService = inject(DialogService);
   idPatient!: string;
   idHistory!: number;
-  patientData!: User;
+  patientData: User = {
+    id_user: 0,
+    user_address: '',
+    user_email: '',
+    user_name: '',
+    user_password: '',
+    user_phone: '',
+    user_admin: false,
+    user_age: 0,
+    user_birthdate: '',
+    user_ced: '',
+    user_created_at: new Date(),
+    user_genre: '',
+    user_lastname: '',
+    user_status: false,
+    user_updated_at: new Date(),
+    user_username: '',
+    role_id: 0
+  };
   messages!: Message[];
 
   public historiesPatient: History[] = [];
@@ -44,6 +63,26 @@ export class HistoriesPageComponent implements OnInit {
 
   // Agregar un mapa para almacenar el estado de los botones deshabilitados
   public controlStates: { [key: number]: boolean } = {};
+
+
+  // Apartado de grafico de lineas
+  colorScheme = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
+  };
+  patientSignals: any[] = [];
+  vitalSignsData: any[] = [];
+  Signos: boolean = true;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Fecha';
+  yAxisLabel: string = 'Signos vitales';
+  legendTitle: string = 'Signos vitales';
+  timeline: boolean = true;
+
 
   ngOnInit(): void {
     Swal.fire({
@@ -189,11 +228,76 @@ export class HistoriesPageComponent implements OnInit {
       .subscribe({
         next: (user: User) => {
           this.patientData = user;
+          this.getPatientSignals();
         },
         error: (err: any) => {
           console.error(err);
         }
       })
+  }
+
+  getPatientSignals() {
+
+    this.historyService.getPatientSignals(Number(this.idPatient))
+    .subscribe({
+      next: (signals) => {
+        this.patientSignals = signals;
+        this.prepareChartData();
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  prepareChartData(): void {
+    const weightSeries = this.patientSignals.map((entry) => ({
+
+      name: formatDate(entry.date, 'dd/MM/yyyy', 'en-US'),
+      value: entry.weight,
+    }));
+
+    const pulseSeries = this.patientSignals.map((entry) => ({
+      name: formatDate(entry.date, 'dd/MM/yyyy', 'en-US'),
+      value: entry.pulse,
+    }));
+
+    const pressureSeries = this.patientSignals.map((entry) => ({
+      name: formatDate(entry.date, 'dd/MM/yyyy', 'en-US'),
+      value: entry.pressure,
+    }));
+
+    const frequencySeries = this.patientSignals.map((entry) => ({
+      name: formatDate(entry.date, 'dd/MM/yyyy', 'en-US'),
+      value: entry.frequency,
+    }));
+
+    const temperatureSeries = this.patientSignals.map((entry) => ({
+      name: formatDate(entry.date, 'dd/MM/yyyy', 'en-US'),
+      value: entry.temperature,
+    }));
+
+    this.vitalSignsData = [
+      { name: 'Peso', series: weightSeries },
+      { name: 'Pulso', series: pulseSeries },
+      { name: 'Presión', series: pressureSeries },
+      { name: 'Frecuencia', series: frequencySeries },
+      { name: 'Temperatura', series: temperatureSeries },
+    ];
+
+  }
+
+  onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+    
+  }
+
+  onActivate(data: any): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data: any): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   //? Metodo para eliminar una historia clinica

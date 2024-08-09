@@ -186,20 +186,23 @@ export class ViewActComponent implements OnInit, OnDestroy {
       actData.tutor_motive = '';
     }
 
-    console.log(`Valores a Actualizar:`, actData);
 
     this.confirmationService.confirm({
       message: '¿Está seguro que desea actualizar el Consentimiento Informado?',
       header: 'Actualizar Consentimiento Informado',
       icon: 'pi pi-exclamation-triangle',
-      acceptIcon: 'pi pi-check',
-      rejectIcon: 'pi pi-times',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.actService.updateAct(idAct, actData).subscribe({
           next: (data) => {
             this.messageService.add({
               severity: 'success',
-              summary: 'Consentimiento Informado Actualizado',
+              summary: 'Éxito',
               detail:
                 'El Consentimiento Informado ha sido actualizado con éxito',
             });
@@ -214,7 +217,7 @@ export class ViewActComponent implements OnInit, OnDestroy {
             console.error(error);
             this.messageService.add({
               severity: 'error',
-              summary: 'Error al Actualizar el Consentimiento Informado',
+              summary: 'Error',
               detail:
                 error.error.message ||
                 'Ha ocurrido un error al actualizar el Consentimiento Informado',
@@ -225,7 +228,7 @@ export class ViewActComponent implements OnInit, OnDestroy {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Actualización Cancelada',
+          summary: 'Cancelada',
           detail:
             'La actualización del Consentimiento Informado ha sido cancelada',
         });
@@ -240,12 +243,16 @@ export class ViewActComponent implements OnInit, OnDestroy {
         '¿Está seguro que desea cancelar la actualización del Consentimiento Informado?',
       header: 'Cancelar Actualización',
       icon: 'pi pi-exclamation-triangle',
-      acceptIcon: 'pi pi-check',
-      rejectIcon: 'pi pi-times',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Actualización Cancelada',
+          summary: 'Cancelada',
           detail:
             'La actualización del Consentimiento Informado ha sido cancelada',
         });
@@ -258,7 +265,7 @@ export class ViewActComponent implements OnInit, OnDestroy {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Actualización no Cancelada',
+          summary: 'Cancelada',
           detail:
             'La actualización del Consentimiento Informado no ha sido cancelada',
         });
