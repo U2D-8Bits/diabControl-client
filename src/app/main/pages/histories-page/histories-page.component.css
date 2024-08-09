@@ -1,40 +1,245 @@
-.btn-add{
-    display: flex;
-    padding: 10px;
-    border-radius: 6px;
-    align-items: center;
-    background-color: #1D4ED8;
-    color: #ffffff;
+.btn-add {
+  display: flex;
+  padding: 10px;
+  border-radius: 6px;
+  align-items: center;
+  background-color: #1d4ed8;
+  color: #ffffff;
 }
 
-.btn-add:hover{
-    background-color: #2563EB;
+.btn-add:hover {
+  background-color: #2563eb;
 }
 
-.badge-succes, .badge-danger{
-    padding: 5px 5px;
-    border-radius: 6px;
-    color: #FFFFFF;
+.badge-succes,
+.badge-danger {
+  padding: 5px 5px;
+  border-radius: 6px;
+  color: #ffffff;
 }
 
-.badge-succes{
-    background-color: #10B981;
+.badge-succes {
+  background-color: #10b981;
 }
 
-.badge-danger{
-    background-color: #EF4444;
+.badge-danger {
+  background-color: #ef4444;
 }
 
-.btn-action{
-    width: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    color: #FFFFFF;
-    background-color: #707785;
+.btn-action {
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: #ffffff;
+  background-color: #707785;
 }
 
-.btn-action:hover{
-    background-color: #4B5563;
+.btn-action:hover {
+  background-color: #4b5563;
+}
+
+/* src/app/components/histories-page/histories-page.component.css */
+
+/* Estilos generales */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #4a5568;
+}
+
+.header button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #3182ce;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.15s ease-in-out;
+}
+
+.header button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header button:focus {
+  outline: none;
+}
+
+.header button:disabled {
+  background-color: #63b3ed;
+  pointer-events: none;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.chart-container,
+.table-container {
+  width: 100%;
+}
+
+.chart-container {
+  order: 1;
+}
+
+.table-container {
+  order: 2;
+}
+
+@media (min-width: 1024px) {
+  .chart-container,
+  .table-container {
+    width: 50%;
+  }
+
+  .chart-container {
+    order: 1;
+  }
+
+  .table-container {
+    order: 2;
+  }
+}
+
+.no-control-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  height: 24rem;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.no-control-message .icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ebf8ff;
+  border-radius: 50%;
+  padding: 1rem;
+  color: #3182ce;
+}
+
+.no-control-message h1 {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  color: #2d3748;
+}
+
+.no-control-message p {
+  margin-top: 0.5rem;
+  color: #718096;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table-container th,
+.table-container td {
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+}
+
+.table-container th {
+  background-color: #edf2f7;
+  color: #4a5568;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.table-container tbody tr {
+  background-color: white;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.table-container tbody tr:hover {
+  background-color: #f7fafc;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3182ce;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.15s ease-in-out;
+}
+
+.actions button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.actions button:focus {
+  outline: none;
+}
+
+.actions button:disabled {
+  background-color: #63b3ed;
+  pointer-events: none;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  background-color: #3182ce;
+  color: white;
+  font-weight: 500;
+  border-radius: 0.25rem;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.pagination button:hover {
+  background-color: #2b6cb0;
+}
+
+.pagination button:disabled {
+  background-color: #63b3ed;
+  pointer-events: none;
+}
+
+.pagination span {
+  font-weight: 600;
+  color: #4a5568;
 }

@@ -4,8 +4,8 @@
 
 
 <div class="flex justify-between items-center p-2">
-    <h1 class="text-2xl text-gray-700">Seguimiento y Control del paciente <label>{{ patientData?.user_name }} {{
-            patientData?.user_lastname }}</label></h1>
+    <h1 class="text-2xl text-gray-700">Seguimiento y Control del paciente <label>{{ patientData.user_name }} {{
+            patientData.user_lastname }}</label></h1>
     <button
         class=" flex items-center gap-2 bg-blue-600 text-white active:bg-blue-700 font-medium uppercase text-s px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 disabled:bg-blue-400 pointer-events-auto"
         type="button" [routerLink]="['/main/patients', patientData.id_user]" type="button">
@@ -15,13 +15,13 @@
 </div>
 
 <div class="content">
-    <div class="chart-container">
+    <!-- <div class="chart-container">
         <ngx-charts-line-chart [view]="[600, 300]" [legend]="legend" [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel" [timeline]="timeline" [results]="vitalSignsData" (select)="onSelect($event)"
             (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
         </ngx-charts-line-chart>
-    </div>
+    </div> -->
 
     <div class="table-container">
         <!-- Mensaje de no existir ningún control -->

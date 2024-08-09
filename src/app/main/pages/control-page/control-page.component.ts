@@ -25,29 +25,30 @@ export class ControlPageComponent implements OnInit {
   private dialogService = inject(DialogService);
   public idPatient: number = 0;
   public idControl: number = 0;
-  public patientData!: User;
-  patientSignals: any[] = [];
-  vitalSignsData: any[] = [];
+  patientData: User = {
+    id_user: 0,
+    user_address: '',
+    user_email: '',
+    user_name: '',
+    user_password: '',
+    user_phone: '',
+    user_admin: false,
+    user_age: 0,
+    user_birthdate: '',
+    user_ced: '',
+    user_created_at: new Date(),
+    user_genre: '',
+    user_lastname: '',
+    user_status: false,
+    user_updated_at: new Date(),
+    user_username: '',
+    role_id: 0
+  };
 
   public controlPatient: Control[] = [];
   public totalControls: number = 0;
   public currentPage: number = 1;
   public pageSize: number = 10;
-
-  colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
-  };
-
-  legend: boolean = true;
-  showLabels: boolean = true;
-  animations: boolean = true;
-  xAxis: boolean = true;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Fecha';
-  yAxisLabel: string = 'Signos vitales';
-  timeline: boolean = true;
 
   getUserData() {
     this.userService.getUserById(this.idPatient).subscribe({
@@ -60,66 +61,7 @@ export class ControlPageComponent implements OnInit {
     });
   }
 
-  getPatientSignals() {
 
-    this.historyService.getPatientSignals(this.idPatient)
-    .subscribe({
-      next: (signals) => {
-        this.patientSignals = signals;
-        this.prepareChartData();
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
-  }
-
-  prepareChartData(): void {
-    const weightSeries = this.patientSignals.map((entry) => ({
-      name: entry.date,
-      value: entry.weight,
-    }));
-
-    const pulseSeries = this.patientSignals.map((entry) => ({
-      name: entry.date,
-      value: entry.pulse,
-    }));
-
-    const pressureSeries = this.patientSignals.map((entry) => ({
-      name: entry.date,
-      value: entry.pressure,
-    }));
-
-    const frequencySeries = this.patientSignals.map((entry) => ({
-      name: entry.date,
-      value: entry.frequency,
-    }));
-
-    const temperatureSeries = this.patientSignals.map((entry) => ({
-      name: entry.date,
-      value: entry.temperature,
-    }));
-
-    this.vitalSignsData = [
-      { name: 'Peso', series: weightSeries },
-      { name: 'Pulso', series: pulseSeries },
-      { name: 'Presión', series: pressureSeries },
-      { name: 'Frecuencia', series: frequencySeries },
-      { name: 'Temperatura', series: temperatureSeries },
-    ];
-  }
-
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
-  }
 
 
   //? Funcion para obtener todos los controles de un paciente con paginación
@@ -212,7 +154,6 @@ export class ControlPageComponent implements OnInit {
         Swal.showLoading()
         this.idPatient = this.route.snapshot.params['id'];
         this.getUserData();
-        this.getPatientSignals();
         this.loadControls();
       }
     }).then((result) => {
