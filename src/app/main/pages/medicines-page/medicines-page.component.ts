@@ -4,8 +4,6 @@ import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { MedicineService } from '../../services/meds/medicines.service';
 import { Medicine } from '../../interfaces/Medicines/medicines.interface';
 import Swal from 'sweetalert2';
-import { CreateMedicComponent } from '../../components/medic/create-medic/create-medic.component';
-import { ViewMedicComponent } from '../../components/medic/view-medic/view-medic.component';
 import { CategoryService } from '../../services/meds/categories.service';
 import { Category } from '../../interfaces/categories/category.interface';
 import { ViewMedicineComponent } from '../../components/medicines/view-medicine/view-medicine.component';
@@ -57,6 +55,14 @@ export class MedicinesPageComponent implements OnInit {
 
   }
 
+
+  //Método para obtener el id de un medico
+  getMedicId(id: number) {
+    
+  }
+
+
+
   //? Método para obtener todas las categorías
   getAllCategories() {
     this.categoryService.getAllCategories().subscribe({
@@ -82,6 +88,9 @@ export class MedicinesPageComponent implements OnInit {
       }
     })
   }
+
+
+
 
   //? Método para obtener medicinas paginadas
   loadMedicines() {
@@ -119,6 +128,7 @@ export class MedicinesPageComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: '¡Sí, bórralo!',
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.medicineService.deleteMedicine(id).subscribe({

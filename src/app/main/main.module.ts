@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { CreateActComponent } from './components/Act/create-act/create-act.component';
 import { CreateCategoryComponent } from './components/categories/create-category/create-category.component';
 import { CreateHistoryComponent } from './components/histories/create-history/create-history.component';
-import { CreateMedicComponent } from './components/medic/create-medic/create-medic.component';
 import { CreateMedicineComponent } from './components/medicines/create-medicine/create-medicine.component';
 import { CreatePatientComponent } from './components/patient/create-patient/create-patient.component';
 import { FirstCharacterPipe } from './pipes/first-character.pipe';
@@ -24,21 +23,29 @@ import { SharedModule } from '../shared/shared.module';
 import { ViewActComponent } from './components/Act/view-act/view-act.component';
 import { ViewCategoryComponent } from './components/categories/view-category/view-category.component';
 import { ViewHistoryComponent } from './components/histories/view-history/view-history.component';
-import { ViewMedicComponent } from './components/medic/view-medic/view-medic.component';
 import { ViewMedicineComponent } from './components/medicines/view-medicine/view-medicine.component';
 import { ViewPatientComponent } from './components/patient/view-patient/view-patient.component';
 import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/show-medicine-page.component';
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 import { MedicinesPageComponent } from './pages/medicines-page/medicines-page.component';
-import { FollowUpComponent } from './components/histories/follow-up/follow-up.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
+import { MedicsPageComponent } from './pages/medics-page/medics-page.component';
+import { CreateMedicComponent } from './components/medic/create-medic/create-medic.component';
+import { ViewMedicComponent } from './components/medic/view-medic/view-medic.component';
+import { ControlPageComponent } from './pages/control-page/control-page.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CreateControlComponent } from './components/control/create-control/create-control.component';
+import { UpdateControlComponent } from './components/control/update-control/update-control.component';
+import { MeetingPageComponent } from './pages/meeting-page/meeting-page.component';
+import { SafeUrlMeetingPipe } from './pipes/meeting-url.pipe';
+import { ChatMessageComponent } from './components/chat/chat-message/chat-message.component';
+
 @NgModule({
   declarations: [
     ActPageComponent,
     CreateActComponent,
     CreateCategoryComponent,
     CreateHistoryComponent,
-    CreateMedicComponent,
     CreateMedicineComponent,
     CreatePatientComponent,
     FirstCharacterPipe,
@@ -51,14 +58,21 @@ import { ChatPageComponent } from './pages/chat-page/chat-page.component';
     ViewActComponent,
     ViewCategoryComponent,
     ViewHistoryComponent,
-    ViewMedicComponent,
     ViewMedicineComponent,
     ViewPatientComponent,
     ShowMedicinePageComponent,
     CategoriesPageComponent,
     MedicinesPageComponent,
-    FollowUpComponent,
     ChatPageComponent,
+    MedicsPageComponent,
+    CreateMedicComponent,
+    ViewMedicComponent,
+    ControlPageComponent,
+    CreateControlComponent,
+    UpdateControlComponent,
+    MeetingPageComponent,
+    SafeUrlMeetingPipe,
+    ChatMessageComponent
   ],
   imports: [
     CommonModule,
@@ -70,6 +84,7 @@ import { ChatPageComponent } from './pages/chat-page/chat-page.component';
     MaterialuiModule,
     SharedModule,
     FormsModule,
+    NgxChartsModule,
   ],
   exports: [
     MainLayoutComponent,

@@ -8,6 +8,9 @@ import { HistoriesPageComponent } from './pages/histories-page/histories-page.co
 import { ActPageComponent } from './pages/act-page/act-page.component';
 import { ShowMedicinePageComponent } from './components/meds/show-medicine-page/show-medicine-page.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
+import { MedicsPageComponent } from './pages/medics-page/medics-page.component';
+import { ControlPageComponent } from './pages/control-page/control-page.component';
+import { MeetingPageComponent } from './pages/meeting-page/meeting-page.component';
 
 const routes: Routes = [
   {
@@ -37,9 +40,24 @@ const routes: Routes = [
         component: ActPageComponent
       },
       {
+        path: 'patients/:id/control',
+        title: 'Seguimiento y Control',
+        component: ControlPageComponent
+      },
+      {
+        path: 'medics',
+        title: 'Medicos',
+        component: MedicsPageComponent
+      },
+      {
         path: 'medicines',
         title: 'Medicamentos',
         component: ShowMedicinePageComponent
+      },
+      {
+        path: 'meetings',
+        title: 'Telemetria',
+        component: MeetingPageComponent
       },
       {
         path: 'chats',

@@ -1,76 +1,140 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
 <div class="max-w-full mx-auto bg-white p-16">
-    <form [formGroup]="myForm" (ngSubmit)="createMedic()">
+    <form [formGroup]="medicForm" (ngSubmit)="createMedic()">
         <div class="grid gap-6 mb-6 lg:grid-cols-2">
             <div class="flex flex-col">
-                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre</label>
+                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Nombre</label>
                 <input formControlName="user_name" type="text" id="first_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="John" required>
+                <div *ngIf="medicForm.get('user_name')?.invalid && medicForm.get('user_name')?.touched"
+                    class="text-red-600 text-sm">
+                    Nombre es requerido.
+                </div>
             </div>
             <div class="flex flex-col">
-                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Apellido</label>
+                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">Apellido</label>
                 <input formControlName="user_lastname" type="text" id="last_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Doe" required>
+                <div *ngIf="medicForm.get('user_lastname')?.invalid && medicForm.get('user_lastname')?.touched"
+                    class="text-red-600 text-sm">
+                    Apellido es requerido.
+                </div>
             </div>
             <div class="flex flex-col">
-                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Fecha de Nacimiento</label>
-                <input formControlName="user_birthdate" type="Date" id="last_name"
+                <label for="birthdate" class="block mb-2 text-sm font-medium text-gray-900">Fecha de Nacimiento</label>
+                <input formControlName="user_birthdate" type="date" id="birthdate"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Doe" required>
+                <div *ngIf="medicForm.get('user_birthdate')?.errors?.['required'] && medicForm.get('user_birthdate')?.touched"
+                    class="text-red-600 text-sm">
+                    Fecha de Nacimiento debe ser válida.
+                </div>
+                <div *ngIf="medicForm.get('user_birthdate')?.errors?.['futureDate'] && medicForm.get('user_birthdate')?.touched"
+                    class="text-red-600 text-sm">
+                    Fecha de Nacimiento no puede ser en el futuro.
+                </div>
             </div>
             <div class="flex flex-col">
-                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Genero</label>
-                <select
+                <label for="user_genre" class="block mb-2 text-sm font-medium text-gray-900">Género</label>
+                <select formControlName="user_genre"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    formControlName="user_genre" required>
+                    required>
+                    <option value="" disabled selected>Seleccione una opción</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
                     <option value="Otros">Otros</option>
                 </select>
+                <div *ngIf="medicForm.get('user_genre')?.invalid && medicForm.get('user_genre')?.touched"
+                    class="text-red-600 text-sm">
+                    Género es requerido.
+                </div>
             </div>
             <div class="flex flex-col">
-                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 ">Direccion</label>
-                <input formControlName="user_address" type="text" id="last_name"
+                <label for="user_address" class="block mb-2 text-sm font-medium text-gray-900">Dirección</label>
+                <input formControlName="user_address" type="text" id="user_address"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="Doe" required>
+                    placeholder="Dirección de domicilio" required>
+                <div *ngIf="medicForm.get('user_address')?.invalid && medicForm.get('user_address')?.touched"
+                    class="text-red-600 text-sm">
+                    Dirección es requerida.
+                </div>
             </div>
             <div class="flex flex-col">
-                <label for="cedula" class="block mb-2 text-sm font-medium text-gray-900 ">Numero de Cedula</label>
+                <label for="cedula" class="block mb-2 text-sm font-medium text-gray-900">Número de Cédula</label>
                 <input formControlName="user_ced" type="text" id="cedula"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="9999999999" required>
+                <div *ngIf="medicForm.get('user_ced')?.invalid && medicForm.get('user_ced')?.touched"
+                    class="text-red-600 text-sm">
+                    <div *ngIf="medicForm.get('user_ced')?.errors?.['required']">
+                        Número de Cédula es requerido.
+                    </div>
+                    <div *ngIf="medicForm.get('user_ced')?.errors?.['invalidLength']">
+                        El número de cédula debe tener 10 dígitos.
+                    </div>
+                    <div *ngIf="medicForm.get('user_ced')?.errors?.['invalidProvinceCode']">
+                        El código de la provincia en el número de cédula es inválido.
+                    </div>
+                    <div *ngIf="medicForm.get('user_ced')?.errors?.['invalidVerifier']">
+                        El número de cédula no es válido.
+                    </div>
+                </div>
             </div>
             <div class="flex flex-col">
-                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Numero de telefono</label>
+                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Número de teléfono</label>
                 <input formControlName="user_phone" type="string" id="phone"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="099-999-999" required>
+                <div *ngIf="medicForm.get('user_phone')?.invalid && medicForm.get('user_phone')?.touched"
+                    class="text-red-600 text-sm">
+                    Número de teléfono es requerido.
+                </div>
             </div>
         </div>
-        <div class="mb-6 flex flex-col">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Correo Electronico</label>
+        <div class="flex flex-col mb-6">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Correo Electrónico</label>
             <input formControlName="user_email" type="email" id="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="john.doe@company.com" required>
+            <div *ngIf="medicForm.get('user_email')?.errors?.['required'] && medicForm.get('user_email')?.touched"
+                class="text-red-600 text-sm">
+                Correo Electrónico es requerido.
+            </div>
+            <div *ngIf="medicForm.get('user_email')?.errors?.['email'] && medicForm.get('user_email')?.touched"
+                class="text-red-600 text-sm">
+                Correo Electrónico no es válido.
+            </div>
         </div>
-        <div class="mb-6 flex flex-col">
-            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre de Usuario</label>
-            <input formControlName="user_username" type="text" id="email"
+        <div class="flex flex-col mb-6">
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Nombre de Usuario</label>
+            <input formControlName="user_username" type="text" id="username"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="john.doe@company.com" required>
+                placeholder="johnDoe" required>
+            <div *ngIf="medicForm.get('user_username')?.invalid && medicForm.get('user_username')?.touched"
+                class="text-red-600 text-sm">
+                Nombre de Usuario es requerido.
+            </div>
         </div>
-        <div class="mb-6 flex flex-col">
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+        <div class="flex flex-col mb-6">
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Contraseña</label>
             <input formControlName="user_password" type="password" id="password"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="•••••••••" required>
+            <div *ngIf="medicForm.get('user_password')?.errors?.['required'] && medicForm.get('user_password')?.touched"
+                class="text-red-600 text-sm">
+                Contraseña es requerida.
+            </div>
+            <div *ngIf="medicForm.get('user_password')?.errors?.['minlength'] && medicForm.get('user_password')?.touched"
+                class="text-red-600 text-sm">
+                Contraseña debe tener al menos 6 caracteres.
+            </div>
         </div>
     </form>
     <div class="grid gap-6 mb-6 lg:grid-cols-2">
-        <button (click)="createMedic()" [disabled]="myForm.invalid"
+        <button (click)="createMedic()" [disabled]="medicForm.invalid"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto">
             Agregar
         </button>

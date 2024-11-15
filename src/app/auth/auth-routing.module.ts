@@ -4,6 +4,7 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { RestorePasswordPageComponent } from './pages/restore-password-page/restore-password-page.component';
+import { AboutUsPageComponent } from './pages/about-us-page/about-us-page.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
         path: 'restore-password',
         title: 'Restablecer contraseña',
         component: RestorePasswordPageComponent
+      },
+      {
+        path: 'about-us',
+        title: 'Sobre nosotros',
+        component: AboutUsPageComponent
       },
       {
         path: '',

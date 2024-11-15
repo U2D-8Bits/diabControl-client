@@ -37,7 +37,7 @@ export class CreatePatientComponent implements OnInit {
     user_lastname: ['', Validators.required],
     user_genre: ['', Validators.required],
     user_email: ['', [Validators.required, Validators.email]],
-    user_ced: ['', Validators.required],
+    user_ced: ['', [Validators.required, this.ecuadorianCedulaValidator]],
     user_birthdate: ['', [Validators.required, this.futureDateValidator]],
     user_age: [0, Validators.required],
     user_admin: [false],
@@ -52,8 +52,6 @@ export class CreatePatientComponent implements OnInit {
       user_age: this.ageUser,
     });
 
-    console.log(`Valores del Formulario a crear =>`, this.myForm.value);
-
     const patientData = this.myForm.value;
 
     this.confirmationService.confirm({
@@ -62,8 +60,10 @@ export class CreatePatientComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass: 'p-button-text',
-      acceptButtonStyleClass: 'p-button-text',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.userService.createUser(patientData)
           .subscribe({
@@ -92,7 +92,7 @@ export class CreatePatientComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Creacion de paciente cancelada',
         });
       }
@@ -106,12 +106,14 @@ export class CreatePatientComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass: 'p-button-text',
-      acceptButtonStyleClass: 'p-button-text',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.messageService.add({
           severity: 'error',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'creación de paciente cancelada',
         });
         this.closeDialog();
@@ -120,7 +122,7 @@ export class CreatePatientComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'creación de paciente no cancelada',
         });
       }
@@ -132,11 +134,9 @@ export class CreatePatientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(`componente create-patient cargado`);
   }
 
   ngOnDestroy(): void {
-    console.log(`componente create-patient destruido`);
   }
 
   futureDateValidator(control: AbstractControl): ValidationErrors | null {
@@ -145,6 +145,31 @@ export class CreatePatientComponent implements OnInit {
     if (selectedDate > today) {
       return { futureDate: true };
     }
+    return null;
+  }
+
+  ecuadorianCedulaValidator(control: AbstractControl): ValidationErrors | null {
+    const cedula = control.value;
+    if (!cedula || cedula.length !== 10) {
+      return { invalidLength: true };
+    }
+
+    const provinceCode = parseInt(cedula.substring(0, 2), 10);
+    if (provinceCode < 1 || (provinceCode > 24 && provinceCode !== 30)) {
+      return { invalidProvinceCode: true };
+    }
+
+    const digits = cedula.split('').map(Number);
+    const verifier = digits.pop();
+    const evenSum = digits.filter((_: any, index: number) => index % 2 === 1).reduce((a: any, b: any) => a + b, 0);
+    const oddSum = digits.filter((_: any, index: number) => index % 2 === 0).map((d: number) => d * 2 > 9 ? d * 2 - 9 : d * 2).reduce((a: any, b: any) => a + b, 0);
+    const totalSum = evenSum + oddSum;
+    const verifierCalc = (10 - (totalSum % 10)) % 10;
+
+    if (verifier !== verifierCalc) {
+      return { invalidVerifier: true };
+    }
+
     return null;
   }
 }

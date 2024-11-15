@@ -26,10 +26,12 @@
                 <input formControlName="user_birthdate" type="date" id="birthdate"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Doe" required>
-                <div *ngIf="myForm.get('user_birthdate')?.errors?.['required'] && myForm.get('user_birthdate')?.touched" class="text-red-600 text-sm">
-                    Fecha de Nacimiento es requerida.
+                    <div *ngIf="myForm.get('user_birthdate')?.errors?.['required'] && myForm.get('user_birthdate')?.touched"
+                    class="text-red-600 text-sm">
+                    Fecha de Nacimiento debe ser válida.
                 </div>
-                <div *ngIf="myForm.get('user_birthdate')?.errors?.['futureDate'] && myForm.get('user_birthdate')?.touched" class="text-red-600 text-sm">
+                <div *ngIf="myForm.get('user_birthdate')?.errors?.['futureDate'] && myForm.get('user_birthdate')?.touched"
+                    class="text-red-600 text-sm">
                     Fecha de Nacimiento no puede ser en el futuro.
                 </div>
             </div>
@@ -60,8 +62,20 @@
                 <input formControlName="user_ced" type="text" id="cedula"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="9999999999" required>
-                <div *ngIf="myForm.get('user_ced')?.invalid && myForm.get('user_ced')?.touched" class="text-red-600 text-sm">
-                    Número de Cédula es requerido.
+                    <div *ngIf="myForm.get('user_ced')?.invalid && myForm.get('user_ced')?.touched"
+                    class="text-red-600 text-sm">
+                    <div *ngIf="myForm.get('user_ced')?.errors?.['required']">
+                        Número de Cédula es requerido.
+                    </div>
+                    <div *ngIf="myForm.get('user_ced')?.errors?.['invalidLength']">
+                        El número de cédula debe tener 10 dígitos.
+                    </div>
+                    <div *ngIf="myForm.get('user_ced')?.errors?.['invalidProvinceCode']">
+                        El código de la provincia en el número de cédula es inválido.
+                    </div>
+                    <div *ngIf="myForm.get('user_ced')?.errors?.['invalidVerifier']">
+                        El número de cédula no es válido.
+                    </div>
                 </div>
             </div>
             <div class="flex flex-col">

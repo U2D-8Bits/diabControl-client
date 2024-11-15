@@ -66,7 +66,6 @@ export class CreateHistoryComponent implements OnInit {
     this.formatDate();
     this.getMedicines();
     this.getMedicData();
-    console.log(this.fenotypes);
   }
 
   formatDate() {
@@ -105,7 +104,6 @@ export class CreateHistoryComponent implements OnInit {
       pacienteId: Number(this.idPatient)
     });
     const historyData = this.historyForm.value;
-    console.log(historyData);
 
     this.confirmationService.confirm({
       message: '¿Está seguro que desea crear esta Historia Clínica?',
@@ -113,15 +111,16 @@ export class CreateHistoryComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass: 'p-button-danger',
-      acceptButtonStyleClass: 'p-button-success',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.historyService.crateHistory(historyData).subscribe({
           next: (data) => {
-            console.log("Valor de Data =>", data);
             this.messageService.add({
               severity: 'success',
-              summary: 'Success',
+              summary: 'Éxito',
               detail: 'Historia Clínica creada correctamente',
             });
             this.historyComponent.ngOnInit();
@@ -143,7 +142,7 @@ export class CreateHistoryComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Creación de Historia Clinica cancelada',
         });
       },
@@ -177,12 +176,14 @@ export class CreateHistoryComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       acceptIcon: 'none',
       rejectIcon: 'none',
-      rejectButtonStyleClass: 'p-button-text',
-      acceptButtonStyleClass: 'p-button-text',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Creacion de Historia Clinica cancelada',
         });
         this.resetForm();
@@ -193,7 +194,7 @@ export class CreateHistoryComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Creacion de Historia Clinica no cancelada',
         });
       }
@@ -208,6 +209,5 @@ export class CreateHistoryComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log(`Componente CreateHistory destruido`);
   }
 }

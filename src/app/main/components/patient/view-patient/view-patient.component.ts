@@ -69,7 +69,7 @@ export class ViewPatientComponent implements OnInit {
       user_admin: [false],
       user_username: ['', Validators.required],
       user_password: ['', Validators.required],
-      user_ced: ['', Validators.required],
+      user_ced: ['', [Validators.required, this.ecuadorianCedulaValidator]],
       role_id: [2, Validators.required],
       user_status: [true, Validators.required],
     })
@@ -127,17 +127,19 @@ export class ViewPatientComponent implements OnInit {
       message: 'Está seguro que desea actualizar los datos del paciente?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
-      acceptIcon: 'pi pi-check',
-      rejectIcon: 'pi pi-times',
-      acceptButtonStyleClass: 'p-button-success',
-      rejectButtonStyleClass: 'p-button-danger',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.userService.updateUser(this.userID,patientData)
           .subscribe({
             next: (data) => {
               this.messageService.add({
                 severity: 'success',
-                summary: 'Success',
+                summary: 'Éxito',
                 detail: 'Paciente actualizado correctamente',
               });
               this.patientsPageComponent.ngOnInit();
@@ -158,7 +160,7 @@ export class ViewPatientComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Actualización de paciente cancelada',
         });
         this.myForm.reset(this.patienFormData);
@@ -176,15 +178,17 @@ export class ViewPatientComponent implements OnInit {
       message: 'Esta seguro que desea cancelar la edición del paciente?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
-      acceptIcon: 'pi pi-check',
-      rejectIcon: 'pi pi-times',
-      acceptButtonStyleClass: 'p-button-success',
-      rejectButtonStyleClass: 'p-button-danger',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass: 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center disabled:bg-blue-400 pointer-events-auto',
+      rejectButtonStyleClass: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  disabled:bg-red-400 pointer-events-auto mr-2', 
       accept: () => {
         this.myForm.reset(this.patienFormData);
         this.messageService.add({
           severity: 'error',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Edición de paciente cancelada',
         });
         setTimeout(() => {
@@ -194,7 +198,7 @@ export class ViewPatientComponent implements OnInit {
       reject: () => {
         this.messageService.add({
           severity: 'info',
-          summary: 'Info',
+          summary: 'Información',
           detail: 'Edición de paciente no cancelada',
         });
       }
@@ -207,6 +211,32 @@ export class ViewPatientComponent implements OnInit {
     if (selectedDate > today) {
       return { futureDate: true };
     }
+    return null;
+  }
+
+
+  ecuadorianCedulaValidator(control: AbstractControl): ValidationErrors | null {
+    const cedula = control.value;
+    if (!cedula || cedula.length !== 10) {
+      return { invalidLength: true };
+    }
+
+    const provinceCode = parseInt(cedula.substring(0, 2), 10);
+    if (provinceCode < 1 || (provinceCode > 24 && provinceCode !== 30)) {
+      return { invalidProvinceCode: true };
+    }
+
+    const digits = cedula.split('').map(Number);
+    const verifier = digits.pop();
+    const evenSum = digits.filter((_: any, index: number) => index % 2 === 1).reduce((a: any, b: any) => a + b, 0);
+    const oddSum = digits.filter((_: any, index: number) => index % 2 === 0).map((d: number) => d * 2 > 9 ? d * 2 - 9 : d * 2).reduce((a: any, b: any) => a + b, 0);
+    const totalSum = evenSum + oddSum;
+    const verifierCalc = (10 - (totalSum % 10)) % 10;
+
+    if (verifier !== verifierCalc) {
+      return { invalidVerifier: true };
+    }
+
     return null;
   }
   

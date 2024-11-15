@@ -73,17 +73,7 @@ export class PatientsPageComponent implements OnInit{
 
 
 
-
-
-  //? Funcion para obtener los pacientes
-  getAllPatients(){
-    //? Lógica para obtener todos los pacientes
-    this.userService.getAllPatients()
-      .subscribe((resp: User[]) => {
-        this.patients = resp
-      })
-  }
-
+  //? Funcion para cargar los pacientes paginados
   loadPatients(){
     this.userService.getAllPatientsPaginated(this.currentPage, this.pageSize, this.search)
     .subscribe({
@@ -120,7 +110,8 @@ export class PatientsPageComponent implements OnInit{
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, cambiar estado'
+        confirmButtonText: 'Sí, cambiar estado',
+        cancelButtonText: 'Cancelar'
       }).then((result) => {
         if(result.isConfirmed){
           //? Lógica para cambiar el estado de un paciente
@@ -161,7 +152,9 @@ export class PatientsPageComponent implements OnInit{
               }, 700)
             },
             error: (err: any) => {
-              this.messageService.add({severity: 'error', summary: 'Error', detail: 'Ha ocurrido un error al eliminar el paciente'})
+              if(err.error.statusCode === 500 ){
+                this.messageService.add({severity: 'info', summary: 'Información', detail: 'No se puede eliminar un paciente con archivos o documentos asociadas'})
+              }
             }
           
           })
