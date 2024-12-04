@@ -77,7 +77,7 @@ export class ControlPageComponent implements OnInit {
       },
       error: (err: any) => {
         console.error(err);
-      } 
+      }
     })
   }
 
@@ -144,7 +144,7 @@ export class ControlPageComponent implements OnInit {
 
   ngOnInit(): void {
     Swal.fire({
-      title: 'Cargando Historias Clínicas',
+      title: 'Cargando Seguimientos',
       html: 'Por favor espere un momento',
       timer: 2500,
       timerProgressBar: true,
