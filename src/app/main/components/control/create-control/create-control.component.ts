@@ -134,7 +134,7 @@ export class CreateControlComponent implements OnInit {
           next: (data) => {
             this.messageService.add({
               severity: 'success',
-              summary: 'Success',
+              summary:'Éxito',
               detail: 'Valoración de la Historia Clínica creada correctamente',
             });
 
